@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC
+  "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{} [%-5level] %d{[dd/MM/yy HH:mm:ss]} [%t %M] %logger{36} - %msg%n"/>
+        </Console>
+        <File name="File" fileName="C:\Users\Adam.ADAM\Documents\Projetos Java\Planilhao\src\main\resources\log4j2.log">
+            <PatternLayout pattern="%d{[dd/MMM HH:mm]} [%t] [%-5level] [%logger{36}] - %msg%n" />
+        </File>
+    </Appenders>
+        
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+            <!--<AppenderRef ref="File"/>-->
+        </Root>
+        <Logger name="com.mchange.v2.c3p0">
+            <level value="SEVERE"/>
+        </Logger>
+        <Logger name="org.hibernate" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="org.hibernate.Type" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="log4j.logger.org.hibernate.SQL" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="log4j.logger.org.hibernate.type" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Logger>
+        <Logger name="org.hibernate" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Logger>   
+        <Logger name="org.hibernate" level="DEBUG" additivity="false">
+            <AppenderRef ref="File"/>
+        </Logger>              
+        <Logger name="org.hibernate.type.descriptor.sql" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </Logger> 
+    </Loggers>
+</log4j:configuration>
