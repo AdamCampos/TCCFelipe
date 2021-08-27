@@ -11,8 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.log4j.Log4j2;
+
 @Repository
+@Log4j2
 public class UsuarioRepositoryImpl implements UsuarioRepository {
+
+	private JdbcTemplate jdbc;
 
 	@Autowired
 	public UsuarioRepositoryImpl(JdbcTemplate jdbc) {
@@ -22,8 +27,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 	private SimpleJdbcInsert orderInserter;
 	private SimpleJdbcInsert orderTacoInserter;
 	private ObjectMapper objectMapper;
-
-	private JdbcTemplate jdbc;
 
 //	Trecho abaixo é o mesmo método mas sem usar a função lambda
 //	@Override
@@ -48,19 +51,32 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Usuario findOne(String id) {
-		return jdbc.queryForObject("select matricula, nome from Usuario where matricula=?", this::mapeiaLinhaUsuario, id);
+		return jdbc.queryForObject("select matricula, nome from Usuario where matricula=?", this::mapeiaLinhaUsuario,
+				id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Usuario save(Usuario usuario) {
-		jdbc.update("insert into Usuario (matricula, nome) values (?, ?, ?)", usuario.getMatricula(),
-				usuario.getNome());
+		jdbc.update("insert into Usuario (matricula, nome) values (?, ?)", usuario.getMatricula(), usuario.getNome());
+		log.info("*Salvo " + usuario.getNome());
 		return usuario;
 	}
 
-	private Usuario mapeiaLinhaUsuario(ResultSet rs, int rowNum) throws SQLException {
-		return new Usuario(rs.getInt("matricula"), rs.getString("nome"));
+	private Usuario mapeiaLinhaUsuario(ResultSet rs, int rowNum) {
+
+		Usuario u = new Usuario();
+
+		try {
+			log.info("RS.:" + rowNum);
+			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"));
+			log.info("Usuario retornado: " + u.getNome());
+			return u;
+		} catch (SQLException e) {
+			log.error("Erro: " + e);
+			e.printStackTrace();
+			return u;
+		}
 	}
 
 	@Override

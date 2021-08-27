@@ -5,9 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 //@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
@@ -17,11 +15,11 @@ import lombok.NoArgsConstructor;
 public class Usuario {
 
 	public Usuario(int matricula, String nome) {
-		// TODO Auto-generated constructor stub
+		this.matricula = matricula;
+		this.nome = nome;
 	}
 
 	public Usuario() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Id
