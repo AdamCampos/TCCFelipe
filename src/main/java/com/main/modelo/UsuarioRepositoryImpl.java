@@ -6,10 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -24,26 +21,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		this.jdbc = jdbc;
 	}
 
-	private SimpleJdbcInsert orderInserter;
-	private SimpleJdbcInsert orderTacoInserter;
-	private ObjectMapper objectMapper;
-
-//	Trecho abaixo é o mesmo método mas sem usar a função lambda
-//	@Override
-//	public Ingredient findOne(String id) {
-//	 return jdbc.queryForObject(
-//	 "select id, name, type from Ingredient where id=?",
-//	 new RowMapper<Ingredient>() {
-//	 public Ingredient mapRow(ResultSet rs, int rowNum)
-//	 throws SQLException {
-//	 return new Ingredient(
-//	 rs.getString("id"),
-//	 rs.getString("name"),
-//	 Ingredient.Type.valueOf(rs.getString("type")));
-//	 };
-//	 }, id);
-//	}
-
 	@Override
 	public Iterable<Usuario> findAll() {
 		return jdbc.query("select matricula, nome from Usuario", this::mapeiaLinhaUsuario);
@@ -51,8 +28,8 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Usuario findOne(String id) {
-		return jdbc.queryForObject("select matricula, nome from Usuario where matricula=?", this::mapeiaLinhaUsuario,
-				id);
+		return jdbc.queryForObject("select matricula, nome, senha from Usuario where matricula=?",
+				this::mapeiaLinhaUsuario, id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -68,8 +45,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		Usuario u = new Usuario();
 
 		try {
-			log.info("RS.:" + rowNum);
-			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"));
+			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"));
 			log.info("Usuario retornado: " + u.getNome());
 			return u;
 		} catch (SQLException e) {

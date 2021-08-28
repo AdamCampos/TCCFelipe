@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Sessão Principal</title>
+</head>
+
+<body>
+
+		<p th:text="${session.usuario.nome}" />
+
+		<div class="header">
+				<div class="linha">
+						<header>
+								<div>
+										<h1 class="logo">Solução em Prevenção de Incêndio</h1>
+								</div>
+								<nav>
+										<ul>
+												<li>
+														<a th:href="@{/index}">Home</a>
+												</li>
+												<li>
+														<a th:href="@{/main}">Main</a>
+												</li>
+												<li>
+														<a th:href="@{/login}">Login</a>
+												</li>
+										</ul>
+								</nav>
+						</header>
+				</div>
+		</div>
+
+		<div class="footer">
+				<div class="linha">
+						<footer>
+								<div class="coluna col12">
+										<span>&copy; 2021 - Spi</span>
+								</div>
+						</footer>
+				</div>
+		</div>
+</body>
+</html>

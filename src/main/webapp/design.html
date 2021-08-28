@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCC Felipe - V0</title>
+</head>
+<body>
+	<h1>Teste 2</h1>
+	<h1>
+		Olá <span th:text="${nomeDoAtributo}"></span> Olá <span>
+			<!-- th:text="${list[1]}"> -->
+			</span>
+
+	</h1>
+	<br /> Design
+	<img th:src="@{/images/get.png}" />
+
+	<form method="POST" th:object="${usuario}">
+		<div class="grid">
+			<div class="ingredient-group" id="lista">
+				<div th:each="item : ${list}">
+					<input name="list" type="checkbox" th:value="${item}" /> 
+					<span th:text="${item}"> INGREDIENT2 </span> <br/>
+				</div>
+			</div>
+			<input id="lastName" placeholder="Enter Last Name" required type="text" th:field="*{matricula}"/>
+			<!-- <div class="ingredient-group" id="proteins">
+				<h3>Pick your protein:</h3>
+				<div th:each="ingredient : ${protein}">
+					<input name="ingredients" type="checkbox"
+						th:value="${ingredient.id}" /> <span th:text="${ingredient.name}">INGREDIENT</span><br />
+				</div>
+			</div>
+			<div class="ingredient-group" id="cheeses">
+				<h3>Choose your cheese:</h3>
+				<div th:each="ingredient : ${cheese}">
+					<input name="ingredients" type="checkbox"
+						th:value="${ingredient.id}" /> <span th:text="${ingredient.name}">INGREDIENT</span><br />
+
+		</div>
+		<div>
+			<h3>Name your taco creation:</h3>
+			<!-- <input type="text" th:field="*{name}" /> <br /> -->
+			<button>Submit your taco</button>
+		</div>
+	</form>
+
+</body>
+</html>

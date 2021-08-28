@@ -8,15 +8,16 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-//@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Entity
 @Named
 @Table(name = "Usuario")
 public class Usuario {
 
-	public Usuario(int matricula, String nome) {
+	public Usuario(int matricula, String nome, int senha) {
 		this.matricula = matricula;
 		this.nome = nome;
+		this.senha = senha;
+
 	}
 
 	public Usuario() {
@@ -25,5 +26,6 @@ public class Usuario {
 	@Id
 	private int matricula;
 	private String nome;
+	private int senha;
 
 }
