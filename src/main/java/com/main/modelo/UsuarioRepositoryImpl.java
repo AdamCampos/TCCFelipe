@@ -2,6 +2,8 @@ package com.main.modelo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Iterable<Usuario> findAll() {
-		return jdbc.query("select matricula, nome from Usuario", this::mapeiaLinhaUsuario);
+		return jdbc.query("select matricula, nome, senha from Usuario", this::mapeiaLinhaUsuario);
 	}
 
 	@Override
@@ -32,11 +34,34 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 				this::mapeiaLinhaUsuario, id);
 	}
 
+	public List<Usuario> buscar(String nome, int matricula) {
+
+		log.info("Pesquisando nome " + nome + " matrícula " + matricula);
+
+		ArrayList<Usuario> lista = (ArrayList<Usuario>) jdbc.query("select matricula, nome, senha from Usuario",
+				this::mapeiaLinhaUsuario);
+
+		ArrayList<Usuario> listaFinal = new ArrayList<Usuario>();
+		listaFinal.clear();
+		for (Usuario u : lista) {
+			if (u.getNome().toLowerCase().trim().contains(nome.toLowerCase()) || u.getMatricula() == matricula) {
+				listaFinal.add(u);
+			}
+		}
+		return listaFinal;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Usuario save(Usuario usuario) {
-		jdbc.update("insert into Usuario (matricula, nome) values (?, ?)", usuario.getMatricula(), usuario.getNome());
-		log.info("*Salvo " + usuario.getNome());
+
+		try {
+			jdbc.update("insert into Usuario (matricula, nome, senha) values (?, ?, ?)", usuario.getMatricula(),
+					usuario.getNome(), usuario.getSenha());
+		} catch (Exception e) {
+			jdbc.update("update Usuario set nome=?, senha=? where matricula=?", usuario.getNome(), usuario.getSenha(),
+					usuario.getMatricula());
+		}
 		return usuario;
 	}
 
@@ -46,7 +71,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 		try {
 			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"));
-			log.info("Usuario retornado: " + u.getNome());
 			return u;
 		} catch (SQLException e) {
 			log.error("Erro: " + e);
@@ -93,8 +117,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public void delete(Usuario entity) {
-		// TODO Auto-generated method stub
-
+		jdbc.update("delete from usuario where matricula = ?", entity.getMatricula());
 	}
 
 	@Override

@@ -8,7 +8,9 @@
 <body>
 
 		<p th:text="${session.usuario.nome}" />
-
+		<form action="main" method="get">
+				<input type="submit" value="logoff" name="logoff" />
+		</form>
 		<div class="header">
 				<div class="linha">
 						<header>

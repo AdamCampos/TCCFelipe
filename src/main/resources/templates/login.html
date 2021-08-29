@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>Login</title>
-	</head>
-	<body>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+Usuário logado: <p th:text="${session.usuario.nome}" />
 		<form action="main" method="post" th:object="${usuario}">
-			<label for="matricula">Matrícula</label>
-			<input id="matricula" type="text" placeholder="digite sua matrícula" name="matricula"/>
-			<label for="senha">Senha</label>
-			<input id="senha" type="text" placeholder="digite a sua senha" name="senha"/>
-			<input type="submit" value="enviar" />
+				<label for="matricula">Matrícula</label>
+				<input id="matricula" type="text" placeholder="digite sua matrícula"
+						name="matricula"
+				>
+				<label for="nome">Nome</label>
+				<input id="nome" type="text" placeholder="digite seu nome"
+						name="nome"
+				>
+				<label for="senha">Senha</label>
+				<input id="senha" type="password" placeholder="digite a sua senha"
+						name="senha"
+				>
+				<br />
+				<input type="submit" value="criar" name="criar" />
+				<br />
+				<input type="submit" value="buscar" name="buscar" />
+				<br />
+				<input type="submit" value="atualizar" name="atualizar" />
+				<br />
+				<input type="submit" value="deletar" name="deletar" />
+				<br />
+				<input type="submit" value="logar" name="logar" />
 		</form>
-			<span th:text="${atributo1}"> </span>
-	</body>
+
+		<table>
+				<tr th:each="usuario: ${lista}">
+						<td th:text="${usuario.nome}" />
+						<td th:text="${usuario.matricula}" />
+				</tr>
+		</table>
+		
+		<a th:href="@{/main}">Main</a>
+		<a th:href="@{/index}">Inicial</a>
+		
+</body>
 </html>

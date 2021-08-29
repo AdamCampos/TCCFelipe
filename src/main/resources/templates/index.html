@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Spi</title>
-	</head>
-	
-	<body>
-		<img th:src="@{/images/Logo.png}" />
-			<div class="header">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spi</title>
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+
+<body>
+		<img th:src="@{/images/logo.png}" id=img1 />
+		<canvas id="canvas"></canvas>
+		<div class="header">
 				<div class="linha">
-					<header>
-						<div>
-							<h1 class="logo">Solução em Prevenção de Incêndio</h1>
-						</div>
-						<form method="get" id="f1" action="login">
-							<button type="submit">Login</button>
-						</form>
-					</header>
+						<header>
+								<div>
+										<h1 class="logo">Solução em Prevenção de Incêndio</h1>
+								</div>
+								<form method="get" id="f1" action="login">
+										<button type="submit">Login</button>
+								</form>
+						</header>
 				</div>
-			</div>
-			<div class="footer">
+		</div>
+		<div class="footer">
 				<div class="linha">
-					<footer>
-						<div class="coluna col12">
-							<span>&copy; 2021 - Spi</span>
-						</div>
-					</footer>
+						<footer>
+								<div class="coluna col12">
+										<span>&copy; 2021 - Spi</span>
+								</div>
+						</footer>
 				</div>
-			</div>
-	</body>
+		</div>
+		<a th:href="@{/main}">Main</a>
+		<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</body>
+
 </html>
