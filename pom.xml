@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.tcc</groupId>
 	<artifactId>tcc</artifactId>
-	<version>1.20200823</version>
+	<version>1.20210823</version>
 	<packaging>war</packaging>
 	<name>tcc</name>
 	<description>TCC Felipe</description>
