@@ -1,11 +1,144 @@
 @charset "ISO-8859-1";
 
+
+#divUsuario {
+	background-color: blue;
+	width: 500px;
+	height: 100px;
+	display: block;
+}
+
+#divExtintor {
+	background-color: red;
+	width: 500px;
+	height: 100px;
+}
+
+#divVistoria {
+	background-color: green;
+	width: 500px;
+	height: 100px;
+}
+
+#divUsuarioNome, #divUsuarioMatricula, #divUsuarioAvatar {
+	background-color: #80ffff;
+	width: 50px;
+	height: 30px;
+	border-color: lime;
+	border: solid;
+	float: left;
+}
+
+.clsEach {
+	border: 2px solid black;
+	width: 1010px;
+	display: flex;
+	font-family: "verdana";
+	font-size: 16px;
+	padding: 20px;
+}
+
+.clsSpan {
+	width: 500px;
+	text-align: center;
+	background-color: #c60000;
+	display: flex;
+	border: 1px solid #e0e0e0;
+}
+
+.clsResposta {
+	width: 500px;
+	text-align: center;
+	background-color: #e0e0e0;
+	display: flex;
+	border: 1px solid #e0e0e0;
+}
+
+#divEsquerda {
+	display: inline-block;
+}
+
+#divDiteireita {
+	display: inline-block;
+}
+
 img {
-  width: 75%;
-  height: 75%;
-  align-content: center;
-  align-items: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+	width: 100%;
+	height: 100%;
+	max-width: 140px;
+	max-height: 205px;
+	align-content : center;
+	align-items: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	align-content: center;
+}
+
+.divHeader {
+	border: 2px solid black;
+	background-color: #c60000;
+	display: flex;
+	padding: 20px;
+	width: 1010px;
+	margin-bottom: 1px;
+	margin-left: 20px;
+	margin-right: 20px;
+	position: sticky;
+	top: 0;
+	
+}
+
+#header{
+	overflow: auto;
+	background-color: #ff0080;
+	width: 980px;
+}
+
+
+#divForm {
+	border: 2px solid black;
+	background-color: #ff80c0;
+	display: flex;
+	padding: 20px;
+	width: 1010px;
+	margin-bottom: 1px;
+	margin-left: 20px;
+	margin-right: 20px;
+	position: fixed;
+	top: 10;
+	left: 20;
+}
+
+#divEach {
+	padding: 20px;
+}
+
+.divFooter {
+	border: 2px solid black;
+	background-color: #8000ff;
+	padding: 20px;
+	width: 1010px;
+	margin: 20px;
+	position: fixed;
+	bottom: 0;
+	left: 20;
+}
+
+#divIcones{
+	
+	background-color: #ffff80;
+	float: rigth;
+	width: 50%;
+
+		
+}
+
+#divLogo{
+	
+	background-color: #ffff80;
+	float: left;
+	width: 50%;
+
+		
 }

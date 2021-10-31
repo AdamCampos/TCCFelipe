@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Login</title>
-</head>
-<body>
-Usuário logado: <p th:text="${session.usuario.nome}" />
-		<form action="main" method="post" th:object="${usuario}">
-				<label for="matricula">Matrícula</label>
-				<input id="matricula" type="text" placeholder="digite sua matrícula"
-						name="matricula"
-				>
-				<label for="nome">Nome</label>
-				<input id="nome" type="text" placeholder="digite seu nome"
-						name="nome"
-				>
-				<label for="senha">Senha</label>
-				<input id="senha" type="password" placeholder="digite a sua senha"
-						name="senha"
-				>
-				<br />
-				<input type="submit" value="criar" name="criar" />
-				<br />
-				<input type="submit" value="buscar" name="buscar" />
-				<br />
-				<input type="submit" value="atualizar" name="atualizar" />
-				<br />
-				<input type="submit" value="deletar" name="deletar" />
-				<br />
-				<input type="submit" value="logar" name="logar" />
+	<head>
+		<title>INESHERS - Login</title>
+		<meta charset="UTF-8">
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+		<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="linha">
+				<header>
+					<div class="coluna col4">
+						<h1 class="logo">INESHERS</h1>
+					</div>
+					<div class="coluna col8">
+						<nav>
+							<ul class="menu inline sem-marcador">
+								<li><a th:href="@{/index}">Página de acesso</a></li>
+								<li><a th:href="@{/main}">Home</a></li>
+								<li>Usuario Logado:<p th:text="${session.usuario.nome}"></li>
+							</ul>
+						</nav>
+					</div>
+				</header>
+			</div>
+		</div>
+		<form action="main" method="post" th:object="${usuario}" >
+				
+		<label for="matricula">Matrícula</label>
+		<input id="matricula" type="text" placeholder="digite sua matrícula" name="matricula">
+				
+		<label for="nome">Nome</label>
+		<input id="nome" type="text" placeholder="digite seu nome" name="nome">
+				
+		<label for="senha">Senha</label>
+		<input id="senha" type="password" placeholder="digite a sua senha" name="senha">
+		<br />
+				
+		<input type="submit" value="logar" name="logar" /><br />	
+		<input type="submit" value="criar" name="criar" /><br />	
+		<input type="submit" value="deletar" name="deletar" />
+														
 		</form>
-
 		<table>
-				<tr th:each="usuario: ${lista}">
-						<td th:text="${usuario.nome}" />
-						<td th:text="${usuario.matricula}" />
-				</tr>
+			<tr th:each="usuario: ${lista}">
+				<td th:text="${usuario.nome}" />
+				<td th:text="${usuario.matricula}" />
+			</tr>
 		</table>
-		
-		<a th:href="@{/main}">Main</a>
-		<a th:href="@{/index}">Inicial</a>
-		
-</body>
+		<div class="footer">
+			<div class="linha">
+				<footer>
+					<div class="coluna col12">
+						<span>&copy; 2021 - INESHERS</span>
+					</div>
+				</footer>
+			</div>
+		</div>
+	</body>
 </html>

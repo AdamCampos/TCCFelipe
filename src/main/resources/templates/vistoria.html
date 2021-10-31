@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Insert title here</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+</head>
+<body>
+		<div id="divUsuario">
+				<div id="divUsuarioNome">
+						<p th:text="${session.usuario.nome}" />
+				</div>
+				<div id="divUsuarioMatricula">
+						<p th:text="${session.usuario.matricula}" />
+				</div>
+				<div id="divUsuarioAvatar">
+						<img
+								th:src="@{/images/{varAvatar} (varAvatar=${#strings.trim(session.usuario.foto) + '.png'})}"
+						/>
+
+				</div>
+		</div>
+		<div id="divExtintor"></div>
+		<div id="divVistoria"></div>
+</body>
+</html>

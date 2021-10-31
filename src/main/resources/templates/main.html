@@ -1,47 +1,60 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Sessão Principal</title>
-</head>
-
-<body>
-
-		<p th:text="${session.usuario.nome}" />
-		<form action="main" method="get">
-				<input type="submit" value="logoff" name="logoff" />
-		</form>
+	<head>
+		<title>INESHERS - Home</title>
+		<meta charset="UTF-8">
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+		<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	</head>
+	<body>
 		<div class="header">
-				<div class="linha">
-						<header>
-								<div>
-										<h1 class="logo">Solução em Prevenção de Incêndio</h1>
-								</div>
-								<nav>
-										<ul>
-												<li>
-														<a th:href="@{/index}">Home</a>
-												</li>
-												<li>
-														<a th:href="@{/main}">Main</a>
-												</li>
-												<li>
-														<a th:href="@{/login}">Login</a>
-												</li>
-										</ul>
-								</nav>
-						</header>
+			<div class="linha">
+				<header>
+					<div class="coluna col4">
+						<h1 class="logo">INESHERS</h1>
+					</div>
+					<div class="coluna col8">
+						<nav>
+							<ul class="menu inline sem-marcador">
+								<li><a th:href="@{/index}">Página de acesso</a></li>
+								<li><a th:href="@{/login}">Login</a></li>
+								<li><a th:href="@{/vistoria}">Vistoria</a></li>
+								<li><a th:href="@{/extintor}">Extintor</a></li>
+								<li>Usuario Logado:<p th:text="${session.usuario.nome}" />
+								<form action="main" method="get">
+									<input type="submit" value="logoff" name="logoff" />
+								</form></li>
+							</ul>
+						</nav>
+					</div>
+				</header>
+			</div>	
+		</div>	
+		<div class="linha">
+			<section>
+				<div class="coluna col9">
+					<h2>INESHERS - <em>Solução em Prevenção de Incêndio</em></h2>
+					<img th:src="@{/images/logo.png}" />
 				</div>
+				<div class="coluna col3 sidebar">
+				<h3>Forma de contato</h3>
+						<ul class="sem-marcador sem-padding">
+ 							  <li><a th:href="@{/contato}">E-mail</a></li>
+							<li><a th:href="@{/contato}">Número</a></li>
+							<li><a th:href="@{/contato}">Número</a></li>
+						</ul>
+					<a th:href="@{/contato}" class="botao">Ver todas formas &raquo;</a>
+				</div>
+			</section>
 		</div>
-
 		<div class="footer">
-				<div class="linha">
-						<footer>
-								<div class="coluna col12">
-										<span>&copy; 2021 - Spi</span>
-								</div>
-						</footer>
-				</div>
+			<div class="linha">
+				<footer>
+					<div class="coluna col12">
+						<span>&copy; 2021 - INESHERS </span>
+					</div>
+				</footer>
+			</div>
 		</div>
-</body>
+	</body>
 </html>

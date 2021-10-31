@@ -25,12 +25,12 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Iterable<Usuario> findAll() {
-		return jdbc.query("select matricula, nome, senha from Usuario", this::mapeiaLinhaUsuario);
+		return jdbc.query("select matricula, nome, senha, foto from Usuario", this::mapeiaLinhaUsuario);
 	}
 
 	@Override
 	public Usuario findOne(String id) {
-		return jdbc.queryForObject("select matricula, nome, senha from Usuario where matricula=?",
+		return jdbc.queryForObject("select matricula, nome, senha, foto from Usuario where matricula=?",
 				this::mapeiaLinhaUsuario, id);
 	}
 
@@ -38,7 +38,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 		log.info("Pesquisando nome " + nome + " matrícula " + matricula);
 
-		ArrayList<Usuario> lista = (ArrayList<Usuario>) jdbc.query("select matricula, nome, senha from Usuario",
+		ArrayList<Usuario> lista = (ArrayList<Usuario>) jdbc.query("select matricula, nome, senha, foto from Usuario",
 				this::mapeiaLinhaUsuario);
 
 		ArrayList<Usuario> listaFinal = new ArrayList<Usuario>();
@@ -56,11 +56,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 	public Usuario save(Usuario usuario) {
 
 		try {
-			jdbc.update("insert into Usuario (matricula, nome, senha) values (?, ?, ?)", usuario.getMatricula(),
-					usuario.getNome(), usuario.getSenha());
+			jdbc.update("insert into Usuario (matricula, nome, senha, foto) values (?, ?, ?, ?)",
+					usuario.getMatricula(), usuario.getNome(), usuario.getSenha(), usuario.getFoto());
 		} catch (Exception e) {
-			jdbc.update("update Usuario set nome=?, senha=? where matricula=?", usuario.getNome(), usuario.getSenha(),
-					usuario.getMatricula());
+			jdbc.update("update Usuario set nome=?, senha=?, foto=?  where matricula=?", usuario.getNome(),
+					usuario.getSenha(), usuario.getFoto(), usuario.getMatricula());
 		}
 		return usuario;
 	}
@@ -70,7 +70,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		Usuario u = new Usuario();
 
 		try {
-			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"));
+			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"), rs.getString("foto"));
 			return u;
 		} catch (SQLException e) {
 			log.error("Erro: " + e);

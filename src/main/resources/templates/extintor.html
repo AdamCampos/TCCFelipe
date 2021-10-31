@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>INESHERS - Extintor</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+		<div class="divHeader">
+				<div>
+						<header id="header">
+								<div id="divLogo">
+									<img th:src="@{/images/logo.png}" />
+										<h1 class="logo">INESHERS</h1>
+								</div>
+								<div id="divIcones">
+										<div>
+												<a th:href="@{/main}">
+														<img th:src="@{/images/home.png}" />
+												</a>
+										</div>
+										<div>
+												<a th:href="@{/login}">
+														<img th:src="@{/images/login.png}" />
+												</a>
+										</div>
+										<div>
+												<a th:href="@{/vistoria}">
+														<img th:src="@{/images/vistoria.png}" />
+												</a>
+										</div>
+								</div>
+
+						</header>
+				</div>
+		</div>
+		<div id="divId"></div>
+		<div id="divClasse"></div>
+		<div id="divAgente"></div>
+		<div id="divFoto"></div>
+
+		<div id="divForm">
+				<form action="extintor" method="get" th:object="${extintor}">
+						<input id="extintorId" type="number" placeholder="digite o id"
+								name="id"
+						>
+						<select name="agente" id="extintorAgente">
+								<option value="água">Água</option>
+								<option value="pó químico">Pó Químico</option>
+								<option value="co2">CO2</option>
+								<option value="lge">LGE</option>
+						</select>
+						<input type="submit" value="pesquisar" name="pesquisar"
+								onmouseover="idExtintorDefault();"
+						/>
+				</form>
+		</div>
+		<br />
+		<br />
+		<div id="divEach" th:each="extintor: ${lista}">
+				<div class="clsEach">
+						<div id="divEsquerda">
+
+								<span class="clsSpan"> Número de Identificação:</span>
+								<span class="clsResposta">
+										<a th:href="@{${id}(id=${extintor.id})}"
+												th:text="${extintor.id}" target="_blank"
+										></a>
+
+								</span>
+								<br />
+								<span class="clsSpan">Agente:</span>
+								<span class="clsResposta" th:text="${extintor.agente}"></span>
+								<br />
+
+								<span class="clsSpan">Data Compra:</span>
+								<span class="clsResposta" th:text="${extintor.dataCompra}"></span>
+								<br />
+
+								<span class="clsSpan">Volume:</span>
+								<span class="clsResposta" th:text="${extintor.volume}"></span>
+								<br />
+						</div>
+						<div id="divDireita">
+								<span class="clsSpan">Foto:</span>
+
+								<img
+										th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}"
+										class="clsSpan"
+								/>
+								<br />
+						</div>
+				</div>
+		</div>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<div class="divFooter">
+				<div class="linha">
+						<footer>
+								<div class="coluna col12">
+										<span>&copy; 2021 - INESHERS </span>
+								</div>
+						</footer>
+				</div>
+		</div>
+</body>
+</html>

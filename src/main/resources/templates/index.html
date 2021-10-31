@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Spi</title>
-<link th:href="@{/css/main.css}" rel="stylesheet" />
-</head>
-
-<body>
-		<img th:src="@{/images/logo.png}" id=img1 />
-		<canvas id="canvas"></canvas>
+	<head>
+		<title>INESHERS - Inicio</title>
+		<meta charset="UTF-8">
+		<link th:href="@{/css/main.css}" rel="stylesheet" />
+		<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	</head>
+	<body>
 		<div class="header">
-				<div class="linha">
-						<header>
-								<div>
-										<h1 class="logo">Solução em Prevenção de Incêndio</h1>
-								</div>
-								<form method="get" id="f1" action="login">
-										<button type="submit">Login</button>
-								</form>
-						</header>
-				</div>
+			<div class="linha">
+				<header>
+					<div class="coluna col4">
+						<h1 class="logo">INESHERS</h1>
+					</div>
+					<img th:src="@{/images/logo.png}" id=img1 />
+					<canvas id="canvas"></canvas>
+					<form method="get" id="f1" action="login">
+						<button type="submit">Login</button>
+					</form>
+				</header>
+			</div>
 		</div>
 		<div class="footer">
-				<div class="linha">
-						<footer>
-								<div class="coluna col12">
-										<span>&copy; 2021 - Spi</span>
-								</div>
-						</footer>
-				</div>
+			<div class="linha">
+				<footer>
+					<div class="coluna col12">
+						<span>&copy; 2021 - INESHERS</span>
+					</div>
+				</footer>
+			</div>
 		</div>
-		<a th:href="@{/main}">Main</a>
-		<script type="text/javascript" th:src="@{/js/main.js}"></script>
-</body>
-
+	</body>
 </html>

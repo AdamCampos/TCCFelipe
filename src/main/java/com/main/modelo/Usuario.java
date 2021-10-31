@@ -13,10 +13,11 @@ import lombok.Data;
 @Table(name = "Usuario")
 public class Usuario {
 
-	public Usuario(int matricula, String nome, int senha) {
+	public Usuario(int matricula, String nome, int senha, String foto) {
 		this.matricula = matricula;
 		this.nome = nome;
 		this.senha = senha;
+		this.foto = foto;
 
 	}
 
@@ -27,5 +28,6 @@ public class Usuario {
 	private int matricula;
 	private String nome;
 	private int senha;
+	private String foto;
 
 }

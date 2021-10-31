@@ -34,7 +34,7 @@ public class ControladorUsuario {
 	@RequestMapping(value = { "/", "/home", "/index", "/main" }, method = { RequestMethod.GET }, params = "logoff")
 	public String logoff(Model model, HttpSession sessao) {
 
-		usuario = new Usuario(0, "Anônimo", 0);
+		usuario = new Usuario(0, "Anônimo", 0, null);
 		sessao.removeAttribute("usuario");
 		sessao.setAttribute("usuario", usuario);
 
@@ -48,7 +48,7 @@ public class ControladorUsuario {
 		try {
 			Usuario usuario = (Usuario) sessao.getAttribute("usuario");
 			if (usuario == null) {
-				usuario = new Usuario(0, "Anônimo", 0);
+				usuario = new Usuario(0, "Anônimo", 0, null);
 				sessao.setAttribute("usuario", usuario);
 			}
 			log.info("Usuario inicio do login " + usuario);

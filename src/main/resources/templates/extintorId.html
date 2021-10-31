@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>INESHERS - Extintor</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/mai.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+
+		NOVA PÀG
+
+
+
+		<div class="header">
+				<div class="linha">
+						<header>
+								<div class="coluna col4">
+										<h1 class="logo">INESHERS</h1>
+								</div>
+								<div class="coluna col8">
+										<nav>
+												<ul class="menu inline sem-marcador">
+														<li>
+																<a th:href="@{/main}">Home</a>
+														</li>
+														<li>
+																<a th:href="@{/login}">Login</a>
+														</li>
+														<li>
+																<a th:href="@{/vistoria}">Vistoria</a>
+														</li>
+														<li>
+																Usuario Logado:
+																<p th:text="${session.usuario.nome}" />
+														</li>
+												</ul>
+										</nav>
+								</div>
+						</header>
+				</div>
+		</div>
+		<div id="divId"></div>
+		<div id="divClasse"></div>
+		<div id="divAgente"></div>
+		<div id="divDataCompra"></div>
+		<div id="divVolume"></div>
+		<div id="divFoto"></div>
+
+		<form action="extintor" method="get" th:object="${extintor}">
+				<input id="extintorId" type="number" placeholder="digite o id"
+						name="id"
+				>
+				<select name="agente" id="extintorAgentes">
+						<option value="água">Água</option>
+						<option value="pó químico">Pó Químico</option>
+						<option value="co2">CO2</option>
+						<option value="lge">LGE</option>
+				</select>
+				<input type="submit" value="pesquisar" name="pesquisar"
+						onmouseover="idExtintorDefault();"
+				/>
+		</form>
+
+		<span th:each="extintor: ${lista}">
+				Número de Identificação:
+				<br />
+				<a th:href="@{${id}(id=${extintor.id})}" th:text="${extintor.id}"
+						target="_blank"
+				></a>
+				<br />
+				Agente:
+				<br />
+				<span th:text="${extintor.agente}"></span>
+				<br />
+				Data Compra:
+				<br />
+				<span th:text="${extintor.dataCompra}"></span>
+				<br />
+				Volume:
+				<br />
+				<span th:text="${extintor.volume}"></span>
+				<br />
+				Foto:
+				<br />
+				<span th:text="${extintor.foto}"></span>
+				<br />
+				<img th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}" />
+			<!-- 	th:src="@{/images/{varAvatar} (varAvatar=${#strings.trim(session.usuario.foto) + '.png'})}" -->
+				
+		</span>
+		<p th:text="${session.extintor.foto}" />
+		<div class="footer">
+				<div class="linha">
+						<footer>
+								<div class="coluna col12">
+										<span>&copy; 2021 - INESHERS </span>
+								</div>
+						</footer>
+				</div>
+		</div>
+</body>
+</html>
