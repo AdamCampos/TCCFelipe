@@ -1,0 +1,125 @@
+/* 
+	Cascata de estilo de teste de layout
+    Adam - 01/11/2021
+ */
+
+/* variáveis*/
+:root { 
+	--cor-cinza: #e0e0e0;
+	--larg: 50vw;
+	--alt: 182vh;
+}
+
+
+/* body é todo o conteúdo da página*/
+body {
+	background-color: #3a4356;
+	font-family: "Lucida Grande", "Verdana";
+	color: var(--cor-cinza);
+	padding-top: 5px;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-bottom: 40px;
+
+}
+
+/* ornamento das divs*/
+#containerHeader {
+
+	display: flex;
+	padding: 10px;
+	border: 3px solid #fff;
+	height: 0.6vh;
+	display: table-cell;
+    vertical-align: middle;
+	text-align: right;
+    position: relative;
+    top: 0;
+}
+
+/* div pai que engloba todo o corpo*/
+#containerBody {
+
+	display: flex;
+  	justify-content: space-around;
+  	align-items: flex-start;
+	border: 2px solid #fff;
+	position: relative;
+	top: 40px;
+
+}
+
+/* div pai do fragmento do cabeçalho*/
+#fragCabecalho{
+	
+	background-color: #ee2828;
+	display: table-cell;
+    vertical-align: middle;
+    top: 30px;
+    left: 10px;
+/*     position: fixed; */
+  	opacity:0.950;
+}
+
+ /* abrange todos os ícones*/
+.clsIcon {
+	
+    flex: 1;
+    border: 2px solid #e0e0e0;
+	display: table-cell;
+    vertical-align: middle;
+	text-align: center;
+	padding-right: 0.5vh;
+	padding-left: 0.5vh;
+	height: auto; 
+    width: auto; 
+}
+
+#quadro2 {
+	background-color: green;
+	flex: 1;
+	height: var(--alt);
+}
+
+#quadro3 {
+	background-color: blue;
+	flex: 1;
+	height: var(--alt);
+}
+
+#quadro4, #quadro1 {
+	background-color: yellow;
+	flex: 1;
+	height: var(--alt);
+}
+
+/* redimensionamento das imagens*/
+#iconLogo {
+    max-width: 200px; 
+    max-height: 200px;
+}
+
+#iconHome {
+    max-width: 100px; 
+    max-height: 100px;
+}
+
+#iconLogin {
+    max-width: 100px; 
+    max-height: 100px;
+}
+
+#iconCheck {
+    max-width: 100px; 
+    max-height: 100px;
+}
+
+#iconExtintor {
+    max-width: 100px; 
+    max-height: 100px;
+}
+
+/* texto usuario*/
+#usuario{
+	padding: 5px;
+}

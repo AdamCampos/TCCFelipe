@@ -1,9 +1,7 @@
 package com.main.controlador;
 
-import com.main.modelo.Usuario;
-import com.main.modelo.UsuarioRepositoryImpl;
-
 import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.main.modelo.Usuario;
+import com.main.modelo.UsuarioRepositoryImpl;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -31,7 +32,8 @@ public class ControladorUsuario {
 		return "index";
 	}
 
-	@RequestMapping(value = { "/", "/home", "/index", "/main" }, method = { RequestMethod.GET }, params = "logoff")
+	@RequestMapping(value = { "/", "/home", "/index", "/main", "/login" }, method = {
+			RequestMethod.GET }, params = "logoff")
 	public String logoff(Model model, HttpSession sessao) {
 
 		usuario = new Usuario(0, "Anônimo", 0, null);
@@ -123,10 +125,53 @@ public class ControladorUsuario {
 		return mav;
 	}
 
+	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "logoff")
+	public ModelAndView logOff(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao) {
+
+		ModelAndView mav = new ModelAndView("login");
+
+		log.debug("::Iniciando logoff");
+
+//		if (usuario == null || usuario.getNome().equals("Anônimo")) {
+//			mav.setViewName("login");
+//			return mav;
+//		}
+//
+//		// Tenta buscar no banco de dados o objeto Usuario pela matrícula (PK)
+//		try {
+//
+//			Usuario usuarioRetornado = uri.findOne(String.valueOf(usuario.getMatricula()));
+//
+//			// Se o usuário existe o flag é verdadeiro e a página main é chamada.
+//			// caso contrário a página de login é recerregada.
+//			if (usuarioRetornado != null) {
+//				// Uma vez que o usuário exista, conferir a senha.
+//				if (usuarioRetornado.getSenha() == usuario.getSenha()) {
+//					log.info("Usuáro e senha ok!");
+//					sessao.setAttribute("usuario", usuarioRetornado);
+//					mav.getModel().put("usuario", usuarioRetornado);
+//					mav.setViewName("redirect:/main");
+//					return mav;
+//				}
+//
+//			} else {
+//				mav.setViewName("login");
+//				return mav;
+//			}
+//
+//		} catch (Exception erroPesquisaPorMatricula) {
+//			log.error("Erro na pesquisa por matrícula: " + erroPesquisaPorMatricula);
+//		}
+		return mav;
+
+	}
+
 	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "logar")
 	public ModelAndView logar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao) {
 
 		ModelAndView mav = new ModelAndView("login");
+
+		log.debug("::Iniciando logar");
 
 		if (usuario == null || usuario.getNome().equals("Anônimo")) {
 			mav.setViewName("login");

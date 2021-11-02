@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:tiles="http://www.thymeleaf.org"
+>
+<head>
+<meta charset="UTF-8">
+<title>Testes da Layout</title>
+<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+		<!-- Seletores: -->
+		<div id="fragCabecalho" th:fragment="cabecalho">
+			
+			<div class ="clsIcon" id="divIcone">
+			<img id="iconLogo" th:src="@{/images/logo.png}" />
+			</div>	
+			
+			<div class ="clsIcon" id="divHome">
+			<a th:href="@{/index}"><img id="iconHome" th:src="@{/images/home.png}" /></a>
+			</div>
+			
+			<div class ="clsIcon" id="divVistoria">
+			<a th:href="@{/vistoria}"><img id="iconCheck" th:src="@{/images/checklist.png}" /></a>
+			</div>
+			
+			<div class ="clsIcon" id="divExtintores">
+			<a th:href="@{/extintor}"><img id="iconExtintor" th:src="@{/images/extintor.png}" /></a>
+			</div>	
+
+			<div class ="clsIcon" id="divLogin">
+			<a th:href="@{/login}"><img id="iconLogin" th:src="@{/images/login.png}" onmouseover="teste2();" /></a>
+			<br/>
+			<span id="usuario" th:text="${session.usuario.nome}"></span>
+			</div>
+			
+		</div>
+
+
+</body>
+</html>

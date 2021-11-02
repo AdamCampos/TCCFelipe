@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:tiles="http://www.thymeleaf.org"
+>
+<head>
+<!-- Este metadado (viewport) mantém escala em 1, independente do tamanho da tela. -->
+<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+<title>Testes de Layout</title>
+<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<link th:href="@{/images/favicon.ico}" rel="shortcut icon"/>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+
+		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">
+			Exemplo de	cabeçalho
+		</div>
+
+		Dividindo a página em quatro quadrados de tamanhos similares:
+
+		<!-- 
+		O trecho abaixo testa uma variável e retorna uma String para valor verdadeiro e outra para valor falso. 
+		A div é substituída pelo conteúdo do arquivo 'conteudo' que está dentro da pasta 'fragmentos'.
+		Neste arquivo, há seletores (ids das divs) que serão selecionados através do resultado abaixo.
+	    -->
+		<div id=containerBody>
+				<div id="quadro1"></div>
+				<div id="quadro2"></div>
+				<div id="quadro3"></div>
+				<div id="quadro4"></div>
+		</div>
+		<div id="divRodape" th:replace="fragmentos/rodape :: ${session.usuario.nome} == 'Anônimo' ? 'rodapeNormal' : 'rodapeAdmin' ">&copy; Exemplo de rodapé</div>
+
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:tiles="http://www.thymeleaf.org"
+>
+<head>
+<meta charset="UTF-8">
+<title>Testes da Layout</title>
+<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+		<!-- Seletores: -->
+		<div th:fragment="rodapeNormal">&copy; Rodapé </div>
+
+		<div th:fragment="rodapeAdmin">&copy; Rodapé de administrador</div>
+
+</body>
+</html>

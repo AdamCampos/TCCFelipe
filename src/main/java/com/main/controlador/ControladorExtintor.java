@@ -76,4 +76,10 @@ public class ControladorExtintor {
 
 		return mav;
 	}
+
+	@RequestMapping(value = { "/teste" }, method = { RequestMethod.GET })
+	public ModelAndView testeLayout(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
+		ModelAndView mav = new ModelAndView("testeLayout");
+		return mav;
+	}
 }
