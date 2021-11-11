@@ -28,8 +28,12 @@ public class ControladorVistoria {
 	public String resolveIndex(Model model, HttpSession sessao) {
 
 		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-		log.debug("Debug vistoria: " + usuario.getNome() + " foto: " + usuario.getFoto());
+		log.debug("::Vistoria: " + usuario.getNome() + " foto: " + usuario.getFoto());
 
-		return "vistoria";
+		if (usuario.getNome().equals("Anônimo") || usuario.getNome().equals("Anonimous")) {
+			return "login";
+		} else {
+			return "vistoria";
+		}
 	}
 }

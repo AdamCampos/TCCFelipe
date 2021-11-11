@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.main.modelo.Usuario;
@@ -27,11 +29,57 @@ public class ControladorUsuario {
 	@Autowired
 	UsuarioRepositoryImpl uri;
 
+	/******************************************************************************************************************/
+
+	// Trata a requisição POST com direcionamento "main" e filtra pelo parêmetro de
+	// ação "logar", dado pelo botão submit do form
+	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "logar")
+	// O método logar devolve uma página modificada e recebe alguns parâmetros
+	// objeto Usuario, dados de sessão e dados de requisição.
+	@CacheEvict
+	public ModelAndView postLogar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao,
+			WebRequest requisicao) {
+
+		// Cria um objeto para ser retornado em forma de página web
+		ModelAndView mav = new ModelAndView("login");
+
+		log.debug("::Iniciando logar");
+		log.debug(":: " + requisicao.getParameter("matriculaOuNome"));
+
+		// Cria um objeto para receber dados da pesquisa
+		Usuario usuarioRetornado = null;
+
+		// O form possui um campo que pode receber nome ou matrícula. Neste trecho o
+		// valor é interpretado e passado para a pesquisa.
+		String nomeMatricula = requisicao.getParameter("matriculaOuNome");
+		try {
+			int iNomeMatricula = Integer.valueOf(nomeMatricula);
+			usuarioRetornado = uri.findOne(String.valueOf(iNomeMatricula), usuario.getSenha());
+			log.debug(":: Convertido para int" + iNomeMatricula);
+		} catch (Exception e) {
+			log.debug(":: Direto para String " + nomeMatricula);
+			usuarioRetornado = uri.findOne("%" + nomeMatricula.trim() + "%", usuario.getSenha());
+		}
+
+		// Testa se alguma pesquisa retornou algum objeto válido
+		if (usuarioRetornado != null) {
+			log.debug("::Retonou " + usuarioRetornado.getMatricula());
+			sessao.setAttribute("usuario", usuarioRetornado);
+			mav.getModel().put("usuario", usuarioRetornado);
+		}
+
+		return mav;
+
+	}
+
+	/******************************************************************************************************************/
+
 	@RequestMapping(value = { "/", "/home", "/index" }, method = { RequestMethod.GET })
-	public String resolveIndex(Model model, HttpSession sessao) {
+	public String getIndex(Model model, HttpSession sessao) {
 		return "index";
 	}
 
+	/******************************************************************************************************************/
 	@RequestMapping(value = { "/", "/home", "/index", "/main", "/login" }, method = {
 			RequestMethod.GET }, params = "logoff")
 	public String logoff(Model model, HttpSession sessao) {
@@ -162,47 +210,6 @@ public class ControladorUsuario {
 //		} catch (Exception erroPesquisaPorMatricula) {
 //			log.error("Erro na pesquisa por matrícula: " + erroPesquisaPorMatricula);
 //		}
-		return mav;
-
-	}
-
-	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "logar")
-	public ModelAndView logar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao) {
-
-		ModelAndView mav = new ModelAndView("login");
-
-		log.debug("::Iniciando logar");
-
-		if (usuario == null || usuario.getNome().equals("Anônimo")) {
-			mav.setViewName("login");
-			return mav;
-		}
-
-		// Tenta buscar no banco de dados o objeto Usuario pela matrícula (PK)
-		try {
-
-			Usuario usuarioRetornado = uri.findOne(String.valueOf(usuario.getMatricula()));
-
-			// Se o usuário existe o flag é verdadeiro e a página main é chamada.
-			// caso contrário a página de login é recerregada.
-			if (usuarioRetornado != null) {
-				// Uma vez que o usuário exista, conferir a senha.
-				if (usuarioRetornado.getSenha() == usuario.getSenha()) {
-					log.info("Usuáro e senha ok!");
-					sessao.setAttribute("usuario", usuarioRetornado);
-					mav.getModel().put("usuario", usuarioRetornado);
-					mav.setViewName("redirect:/main");
-					return mav;
-				}
-
-			} else {
-				mav.setViewName("login");
-				return mav;
-			}
-
-		} catch (Exception erroPesquisaPorMatricula) {
-			log.error("Erro na pesquisa por matrícula: " + erroPesquisaPorMatricula);
-		}
 		return mav;
 
 	}

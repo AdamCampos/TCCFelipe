@@ -3,42 +3,13 @@
 <head>
 <title>INESHERS - Extintor</title>
 <meta charset="UTF-8">
-<link th:href="@{/css/main.css}" rel="stylesheet" />
+<link th:href="@{/css/teste.css}" rel="stylesheet" />
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <body>
-		<div class="divHeader">
-				<div>
-						<header id="header">
-								<div id="divLogo">
-									<img th:src="@{/images/logo.png}" />
-										<h1 class="logo">INESHERS</h1>
-								</div>
-								<div id="divIcones">
-										<div>
-												<a th:href="@{/main}">
-														<img th:src="@{/images/home.png}" />
-												</a>
-										</div>
-										<div>
-												<a th:href="@{/login}">
-														<img th:src="@{/images/login.png}" />
-												</a>
-										</div>
-										<div>
-												<a th:href="@{/vistoria}">
-														<img th:src="@{/images/vistoria.png}" />
-												</a>
-										</div>
-								</div>
 
-						</header>
-				</div>
-		</div>
-		<div id="divId"></div>
-		<div id="divClasse"></div>
-		<div id="divAgente"></div>
-		<div id="divFoto"></div>
+		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">
+				Exemplo de cabeçalho</div>
 
 		<div id="divForm">
 				<form action="extintor" method="get" th:object="${extintor}">
@@ -98,14 +69,5 @@
 		<br />
 		<br />
 		<br />
-		<div class="divFooter">
-				<div class="linha">
-						<footer>
-								<div class="coluna col12">
-										<span>&copy; 2021 - INESHERS </span>
-								</div>
-						</footer>
-				</div>
-		</div>
 </body>
 </html>

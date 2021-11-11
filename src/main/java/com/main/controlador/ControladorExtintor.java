@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,11 +27,16 @@ public class ControladorExtintor {
 	@Autowired
 	ExtintorRepositoryImpl uri;
 
+	// A navegação para extintor não tem restrição, pois o QR deve conseguir acessar
+	// o banco automaticamente.
 	@RequestMapping(value = { "/extintor" }, method = { RequestMethod.GET })
-	public ModelAndView resolveIndex(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
+	public ModelAndView getExtintor(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
 
 		ModelAndView mav = new ModelAndView("extintor");
 		ModelAndView mavId = new ModelAndView("extintorId");
+
+		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+		log.debug("::Extintor - usuário logado: " + usuario.getNome());
 
 		try {
 			if (extintor != null) {
@@ -77,9 +81,4 @@ public class ControladorExtintor {
 		return mav;
 	}
 
-	@RequestMapping(value = { "/teste" }, method = { RequestMethod.GET })
-	public ModelAndView testeLayout(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
-		ModelAndView mav = new ModelAndView("testeLayout");
-		return mav;
-	}
 }

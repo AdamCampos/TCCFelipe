@@ -5,121 +5,232 @@
 
 /* variáveis*/
 :root { 
-	--cor-cinza: #e0e0e0;
-	--larg: 50vw;
+	--cor-cinza: #e0e0e0; 
+	--larg: 50vw; 
 	--alt: 182vh;
 }
-
 
 /* body é todo o conteúdo da página*/
 body {
 	background-color: #3a4356;
 	font-family: "Lucida Grande", "Verdana";
-	color: var(--cor-cinza);
+	color: var(- -cor-cinza);
 	padding-top: 5px;
 	padding-left: 40px;
 	padding-right: 40px;
 	padding-bottom: 40px;
-
 }
 
 /* ornamento das divs*/
 #containerHeader {
-
 	display: flex;
+	justify-content: space-around;
+	align-items: center;
 	padding: 10px;
 	border: 3px solid #fff;
 	height: 0.6vh;
 	display: table-cell;
-    vertical-align: middle;
+	vertical-align: middle;
 	text-align: right;
-    position: relative;
-    top: 0;
+	position: relative;
+	top: 0;
+	width: 100vw;
 }
 
 /* div pai que engloba todo o corpo*/
 #containerBody {
-
 	display: flex;
-  	justify-content: space-around;
-  	align-items: flex-start;
+	justify-content: space-around;
+	align-items: flex-start;
 	border: 2px solid #fff;
 	position: relative;
 	top: 40px;
+}
 
+#containerLogo {
+	position: fixed;
+}
+
+#containerLogo:hover {
+	box-shadow: -2px -2px 2px 2px #e8e8e8, 2px 2px 2px 2px #e8e8e8;
+}
+
+#containerLogin {
+	align-content: center;
+	align-items: center;
+	text-align: left;
+	position: fixed;
+	width: 90vw;
+	height: 50vh;
+	vertical-align: middle;
+	padding: 5px;
+	display: flex;
+	justify-content: center;
 }
 
 /* div pai do fragmento do cabeçalho*/
-#fragCabecalho{
-	
+#fragCabecalho {
 	background-color: #ee2828;
 	display: table-cell;
-    vertical-align: middle;
-    top: 30px;
-    left: 10px;
-/*     position: fixed; */
-  	opacity:0.950;
+	vertical-align: middle;
+	top: 30px;
+	left: 10px;
+	opacity: 0.950;
 }
 
- /* abrange todos os ícones*/
+/* abrange todos os ícones*/
 .clsIcon {
-	
-    flex: 1;
-    border: 2px solid #e0e0e0;
+	flex: 1;
+	border: 2px solid #e0e0e0;
 	display: table-cell;
-    vertical-align: middle;
+	vertical-align: middle;
 	text-align: center;
 	padding-right: 0.5vh;
 	padding-left: 0.5vh;
-	height: auto; 
-    width: auto; 
+	height: auto;
+	width: 100vw;
+	opacity: 70%;
 }
 
-#quadro2 {
-	background-color: green;
-	flex: 1;
-	height: var(--alt);
+.clsIcon:hover {
+	opacity: 100%;
 }
 
-#quadro3 {
-	background-color: blue;
-	flex: 1;
-	height: var(--alt);
+.clsCaixas {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #4f4f4f;
+	padding: 2px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	box-shadow: 2px -2px #CCC;
+	font-size: 1.2em;
+	color: #e5e5e5;
 }
 
-#quadro4, #quadro1 {
-	background-color: yellow;
-	flex: 1;
-	height: var(--alt);
+#caixaLogin {
+	position: absolute;
+	top: 75px;
+	height: 250px;
+	font-size: 18;
+}
+
+#textoLogin {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+#botLogin {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+#divBotao {
+	padding-top: 20px;
+}
+
+#caixaNovo {
+	position: absolute;
+	top: 375px;
 }
 
 /* redimensionamento das imagens*/
 #iconLogo {
-    max-width: 200px; 
-    max-height: 200px;
+	max-width: 200px;
+	max-height: 200px;
 }
 
 #iconHome {
-    max-width: 100px; 
-    max-height: 100px;
+	max-width: 100px;
+	max-height: 100px;
 }
 
 #iconLogin {
-    max-width: 100px; 
-    max-height: 100px;
+	max-width: 100px;
+	max-height: 100px;
 }
 
 #iconCheck {
-    max-width: 100px; 
-    max-height: 100px;
+	max-width: 100px;
+	max-height: 100px;
 }
 
 #iconExtintor {
-    max-width: 100px; 
-    max-height: 100px;
+	max-width: 100px;
+	max-height: 100px;
+}
+
+#iconeInicial {
+	max-width: 500px;
+	max-height: 500px;
+	background-color: red;
+	align-content: center;
+	align-items: center;
 }
 
 /* texto usuario*/
-#usuario{
+#usuario {
 	padding: 5px;
+}
+
+.submit, input[type=submit] {
+	padding: 5px 15px;
+	background: #ccc;
+	border: 0 none;
+	cursor: pointer;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	appearance: none;
+	background-color: #9e9e9e;
+	border: 1px solid rgba(27, 31, 35, .15);
+	border-radius: 6px;
+	box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 20px;
+	padding: 6px 16px;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.submit:hover {
+	background-color: #699a03;
+}
+
+label {
+	/* background-color: orange; */
+	display: inline-block;
+	width: 300px;
+}
+
+.clsLabel {
+	display: block;
+	width: 300px;
+	font-size: 16px;
+	padding-top: 5px;
+	align-self: flex-end;
+}
+
+input[type=text], input[type=password] {
+	display: inline-block;
+	width: 293px;
+	font-size: 16px;
+}
+
+#usuario{
+	font-size: 1.02em;
 }

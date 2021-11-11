@@ -4,8 +4,6 @@ import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -45,17 +43,9 @@ public class Usuario {
 	}
 
 	@Id
-	@NotNull(message = "matricula cannot be null")
-	@NotEmpty(message = "matricula cannot be empty")
 	private int matricula = 999;
-	@NotNull(message = "nome cannot be null")
-	@NotEmpty(message = "nome cannot be empty")
 	private String nome = "Anonimous";
-	@NotNull(message = "senha cannot be null")
-	@NotEmpty(message = "senha cannot be empty")
 	private int senha = 0;
-	@NotNull(message = "foto cannot be null")
-	@NotEmpty(message = "foto cannot be empty")
 	private String foto = "fotoAnonima";
 
 }

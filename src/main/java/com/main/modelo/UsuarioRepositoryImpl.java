@@ -30,13 +30,42 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Usuario findOne(String id) {
-		return jdbc.queryForObject("select matricula, nome, senha, foto from Usuario where matricula=?",
-				this::mapeiaLinhaUsuario, id);
+
+		Usuario u = null;
+		try {
+			log.info("::Pesquisando por matrícula " + id);
+			u = jdbc.queryForObject("select matricula, nome, senha, foto from Usuario where (matricula = ?) ",
+					this::mapeiaLinhaUsuario, id);
+		} catch (Exception e) {
+			log.info("::Pesquisando por nome " + id);
+			u = jdbc.queryForObject("select matricula, nome, senha, foto from Usuario where (nome like ?) ",
+					this::mapeiaLinhaUsuario, id);
+		}
+
+		return u;
+	}
+
+	public Usuario findOne(String nomeOuSenha, int senha) {
+
+		Usuario u = null;
+		try {
+			log.info("::Pesquisando por matrícula " + nomeOuSenha);
+			u = jdbc.queryForObject(
+					"select matricula, nome, senha, foto from Usuario where (matricula = ? and senha = ?) ",
+					this::mapeiaLinhaUsuario, nomeOuSenha, senha);
+		} catch (Exception e) {
+			log.info("::Pesquisando por nome " + nomeOuSenha);
+			u = jdbc.queryForObject(
+					"select matricula, nome, senha, foto from Usuario where (nome like ? and senha = ?) ",
+					this::mapeiaLinhaUsuario, nomeOuSenha, senha);
+		}
+
+		return u;
 	}
 
 	public List<Usuario> buscar(String nome, int matricula) {
 
-		log.info("Pesquisando nome " + nome + " matrícula " + matricula);
+		log.info("::Pesquisando nome " + nome + " matrícula " + matricula);
 
 		ArrayList<Usuario> lista = (ArrayList<Usuario>) jdbc.query("select matricula, nome, senha, foto from Usuario",
 				this::mapeiaLinhaUsuario);

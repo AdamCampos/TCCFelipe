@@ -1,62 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>INESHERS - Login</title>
-		<meta charset="UTF-8">
-		<link th:href="@{/css/main.css}" rel="stylesheet" />
-		<script type="text/javascript" th:src="@{/js/main.js}"></script>
-	</head>
-	<body>
-		<div class="header">
-			<div class="linha">
-				<header>
-					<div class="coluna col4">
-						<h1 class="logo">INESHERS</h1>
-					</div>
-					<div class="coluna col8">
-						<nav>
-							<ul class="menu inline sem-marcador">
-								<li><a th:href="@{/index}">Página de acesso</a></li>
-								<li><a th:href="@{/main}">Home</a></li>
-								<li>Usuario Logado:<p th:text="${session.usuario.nome}"></li>
-							</ul>
-						</nav>
-					</div>
-				</header>
-			</div>
+<head>
+<title>INESHERS - Login</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body onload="onLoadLogin();">
+
+		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">
+				Exemplo de cabeçalho</div>
+
+
+		<!-- ****************************************************************************************** -->
+
+		<div id="containerLogin">
+				<div class="clsCaixas" id="caixaLogin">
+						<span id= "textoLogin" >Já tenho login </span>
+						<br />
+
+						<form class="clsLabel" action="main" method="post"
+								th:object="${usuario}"
+						>
+								<label class="clsLabel" for="matricula">Matrícula ou
+										Nome</label>
+								<input class="clsLabel" id="matricula" type="text"
+										placeholder="digite sua matrícula ou nome" name="matriculaOuNome"	/>
+								<br />
+
+								<label class="clsLabel" for="senha">Senha</label>
+								<input class="clsLabel" id="senha" type="password"
+										placeholder="digite a sua senha" name="senha"/>
+								<br />
+						<div id="divBotao"><input id="botLogin" type="submit" name="logar" value="OK"/></div>
+						</form>
+
+				</div>
+
+				<div class="clsCaixas" id="caixaNovo">Quero criar um login</div>
 		</div>
-		<form action="main" method="post" th:object="${usuario}" >
-				
-		<label for="matricula">Matrícula</label>
-		<input id="matricula" type="text" placeholder="digite sua matrícula" name="matricula">
-				
-		<label for="nome">Nome</label>
-		<input id="nome" type="text" placeholder="digite seu nome" name="nome">
-				
-		<label for="senha">Senha</label>
-		<input id="senha" type="password" placeholder="digite a sua senha" name="senha">
-		<br />
-				
-		<input type="submit" value="logar" name="logar" /><br />	
-		<input type="submit" value="criar" name="criar" /><br />	
-		<input type="submit" value="deletar" name="deletar" />
-		<input type="submit" value="logoff" name="logoff" />
-														
-		</form>
-		<table>
-			<tr th:each="usuario: ${lista}">
-				<td th:text="${usuario.nome}" />
-				<td th:text="${usuario.matricula}" />
-			</tr>
-		</table>
-		<div class="footer">
-			<div class="linha">
-				<footer>
-					<div class="coluna col12">
-						<span>&copy; 2021 - INESHERS</span>
-					</div>
-				</footer>
-			</div>
-		</div>
-	</body>
+
+</body>
 </html>
