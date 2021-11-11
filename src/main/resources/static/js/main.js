@@ -5,7 +5,6 @@ const constWidth = window.innerWidth || document.documentElement.clientWidth ||
 	document.body.clientWidth;
 const constHeight = window.innerHeight || document.documentElement.clientHeight ||
 	document.body.clientHeight;
-var i = 0;
 
 console.log(constWidth, constHeight);
 
@@ -45,8 +44,6 @@ function idExtintorDefault() {
 /** ============================================================================ */
 function onLoadLogin() {
 
-i++;
-alert(document.getElementById("usuario").innerText + " i: " + i);
 
 var target = document.getElementById("usuario");
 
@@ -64,4 +61,14 @@ var target = document.getElementById("usuario");
 	
 	// passar o nó alvo, bem como as opções de observação
 	observer.observe(target, config);
+	
+	console.log(target.innerText);
+	if(target.innerText==='Felipe Campos'){
+		document.getElementById("caixaNovo").style.visibility='visible';
+		console.log('admin');
+	}else{
+		document.getElementById("caixaNovo").style.visibility='hidden';
+		console.log('comum');
+	}
+	
 };
