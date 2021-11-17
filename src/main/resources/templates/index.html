@@ -3,14 +3,16 @@
 <head>
 <title>INESHERS - Inicio</title>
 <meta charset="UTF-8">
-<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<link th:href="@{/css/main.css}" rel="stylesheet" />
 <link th:href="@{/images/favicon.ico}" rel="shortcut icon" />
 </head>
 <body>
 		<script type="text/javascript" th:src="@{/js/main.js}"></script>
 		<div id="containerLogo">
 				<form method="get" action="login">
-						<input type="image" th:src="@{/images/logo.png}" id="iconeInicial" class="clsIcon" onload="onLoadIndex();"/>
+						<input type="image" th:src="@{/images/logo.png}" id="iconeInicial"
+								class="clsIcon" onload="onLoadIndex();"
+						/>
 				</form>
 		</div>
 

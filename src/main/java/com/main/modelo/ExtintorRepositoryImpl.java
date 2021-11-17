@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.log4j.Log4j2;
@@ -108,7 +107,8 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 		ArrayList<Extintor> lista = new ArrayList<Extintor>();
 		try {
 			lista = (ArrayList<Extintor>) jdbc.query(
-					"select id, classe, agente, dataCompra, volume, foto from Extintor where id=?", this::mapeiaLinhaExtintor, id);
+					"select id, classe, agente, dataCompra, volume, foto from Extintor where id=?",
+					this::mapeiaLinhaExtintor, id);
 		} catch (Exception e) {
 			log.debug("ERRO 1::" + e);
 		}
@@ -131,17 +131,36 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 		return lista;
 	}
 
+	public List<Extintor> retornaItensAgentes() {
+		List<Extintor> lista = jdbc.query("select agente from extintor group by agente", this::mapeiaLinhaExtintor);
+		log.debug("::Agentes retornados:  " + lista.size());
+
+		for (Extintor e : lista) {
+			log.debug("::Agente:  " + e.getId());
+		}
+
+		return lista;
+	}
+
 	private Extintor mapeiaLinhaExtintor(ResultSet rs, int rowNum) {
 
 		Extintor u = new Extintor();
 
 		try {
 			u = new Extintor(rs.getInt("id"), rs.getString("classe"), rs.getString("agente"),
-					rs.getString("dataCompra"), rs.getDouble("volume"), rs.getString("foto"));
+					rs.getString("dataCompra"), rs.getString("volume"), rs.getString("foto"));
 			log.debug("::" + u);
 			return u;
 		} catch (SQLException e) {
-			log.debug("Erro:: " + e);
+			u = new Extintor();
+			try {
+				u.setId(0);
+				u.setAgente(rs.getString("agente"));
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				log.debug("::Erro ao instanciar extintor pelo resultSet anônimo " + e);
+			}
+			log.debug("::Erro ao instanciar extintor pelo resultSet " + e);
 			e.printStackTrace();
 			return u;
 		}

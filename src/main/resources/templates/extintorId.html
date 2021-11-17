@@ -3,34 +3,31 @@
 <head>
 <title>INESHERS - Extintor</title>
 <meta charset="UTF-8">
-<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<link th:href="@{/css/main.css}" rel="stylesheet" />
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <body>
-
-
-		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">
-				Exemplo de cabeçalho</div>
-
+		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo
+				de cabeçalho</div>
 		<div id="divForm">
-				<form action="extintor" method="get" th:object="${extintor}">
+				<form id="idForm" action="extintor" method="get"
+						th:object="${extintor}"
+				>
 						<input id="extintorId" type="number" placeholder="digite o id"
 								name="id"
 						>
-
-						<select name="agente" id="extintorAgentes">
-								<option value="água">Água</option>
-								<option value="pó químico">Pó Químico</option>
-								<option value="co2">CO2</option>
-								<option value="lge">LGE</option>
+						<select name="agente" id="extintorAgente">
+								<option th:each="extintor : ${listaAgentes}"
+										th:value="${extintor.agente}" th:text="${extintor.agente}"
+								></option>
 						</select>
-						<input type="submit" value="pesquisar" name="pesquisar"
-								onmouseover="idExtintorDefault();"
+						<input id="botPesquisar" type="submit" value="pesquisar"
+								name="pesquisar" onmouseover="idExtintorDefault();"
 						/>
 				</form>
 		</div>
 		<br />
-		<br />
+
 		<div id="divEach" th:each="extintor: ${lista}">
 				<div class="clsEach">
 						<div id="divEsquerda">
@@ -66,10 +63,5 @@
 						</div>
 				</div>
 		</div>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
 </body>
 </html>

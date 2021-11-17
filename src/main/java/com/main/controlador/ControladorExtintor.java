@@ -1,6 +1,7 @@
 package com.main.controlador;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,7 +37,15 @@ public class ControladorExtintor {
 		ModelAndView mavId = new ModelAndView("extintorId");
 
 		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-		log.debug("::Extintor - usuário logado: " + usuario.getNome());
+		List<Extintor> listaTiposAgentes;
+
+		// Retorna a lista só com os tipos agentes
+		try {
+			listaTiposAgentes = uri.retornaItensAgentes();
+			mav.addObject("listaAgentes", listaTiposAgentes);
+		} catch (Exception e) {
+			log.error("::Erro ao tentar buscar lista de agentes.");
+		}
 
 		try {
 			if (extintor != null) {
@@ -44,8 +53,8 @@ public class ControladorExtintor {
 				sessao.removeAttribute("extintor");
 				sessao.setAttribute("extintor", extintor);
 
+				// No caso de id <= 0, a pesquisa será pelo tipo
 				if (extintor.getId() <= 0) {
-					// No caso de id <= 0, a pesquisa será pelo tipo
 					ArrayList<Extintor> lista = (ArrayList<Extintor>) uri
 							.buscarAgente("%" + extintor.getAgente() + "%");
 

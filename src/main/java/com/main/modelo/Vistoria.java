@@ -15,23 +15,29 @@ public class Vistoria {
 
 	@Id
 	private int id;
-	private String dataUltima;
 	private int fkExtintor;
-	private String dataProxima;
-	private String obs;
-	private String foto;
 	private int fkUsuario;
+	private String dataUltima;
+	private String dataProxima;
+	private String dataTeste;
+	private String foto;
+	/* private String localizacao; */
+	private String obs;
 
-	public Vistoria(int id, String dataUltima, String dataProxima, int fkExtintor, String obs,String foto, int fkUsuario) {
+	public Vistoria(int id, int fkExtintor, int fkUsuario, String dataUltima, String dataProxima, String dataTeste,
+			String foto, /* String localizacao, */ String obs) {
 		this.id = id;
+		this.fkExtintor = fkExtintor;
+		this.fkUsuario = fkUsuario;
 		this.dataUltima = dataUltima;
 		this.dataProxima = dataProxima;
-		this.fkExtintor = fkExtintor;
-		this.obs = obs;
+		this.dataTeste = dataTeste;
 		this.foto = foto;
-		this.fkUsuario = fkUsuario;
+		/* this.localizacao; */
+		this.obs = obs;
 	}
 
 	public Vistoria() {
 	}
+
 }

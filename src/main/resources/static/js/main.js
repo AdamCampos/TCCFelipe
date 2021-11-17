@@ -47,7 +47,7 @@ function onLoadLogin() {
 
 var target = document.getElementById("usuario");
 
-	// cria uma nova instância de observador
+	/*// cria uma nova instância de observador
 	var observer = new MutationObserver(function(mutations) {
 		mutations.forEach(function(mutation) {
 			console.log(mutation.type);
@@ -60,14 +60,30 @@ var target = document.getElementById("usuario");
 	var config = { attributes: true, childList: true, characterData: true };
 	
 	// passar o nó alvo, bem como as opções de observação
-	observer.observe(target, config);
+	observer.observe(target, config);*/
 	
-	console.log(target.innerText);
+	
 	if(target.innerText==='Felipe Campos'){
 		document.getElementById("caixaNovo").style.visibility='visible';
 		console.log('admin');
 	}else{
 		document.getElementById("caixaNovo").style.visibility='hidden';
+		console.log('comum');
+	}
+	
+};
+
+/** ============================================================================ */
+function onLoadExtintor() {
+
+
+var target = document.getElementById("usuario");
+	
+	if(target.innerText==='Felipe Campos'){
+		document.getElementById("caixaAdmin").style.visibility='visible';
+		console.log('admin');
+	}else{
+		document.getElementById("caixaAdmin").style.visibility='hidden';
 		console.log('comum');
 	}
 	

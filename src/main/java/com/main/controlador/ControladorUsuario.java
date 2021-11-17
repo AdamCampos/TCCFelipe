@@ -105,34 +105,20 @@ public class ControladorUsuario {
 
 	/******************************************************************************************************************/
 
-	@RequestMapping(value = { "/", "/home", "/index", "/main", "/login" }, method = {
-			RequestMethod.GET }, params = "logoff")
-	public String logoff(Model model, HttpSession sessao) {
+	@RequestMapping(value = { "/logoff" }, method = { RequestMethod.GET })
+	public ModelAndView logOff(HttpSession sessao) {
 
+		ModelAndView mav = new ModelAndView("login");
 		usuario = new Usuario(0, "Anônimo", 0, null);
 		sessao.removeAttribute("usuario");
 		sessao.setAttribute("usuario", usuario);
+		log.debug("::Iniciando logoff");
 
-		log.info("Logoff");
-		return "index";
+		return mav;
+
 	}
 
-	@RequestMapping(value = { "/login" }, method = { RequestMethod.GET })
-	public String resolveLogin(Model model, HttpSession sessao) {
-
-		try {
-			Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-			if (usuario == null) {
-				usuario = new Usuario(0, "Anônimo", 0, null);
-				sessao.setAttribute("usuario", usuario);
-			}
-			log.info("Usuario inicio do login " + usuario);
-		} catch (Exception e) {
-			log.error("Erro usuario " + e);
-		}
-
-		return "login";
-	}
+	/******************************************************************************************************************/
 
 	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "buscar")
 	public ModelAndView buscar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao) {
@@ -148,6 +134,8 @@ public class ControladorUsuario {
 
 		return mav;
 	}
+
+	/******************************************************************************************************************/
 
 	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "deletar")
 	public ModelAndView deletar(WebRequest requisicao, HttpSession sessao) {
@@ -172,17 +160,23 @@ public class ControladorUsuario {
 		return mav;
 	}
 
-	@RequestMapping(value = { "/logoff" }, method = { RequestMethod.GET })
-	public ModelAndView logOff(HttpSession sessao) {
+	/******************************************************************************************************************/
 
-		ModelAndView mav = new ModelAndView("login");
-		usuario = new Usuario(0, "Anônimo", 0, null);
-		sessao.removeAttribute("usuario");
-		sessao.setAttribute("usuario", usuario);
-		log.debug("::Iniciando logoff");
+	@RequestMapping(value = { "/login" }, method = { RequestMethod.GET })
+	public String resolveLogin(Model model, HttpSession sessao) {
 
-		return mav;
+		try {
+			Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+			if (usuario == null) {
+				usuario = new Usuario(0, "Anônimo", 0, null);
+				sessao.setAttribute("usuario", usuario);
+			}
+			log.info("Usuario inicio do login " + usuario);
+		} catch (Exception e) {
+			log.error("Erro usuario " + e);
+		}
 
+		return "login";
 	}
 
 }

@@ -3,36 +3,95 @@
 <head>
 <title>INESHERS - Extintor</title>
 <meta charset="UTF-8">
-<link th:href="@{/css/teste.css}" rel="stylesheet" />
+<link th:href="@{/css/main.css}" rel="stylesheet" />
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
-<body>
-
-		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">
-				Exemplo de cabeçalho</div>
-
+<body onload="onLoadExtintor();">
+		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo
+				de cabeçalho</div>
+		<br />
 		<div id="divForm">
-				<form action="extintor" method="get" th:object="${extintor}">
+				<form id="idForm" action="extintor" method="get"
+						th:object="${extintor}"
+				>
 						<input id="extintorId" type="number" placeholder="digite o id"
 								name="id"
 						>
 						<select name="agente" id="extintorAgente">
-								<option value="água">Água</option>
-								<option value="pó químico">Pó Químico</option>
-								<option value="co2">CO2</option>
-								<option value="lge">LGE</option>
+								<option th:each="extintor : ${listaAgentes}"
+										th:value="${extintor.agente}" th:text="${extintor.agente}"
+								></option>
 						</select>
-						<input type="submit" value="pesquisar" name="pesquisar"
-								onmouseover="idExtintorDefault();"
+						<input id="botPesquisarExtintor" type="submit" value="Pesquisar"
+								name="pesquisar" onmouseover="idExtintorDefault();"
 						/>
 				</form>
 		</div>
 		<br />
+		<div class="clsCaixasAdmin" id="caixaAdmin">
+		<br />
+
+				<span id="textoEditarLogin">Editar Extintor</span>
+				<br />
+				<br />
+				<form class="clsLabelAdmin" action="main" method="post"
+						th:object="${extintor}"
+				>
+						<label class="clsLabelAdmin" for="id">Número de
+								Indentificação:</label>
+								<br />
+						<input class="clsLabelAdmin" id="editarId" type="text"
+								placeholder="digite seu Número de
+										Indentificação"
+								name="id">
+						<br />
+
+						<label class="clsLabelAdmin" for="Classe">Classe:</label>
+						<br />
+						<input class="clsLabelAdmin" id="editarClasse" type="text"
+								placeholder="digite a Classe" name="Classe"/>
+						<br />
+
+						<label class="clsLabelAdmin" for="Agente">Agente:</label><br />
+						<input class="clsLabelAdmin" id="editarAgente" type="password"
+								placeholder="digite seu Agente" name="Agente"
+						/>
+						<br />
+
+						<label class="clsLabelAdmin" for="DataCompra">Data Compra:</label><br />
+						<input class="clsLabelAdmin" id="editarDataCompra" type="password"
+								placeholder="digite a Data Compra" name="DataCompra"
+						/>
+						<br />
+
+						<label class="clsLabelAdmin" for="Volume">Volume:</label><br />
+						<input class="clsLabelAdmin" id="editarVolume" type="password"
+								placeholder="digite o Volume" name="Volume"
+						/>
+						<br />
+						<div id="imputBot">
+						<input id="botCriarExtintor" type="submit" name="criar"
+								value="Criar" onmouseover="idExtintorDefault();"
+						/>
+						<input id="botAtualizarExtintor" type="submit" value="Atualizar"
+								name="atualizar" onmouseover="idExtintorDefault();"
+						/>
+						<input id="botDeletarExtintor" type="submit" value="Deletar"
+								name="deletar" onmouseover="idExtintorDefault();"
+						/>
+						<input id="botGerarQrExtintor"
+								th:href="@{https://br.qr-code-generator.com/}" type="submit"
+								value="Gerar Qr code" name="qrcode"
+								onmouseover="idExtintorDefault();"
+						/>
+						</div>
+
+				</form>
+		</div>
 		<br />
 		<div id="divEach" th:each="extintor: ${lista}">
 				<div class="clsEach">
 						<div id="divEsquerda">
-
 								<span class="clsSpan"> Número de Identificação:</span>
 								<span class="clsResposta">
 										<a th:href="@{${id}(id=${extintor.id})}"
@@ -41,6 +100,10 @@
 
 								</span>
 								<br />
+								<span class="clsSpan">Classe:</span>
+								<span class="clsResposta" th:text="${extintor.classe}"></span>
+								<br />
+
 								<span class="clsSpan">Agente:</span>
 								<span class="clsResposta" th:text="${extintor.agente}"></span>
 								<br />
@@ -64,10 +127,5 @@
 						</div>
 				</div>
 		</div>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
 </body>
 </html>
