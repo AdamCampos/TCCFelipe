@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.main.modelo.Extintor;
 import com.main.modelo.ExtintorRepositoryImpl;
-import com.main.modelo.Usuario;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -36,7 +35,6 @@ public class ControladorExtintor {
 		ModelAndView mav = new ModelAndView("extintor");
 		ModelAndView mavId = new ModelAndView("extintorId");
 
-		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
 		List<Extintor> listaTiposAgentes;
 
 		// Retorna a lista só com os tipos agentes
@@ -90,4 +88,50 @@ public class ControladorExtintor {
 		return mav;
 	}
 
+	/******************************************************************************************************************/
+	@RequestMapping(value = { "/extintor" }, method = { RequestMethod.POST }, params = "criar")
+	public ModelAndView criar(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
+
+		ModelAndView mav = new ModelAndView("extintor");
+		uri.save(extintor);
+
+		return mav;
+	}
+
+	/******************************************************************************************************************/
+	@RequestMapping(value = { "/extintor" }, method = { RequestMethod.POST }, params = "atualizar")
+	public ModelAndView atualizar(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
+
+		ModelAndView mav = new ModelAndView("extintor");
+
+		int id = extintor.getId();
+		String classe = extintor.getClasse();
+		String agente = extintor.getAgente();
+		String dataCompra = extintor.getDataCompra();
+		String volume = extintor.getVolume();
+		String foto = extintor.getFoto();
+
+		Extintor u = uri.findOne(String.valueOf(id));
+		u.setClasse(classe);
+		u.setAgente(agente);
+		u.setDataCompra(dataCompra);
+		u.setVolume(volume);
+		u.setFoto(foto);
+
+		uri.save(u);
+
+		return mav;
+	}
+
+	/******************************************************************************************************************/
+
+	@RequestMapping(value = { "/extintor" }, method = { RequestMethod.POST }, params = "deletar")
+	public ModelAndView deletar(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
+
+		ModelAndView mav = new ModelAndView("extintor");
+
+		uri.delete(extintor);
+
+		return mav;
+	}
 }

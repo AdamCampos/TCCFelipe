@@ -54,15 +54,13 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 	}
 
 	@Override
-	public void deleteById(String id) {
-		// TODO Auto-generated method stub
+	public void deleteById(String entity) {
 
 	}
 
 	@Override
 	public void delete(Extintor entity) {
-		// TODO Auto-generated method stub
-
+		jdbc.update("delete from extintor where id = ?", entity.getId());
 	}
 
 	@Override
@@ -91,14 +89,38 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 
 	@Override
 	public Extintor findOne(String id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Extintor u = null;
+		try {
+			log.info("::Pesquisando por id " + id);
+			u = jdbc.queryForObject("select id, classe, agente, dataCompra, volume, foto from Extintor where (id = ?) ",
+					this::mapeiaLinhaExtintor, id);
+		} catch (Exception e) {
+			log.info("::Erro ao pesquisar extintor " + e);
+		}
+
+		return u;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Extintor save(Extintor extintor) {
-		// TODO Auto-generated method stub
-		return null;
+
+		try {
+			jdbc.update("insert into Extintor (id, classe, agente, dataCompra, volume, foto) values (?, ?, ?, ?, ?, ?)",
+					extintor.getId(), extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(),
+					extintor.getVolume(), extintor.getFoto());
+		} catch (Exception e) {
+			log.debug("::Erro ao inserir extintor " + e);
+			try {
+				jdbc.update("update Extintor set classe=?, agente=?, dataCompra=?, volume=?, foto=?  where id=?",
+						extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(), extintor.getVolume(),
+						extintor.getFoto(), extintor.getId());
+			} catch (Exception sqlE) {
+				log.debug("::Erro ao atualizar extintor " + sqlE);
+			}
+		}
+		return extintor;
 	}
 
 	public List<Extintor> buscarId(int id) {
@@ -133,11 +155,6 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 
 	public List<Extintor> retornaItensAgentes() {
 		List<Extintor> lista = jdbc.query("select agente from extintor group by agente", this::mapeiaLinhaExtintor);
-		log.debug("::Agentes retornados:  " + lista.size());
-
-		for (Extintor e : lista) {
-			log.debug("::Agente:  " + e.getId());
-		}
 
 		return lista;
 	}

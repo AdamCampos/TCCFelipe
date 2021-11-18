@@ -15,16 +15,14 @@
 						th:object="${extintor}"
 				>
 						<input id="extintorId" type="number" placeholder="digite o id"
-								name="id"
-						>
+								name="id">
 						<select name="agente" id="extintorAgente">
-								<option th:each="extintor : ${listaAgentes}"
-										th:value="${extintor.agente}" th:text="${extintor.agente}"
-								></option>
+						
+								<option th:each="extintor : ${listaAgentes}" th:with="agente=${extintor.agente}"
+										th:value="${#strings.trim(agente)}" th:text="${#strings.trim(agente)}"></option>
 						</select>
 						<input id="botPesquisarExtintor" type="submit" value="Pesquisar"
-								name="pesquisar" onmouseover="idExtintorDefault();"
-						/>
+								name="pesquisar" onmouseover="idExtintorDefault();"	/>
 				</form>
 		</div>
 		<br />
@@ -34,7 +32,7 @@
 				<span id="textoEditarLogin">Editar Extintor</span>
 				<br />
 				<br />
-				<form class="clsLabelAdmin" action="main" method="post"
+				<form class="clsLabelAdmin" action="extintor" method="post"
 						th:object="${extintor}"
 				>
 						<label class="clsLabelAdmin" for="id">Número de
@@ -53,30 +51,34 @@
 						<br />
 
 						<label class="clsLabelAdmin" for="Agente">Agente:</label><br />
-						<input class="clsLabelAdmin" id="editarAgente" type="password"
+						<input class="clsLabelAdmin" id="editarAgente" type="text"
 								placeholder="digite seu Agente" name="Agente"
 						/>
 						<br />
 
 						<label class="clsLabelAdmin" for="DataCompra">Data Compra:</label><br />
-						<input class="clsLabelAdmin" id="editarDataCompra" type="password"
+						<input class="clsLabelAdmin" id="editarDataCompra" type="text"
 								placeholder="digite a Data Compra" name="DataCompra"
 						/>
 						<br />
 
 						<label class="clsLabelAdmin" for="Volume">Volume:</label><br />
-						<input class="clsLabelAdmin" id="editarVolume" type="password"
+						<input class="clsLabelAdmin" id="editarVolume" type="text"
 								placeholder="digite o Volume" name="Volume"
 						/>
 						<br />
+						<label class="clsLabelAdmin" for="Foto">Foto:</label><br />
+						<input class="clsLabelAdmin" id="editarFoto" type="text"
+								placeholder="digite o nome da foto" name="Foto">
+						<br />
 						<div id="imputBot">
 						<input id="botCriarExtintor" type="submit" name="criar"
-								value="Criar" onmouseover="idExtintorDefault();"
+								value="criar" onmouseover="idExtintorDefault();"
 						/>
-						<input id="botAtualizarExtintor" type="submit" value="Atualizar"
+						<input id="botAtualizarExtintor" type="submit" value="atualizar"
 								name="atualizar" onmouseover="idExtintorDefault();"
 						/>
-						<input id="botDeletarExtintor" type="submit" value="Deletar"
+						<input id="botDeletarExtintor" type="submit" value="deletar"
 								name="deletar" onmouseover="idExtintorDefault();"
 						/>
 						<input id="botGerarQrExtintor"
