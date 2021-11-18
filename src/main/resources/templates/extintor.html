@@ -26,15 +26,14 @@
 				</form>
 		</div>
 		<br />
-		<div class="clsCaixasAdmin" id="caixaAdmin">
+		<div  id="caixaAdmin"><!-- class="clsCaixasAdmin" -->
 		<br />
 
-				<span id="textoEditarLogin">Editar Extintor</span>
+				<span id="textoEditarExtintor">Editar Extintor</span>
 				<br />
 				<br />
 				<form class="clsLabelAdmin" action="extintor" method="post"
-						th:object="${extintor}"
-				>
+						th:object="${extintor}">
 						<label class="clsLabelAdmin" for="id">Número de
 								Indentificação:</label>
 								<br />
@@ -92,16 +91,14 @@
 		</div>
 		<br />
 		<div id="divEach" th:each="extintor: ${lista}">
-				<div class="clsEach">
+				<div><!-- class="clsEach" --> 
 						<div id="divEsquerda">
 								<span class="clsSpan"> Número de Identificação:</span>
 								<span class="clsResposta">
-										<a th:href="@{${id}(id=${extintor.id})}"
-												th:text="${extintor.id}" target="_blank"
-										></a>
-
+										<a th:href="@{${id}(id=${extintor.id})}" th:text="${extintor.id}" target="_blank"></a>
 								</span>
 								<br />
+
 								<span class="clsSpan">Classe:</span>
 								<span class="clsResposta" th:text="${extintor.classe}"></span>
 								<br />
@@ -121,10 +118,7 @@
 						<div id="divDireita">
 								<span class="clsSpan">Foto:</span>
 
-								<img
-										th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}"
-										class="clsSpan"
-								/>
+								<img th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}"	class="clsSpan"	/>
 								<br />
 						</div>
 				</div>

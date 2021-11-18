@@ -1,14 +1,16 @@
 package com.main.controlador;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.main.modelo.Usuario;
 import com.main.modelo.Vistoria;
 import com.main.modelo.VistoriaRepositoryImpl;
 
@@ -25,15 +27,18 @@ public class ControladorVistoria {
 	VistoriaRepositoryImpl uri;
 
 	@RequestMapping(value = { "/vistoria" }, method = { RequestMethod.GET })
-	public String resolveIndex(Model model, HttpSession sessao) {
+	public ModelAndView resolveIndex(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao) {
 
-		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-		log.debug("::Vistoria: " + usuario.getNome() + " foto: " + usuario.getFoto());
+		ModelAndView mav = new ModelAndView("vistoria");
 
-		if (usuario.getNome().equals("Anônimo") || usuario.getNome().equals("Anonimous")) {
-			return "login";
-		} else {
-			return "vistoria";
-		}
+		sessao.removeAttribute("vistoria");
+		sessao.setAttribute("vistoria", vistoria);
+
+		ArrayList<Vistoria> listaVistorias = (ArrayList<Vistoria>) uri.findAll();
+
+		log.debug("::lista de vistorias: " + listaVistorias.size());
+		mav.addObject("lista", listaVistorias);
+
+		return mav;
 	}
 }

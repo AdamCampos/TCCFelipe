@@ -13,6 +13,14 @@ import lombok.Data;
 @Table(name = "Extintor")
 public class Extintor {
 
+	@Id
+	private int id = 0;
+	private String classe = null;
+	private String agente = null;
+	private String dataCompra = "1999-01-01";
+	private String volume = "1999-01-01";
+	private String foto = null;
+
 	public Extintor(int id, String classe, String agente, String dataCompra, String volume, String foto) {
 		this.id = id;
 		this.classe = classe;
@@ -24,13 +32,5 @@ public class Extintor {
 
 	public Extintor() {
 	}
-
-	@Id
-	private int id = 0;
-	private String classe = null;
-	private String agente = null;
-	private String dataCompra = "1999-01-01";
-	private String volume = "1999-01-01";
-	private String foto = null;
 
 }

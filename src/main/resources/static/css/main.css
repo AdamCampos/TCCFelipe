@@ -135,7 +135,6 @@ body {
 	position: absolute;
 	top: 375px;
 }
-
 /* redimensionamento das imagens*/
 #iconLogo {
 	max-width: 200px;
@@ -174,7 +173,6 @@ body {
 	align-content: center;
 	align-items: center;
 }
-
 /* texto usuario*/
 #usuario {
 	padding: 5px;
@@ -240,63 +238,17 @@ input[type=text], input[type=password] {
 	font-size: 1.02em;
 }
 
-#divEach {
-	background-color: #004080;
-	padding: 10px;
-	border-style: solid;
-	border-color: black;
-	border-width: 3px;
-	align-content: center;
-	align-items: center;
-	text-align: left;
-	width: 93, 2vw;
-	vertical-align: middle;
-	display: flex;
-	justify-content: center;
-	vertical-align: middle;
-	top: 30px;
-	left: 10px;
-	opacity: 0.950;
-}
-#divEsquerda {
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	padding: 20px;
-	display: table-cell;
+#imputBot {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-#divDireita {
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	padding: 20px;
-	display: table-cell;
-}
+/* ****************************************************************************************** */
+/* CSS extintor */
 
-.clsSpan {
-	background-color: #80ffff;
-	font-size: 16px;
-	width: 300px;
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	display: block;
-	padding-top: 5px;
-	align-self: flex-end;
-}
-
-.clsResposta {
-	display: block;
-	width: 100px;
-	font-size: 16px;
-	padding-top: 5px;
-	align-self: flex-end;
-	border-style: solid;
-	border-color: #ff0000;
-	border-width: 1px;
-}
-
+/* Botão */
 #divForm {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -330,52 +282,28 @@ input[type=text], input[type=password] {
 	padding-right: 10px;
 }
 
-#extintorId{
+#extintorId {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 100px;
 	padding-right: 100px;
 }
 
-#extintorAgente{
+#extintorAgente {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 100px;
 	padding-right: 100px;
 }
 
-#botPesquisarExtintor{
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-	
-}
-#botAtualizarExtintor{
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-#botDeletarExtintor{
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-#botCriarExtintor{
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-#botGerarQrExtintor{
+#botPesquisarExtintor {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
+/* Caixa Extintor */
 #caixaAdmin {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -394,33 +322,180 @@ input[type=text], input[type=password] {
 	font-size: 1.2em;
 	color: #e5e5e5;
 }
-
-#imputBot{
+/* .clsLabelAdmin {
+	display: block;
+	width: 300px;
+	font-size: 16px;
+	padding-top: 5px;
+	align-self: flex-end;
+} */
+#botCriarExtintor {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
+#botAtualizarExtintor {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#botDeletarExtintor {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#botGerarQrExtintor {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+/* Extintor */
+#divEach {
+	background-color: #004080;
+	padding: 10px;
+	border-style: solid;
+	border-color: black;
+	border-width: 3px;
+	align-content: center;
+	align-items: center;
+	text-align: left;
+	width: 93, 2vw;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	vertical-align: middle;
+	top: 30px;
+	left: 10px;
+	opacity: 0.950;
+}
+
+#divEsquerda {
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding: 20px;
+	display: table-cell;
+}
+
+.clsSpan {
+	background-color: #80ffff;
+	font-size: 16px;
+	width: 300px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	display: block;
+	padding-top: 5px;
+	align-self: flex-end;
+}
+
+.clsResposta {
+	display: block;
+	width: 100px;
+	font-size: 16px;
+	padding-top: 5px;
+	align-self: flex-end;
+	border-style: solid;
+	border-color: #ff0000;
+	border-width: 1px;
+}
+
+#divDireita {
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding: 20px;
+	display: table-cell;
+}
+
 /* ****************************************************************************************** */
-/* CSS extintor */
-
-#containerHeader{
-	
+/* CSS vistoria */
+#divEachVistoria {
+	background-color: #004080;
+	padding: 10px;
+	border-style: solid;
+	border-color: black;
+	border-width: 3px;
+	align-content: center;
+	align-items: center;
+	text-align: left;
+	width: 93, 2vw;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	vertical-align: middle;
+	top: 30px;
+	left: 10px;
+	opacity: 0.950;
 }
 
-#divForm{
-	
+#divVistoriaEsquerda {
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding: 20px;
+	display: table-cell;
 }
 
-#idForm{
-	
+#divVistoriaDireita {
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding: 20px;
+	display: table-cell;
 }
 
-#extintorId
-#extintorAgente
-#botPesquisarExtintor
-#caixaAdmin
-#textoEditarLogin
-.clsLabelAdmin
-#editarId
+/* Caixa Vistoria */
+#caixaAdminVistoria {
+	padding-left: 10px;
+	padding-right: 10px;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #4f4f4f;
+	padding: 2px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	box-shadow: 2px -2px #CCC;
+	font-size: 1.2em;
+	color: #e5e5e5;
+}
+/* .clsLabelAdmin {
+	display: block;
+	width: 300px;
+	font-size: 16px;
+	padding-top: 5px;
+	align-self: flex-end;
+} */
+#botCriarVistoria {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#botAtualizarVistoria {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#botDeletarVistoria {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
