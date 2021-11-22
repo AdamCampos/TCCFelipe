@@ -6,9 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Data
 @Entity
 @Named
@@ -16,12 +14,6 @@ import lombok.extern.log4j.Log4j2;
 public class Usuario {
 
 	public Usuario(int matricula, String nome, int senha, String foto) {
-
-		try {
-			log.debug("::instanciando usuario parametrizado - Nome: " + this.getNome());
-		} catch (Exception e) {
-			log.debug("::instanciando usuario parametrizado - Erro " + e);
-		}
 
 		this.matricula = matricula;
 		this.nome = nome;
@@ -31,15 +23,6 @@ public class Usuario {
 	}
 
 	public Usuario() {
-
-		try {
-			log.debug("::instanciando usuario - Nome: " + this.getNome());
-			log.debug("::instanciando usuario - Senha: " + this.getSenha());
-			log.debug("::instanciando usuario - Matricula: " + this.getMatricula());
-		} catch (Exception e) {
-			log.debug("::instanciando usuario - Erro " + e);
-		}
-
 	}
 
 	@Id

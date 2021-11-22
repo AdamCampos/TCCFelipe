@@ -30,10 +30,10 @@ public class ControladorExtintor {
 	// A navegação para extintor não tem restrição, pois o QR deve conseguir acessar
 	// o banco automaticamente.
 	@RequestMapping(value = { "/extintor" }, method = { RequestMethod.GET })
-	public ModelAndView getExtintor(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
+	public ModelAndView buscar(@ModelAttribute("extintor") Extintor extintor, HttpSession sessao) {
 
 		ModelAndView mav = new ModelAndView("extintor");
-		ModelAndView mavId = new ModelAndView("extintorId");
+		// ModelAndView mavId = new ModelAndView("extintorId");
 
 		List<Extintor> listaTiposAgentes;
 
@@ -41,6 +41,7 @@ public class ControladorExtintor {
 		try {
 			listaTiposAgentes = uri.retornaItensAgentes();
 			mav.addObject("listaAgentes", listaTiposAgentes);
+			log.debug("::Lista de agentes");
 		} catch (Exception e) {
 			log.error("::Erro ao tentar buscar lista de agentes.");
 		}
@@ -73,8 +74,8 @@ public class ControladorExtintor {
 					log.debug("::Existe Id: " + extintor.getId());
 
 					ArrayList<Extintor> lista = (ArrayList<Extintor>) uri.buscarId(extintor.getId());
-					mavId.addObject("lista", lista);
-					return mavId;
+					mav.addObject("lista", lista);
+					return mav;
 				}
 
 			}

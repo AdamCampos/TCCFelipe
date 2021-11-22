@@ -101,12 +101,31 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
 		<dependency>
-		    <groupId>org.primefaces</groupId>
-		    <artifactId>primefaces</artifactId>
-		    <version>10.0.0</version>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>10.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.zxing/javase -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.15</version>
+		</dependency>
+
 
 		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
 			</dependency> -->

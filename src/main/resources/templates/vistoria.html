@@ -7,155 +7,153 @@
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <body>
-		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo
-				de cabeçalho</div>
+	<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo de cabeçalho</div>
 
-		Vistoria
+	<div class="clsCaixasAdmin" id="caixaAdminVistoria">
 		<br />
-		Chamada de todas as vistorias:
 
-		<div class="clsCaixasAdmin" id="caixaAdminVistoria">
-				<br />
-
-				<span id="textoEditarVistoria">Editar Extintor</span>
-				<br />
-				<br />
-				<form class="clsLabelAdmin" action="vistoria" method="post"
-						th:object="${vistoria}"
-				>
-						<label class="clsLabelAdmin" for="id">Número de
-								Indentificação da Vistoria:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarIdVistoria" type="text"
-								placeholder="digite seu Número de
-										Indentificação Vistoria"
-								name="id"
-						>
-						<br />
-						<label class="clsLabelAdmin" for="id">Número de
-								Indentificação da Extintor:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarId" type="text"
-								placeholder="digite seu Número de
-										Indentificação"
-								name="id"
-						>
-						<br />
-						<label class="clsLabelAdmin" for="id">Número de
-								Indentificação da Usuário:</label>
-								<br />
-						<input class="clsLabelAdmin" id="editarId" type="text"
-								placeholder="digite seu Número de
-										Indentificação"
-								name="id">
-						<br />
-						<label class="clsLabelAdmin" for="Classe">Última Vistoria:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarClasse" type="text"
-								placeholder="digite a Classe" name="Classe"
-						/>
-						<br />
-
-						<label class="clsLabelAdmin" for="Agente">Proxima Vistoria:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarAgente" type="text"
-								placeholder="digite seu Agente" name="Agente"
-						/>
-						<br />
-
-						<label class="clsLabelAdmin" for="DataCompra">Localização:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarDataCompra" type="text"
-								placeholder="digite a Data Compra" name="DataCompra"
-						/>
-						<br />
-
-						<label class="clsLabelAdmin" for="Volume">Observação:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarVolume" type="text"
-								placeholder="digite o Volume" name="Volume"
-						/>
-						<br />
-						<label class="clsLabelAdmin" for="Foto">Foto:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarFoto" type="text"
-								placeholder="digite o nome da foto" name="Foto"
-						>
-						<br />
-						<div id="imputBot">
-								<input id="botCriarExtintor" type="submit" name="criar"
-										value="criar" onmouseover="idExtintorDefault();"
-								/>
-								<input id="botAtualizarExtintor" type="submit" value="atualizar"
-										name="atualizar" onmouseover="idExtintorDefault();"
-								/>
-								<input id="botDeletarExtintor" type="submit" value="deletar"
-										name="deletar" onmouseover="idExtintorDefault();"
-								/>
-								<input id="botGerarQrExtintor"
-										th:href="@{https://br.qr-code-generator.com/}" type="submit"
-										value="Gerar Qr code" name="qrcode"
-										onmouseover="idExtintorDefault();"
-								/>
-						</div>
-
-				</form>
-		</div>
+		<span id="textoEditarVistoria">Dados de Vistorias</span>
 		<br />
-		<div id="divEachVistoria" th:each="vistoria: ${lista}">
-				<span th:text="${vistoria.id}"></span>
-				<div class="clsEach">
-						<div id="divVistoriaEsquerda">
-								<span class="clsSpan"> Número de Identificação da
-										Vistoria:</span>
-								<span class="clsResposta">
-										<a th:href="@{${id}(id=${vistoria.id})}"
-												th:text="${vistoria.id}" target="_blank"
-										></a>
-								</span>
-								<br />
+		<br />
+		<form class="clsLabelAdmin" action="vistoria" method="post" th:object="${vistoria}" enctype="multipart/form-data">
 
-								<span class="clsSpan">Número de Identificação do
-										Extintor:</span>
-								<span class="clsResposta" th:text="${vistoria.fkExtintor}"></span>
-								<br />
-
-								<span class="clsSpan">Número de Identificação do Usuário:</span>
-								<span class="clsResposta" th:text="${vistoria.fkUsuario}"></span>
-								<br />
-
-								<span class="clsSpan">Última Vistoria</span>
-								<span class="clsResposta" th:text="${vistoria.dataUltima}"></span>
-								<br />
-
-								<span class="clsSpan">Período entre vistorias (meses)</span>
-								<span class="clsResposta" th:text="${vistoria.periodo}"></span>
-								<br />
-
-								<span class="clsSpan">Próxima vistoria</span>
-								<span class="clsResposta" th:text="${vistoria.dataProxima}"></span>
-								<br />
+			<!-- O usuário é automaticamente identificado, através de login. Usuário não logado não acessa esta página. -->
+			<label class="clsLabelAdmin" for="id">Usuário:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarId" type="text" th:value="${session.usuario.nome}" name="userId">
+			<br />
+			<!-- *************************************************************************************************************** -->
 
 
-						</div>
-						<div id="divVistoriaDireita">
-								<span class="clsSpan">Foto:</span>
+			<label class="clsLabelAdmin" for="id">Número da Vistoria:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarIdVistoria" type="text" placeholder="digite o número da Vistoria" name="id">
+			<br />
 
-								<img
-										th:src="@{/images/fotos/{foto}(foto=${#strings.trim(vistoria.foto)+ '.jfif'})}"
-										class="clsSpan"
-								/>
-								<br />
-								<span class="clsSpan">Localização</span>
-								<span class="clsResposta" th:text="${vistoria.localizacao}"></span>
-								<br />
+			<label class="clsLabelAdmin" for="fkExtintor">Número do extintor:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarId" type="text" placeholder="digite seu Número do extintor" name="fkExtintor">
+			<br />
 
-								<span class="clsSpan">Observação)</span>
-								<span class="clsResposta" th:text="${vistoria.obs}"></span>
-								<br />
-						</div>
-				</div>
+			<label class="clsLabelAdmin" for="dataUltima">Última Vistoria:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarClasse" type="text" placeholder="digite a data da última vistoria" name="dataUltima" />
+			<br />
+
+			<label class="clsLabelAdmin" for="dataProxima">Próxima Vistoria:</label>
+			<br />
+			<input class="clsLabelAdmin" id="dataProxima" type="text" placeholder="digite a data da próxima vistoria" name="dataProxima" />
+			<br />
+
+			<label class="clsLabelAdmin" for="localizacao">Localização:</label>
+			<br />
+			<input class="clsLabelAdmin" id="localizacao" type="text" placeholder="digite a localização" name="localizacao" />
+			<br />
+
+			<label class="clsLabelAdmin" for="obs">Observação:</label>
+			<br />
+			<input class="clsLabelAdmin" id="obs" type="text" placeholder="digite alguma observaçãoe" name="obs" />
+			<br />
+			<label class="clsLabelAdmin" for="foto">Foto:</label>
+			<br />
+			<input class="clsLabelAdmin" id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg" />
+			<!-- <input class="clsLabelAdmin" id="foto" type="text" placeholder="digite o nome da foto" name="foto"> -->
+			<br />
+			<div id="inputBot">
+				<input id="botCriarVistoriar" type="submit" name="criar" value="criar" />
+				<input id="botAtualizarVistoriar" type="submit" value="atualizar" name="atualizar" />
+				<input id="botDeletarVistoriar" type="submit" value="deletar" name="deletar" />
+			</div>
+
+		</form>
+	</div>
+	<br />
+
+	<!-- *************************************************************************************************************** -->
+	<!-- Formulário com opções de pesquisa -->
+	<div>
+		<form action="buscaVistoria" method="get">
+			<!-- Usuários -->
+			<input id="buscaPorUsuario" type="submit" value="Usuário" name="1" />
+			<!-- Carrega todos os usuários. Os exibe de acordo com o javascript -->
+			<select name="usuario">
+				<option th:each="usuario : ${listaUsuarios}" th:with="varUsuario=${usuario.nome}" th:value="${usuario.matricula}"
+					th:text="${usuario.matricula} + ' - ' + ${#strings.trim(varUsuario)}"
+				></option>
+			</select>
+		</form>
+
+		<form action="buscaVistoria" method="get">
+			<!-- Extintores -->
+			<input id="buscaPorExtintor" type="submit" value="Extintor" name="2" />
+			<!-- Carrega todos os extintores. Os exibe de acordo com o javascript -->
+			<select name="extintor">
+				<option th:each="extintor : ${listaExtintores}" th:with="varExtintor=${extintor.id}" th:value="${extintor.id}" th:text="${extintor.id}"></option>
+			</select>
+		</form>
+
+		<form action="buscaVistoria" method="get">
+			<!-- Extintores -->
+			<input id="buscaPorVistoria" type="submit" value="Vistoria" name="3" />
+			<!-- Carrega todas as extintores. As exibe de acordo com o javascript -->
+			<select name="vistoria">
+				<option th:each="vistoria : ${listaVistorias}" th:with="varVistoria=${vistoria.id}" th:value="${vistoria.id}" th:text="${vistoria.id}"></option>
+			</select>
+		</form>
+	</div>
+	<!-- *************************************************************************************************************** -->
+
+
+	<div id="divEachVistoria" th:each="vistoria: ${lista}">
+		<span th:text="${vistoria.id}"></span>
+		<div class="clsEach">
+			<div id="divVistoriaEsquerda">
+				<span class="clsSpan"> Número de Identificação da Vistoria:</span>
+				<span class="clsResposta">
+					<a th:href="@{${id}(id=${vistoria.id})}" th:text="${vistoria.id}" target="_blank"></a>
+				</span>
+				<br />
+
+				<span class="clsSpan">Número de Identificação do Extintor:</span>
+				<span class="clsResposta" th:text="${vistoria.fkExtintor}"></span>
+				<br />
+
+				<span class="clsSpan">Número de Identificação do Usuário:</span>
+				<span class="clsResposta" th:text="${vistoria.fkUsuario}"></span>
+				<br />
+
+				<span class="clsSpan">Última Vistoria</span>
+				<span class="clsResposta" th:with="varDataUltima=${vistoria.dataUltimaDate}" th:value="${vistoria.dataUltima}" th:text="${#dates.format(varDataUltima, 'dd-MM-yyyy')}"> </span>
+				<br />
+
+				<span class="clsSpan">Período entre vistorias (meses)</span>
+				<span class="clsResposta" th:text="${vistoria.periodo}"></span>
+				<br />
+
+				<span class="clsSpan">Próxima vistoria</span>
+				<span class="clsResposta" th:with="varDataProxima=${vistoria.dataProximaDate}" th:value="${vistoria.dataProxima}" th:text="${#dates.format(varDataProxima, 'dd-MM-yyyy')}">
+				</span>
+				<br />
+
+
+			</div>
+			<div id="divVistoriaDireita">
+				<span class="clsSpan">Foto:</span>
+				
+				<!-- <img th:src="@{'data:image/png;base64,'+${session.fotoString}}"/> -->
+				<img th:src="@{'data:image/png;base64,'+${vistoria.fotoBanco}}" width="200"/>
+				<br />
+				
+				<span class="clsSpan">Localização</span>
+				<span class="clsResposta" th:text="${vistoria.localizacao}"></span>
+				<br />
+
+				<span class="clsSpan">Observação</span>
+				<span class="clsResposta" th:text="${vistoria.obs}"></span>
+				<br />
+			</div>
 		</div>
+	</div>
 
 </body>
 </html>

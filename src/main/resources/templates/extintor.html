@@ -7,121 +7,115 @@
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <body onload="onLoadExtintor();">
-		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo
-				de cabeçalho</div>
-		<br />
-		<div id="divForm">
-				<form id="idForm" action="extintor" method="get"
-						th:object="${extintor}"
-				>
-						<input id="extintorId" type="number" placeholder="digite o id"
-								name="id">
-						<select name="agente" id="extintorAgente">
-						
-								<option th:each="extintor : ${listaAgentes}" th:with="agente=${extintor.agente}"
-										th:value="${#strings.trim(agente)}" th:text="${#strings.trim(agente)}"></option>
-						</select>
-						<input id="botPesquisarExtintor" type="submit" value="Pesquisar"
-								name="pesquisar" onmouseover="idExtintorDefault();"	/>
-				</form>
-		</div>
-		<br />
-		<div  id="caixaAdmin"><!-- class="clsCaixasAdmin" -->
+
+	<!-- *************************************************************************************************************************************************************************** -->
+
+	<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo de cabeçalho</div>
+	<br />
+
+	<!-- *************************************************************************************************************************************************************************** -->
+
+	<div id="divForm">
+		<form id="idForm" action="extintor" method="get" th:object="${extintor}">
+			<input id="extintorId" type="number" placeholder="digite o id" name="id">
+			<select name="agente" id="extintorAgente">
+
+				<option th:each="extintor : ${listaAgentes}" th:with="agente=${extintor.agente}" th:value="${#strings.trim(agente)}" th:text="${#strings.trim(agente)}"></option>
+			</select>
+			<input id="botPesquisarExtintor" type="submit" value="Pesquisar" onmouseover="idExtintorDefault();" />
+		</form>
+	</div>
+	<br />
+
+	<!-- *************************************************************************************************************************************************************************** -->
+
+	<div id="caixaAdmin">
+		<!-- class="clsCaixasAdmin" -->
 		<br />
 
-				<span id="textoEditarExtintor">Editar Extintor</span>
+		<span id="textoEditarExtintor">Editar Extintor</span>
+		<br />
+		<br />
+		<form class="clsLabelAdmin" action="extintor" method="post" th:object="${extintor}">
+			<label class="clsLabelAdmin" for="id">Número de Indentificação:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarId" type="text" placeholder="digite seu Número de Indentificação" name="id">
+			<br />
+
+			<label class="clsLabelAdmin" for="Classe">Classe:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarClasse" type="text" placeholder="digite a Classe" name="Classe" />
+			<br />
+
+			<label class="clsLabelAdmin" for="Agente">Agente:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarAgente" type="text" placeholder="digite seu Agente" name="Agente" />
+			<br />
+
+			<label class="clsLabelAdmin" for="DataCompra">Data Compra:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarDataCompra" type="text" placeholder="digite a Data Compra" name="DataCompra" />
+			<br />
+
+			<label class="clsLabelAdmin" for="Volume">Volume:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarVolume" type="text" placeholder="digite o Volume" name="Volume" />
+			<br />
+			<label class="clsLabelAdmin" for="Foto">Foto:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarFoto" type="text" placeholder="digite o nome da foto" name="Foto">
+			<br />
+			<div id="inputBot">
+				<input id="botCriarExtintor" type="submit" name="criar" value="criar" onmouseover="idExtintorDefault();" />
+				<input id="botAtualizarExtintor" type="submit" value="atualizar" name="atualizar" onmouseover="idExtintorDefault();" />
+				<input id="botDeletarExtintor" type="submit" value="deletar" name="deletar" onmouseover="idExtintorDefault();" />
+				<input id="botGerarQrExtintor" th:href="@{https://br.qr-code-generator.com/}" type="submit" value="Gerar Qr code" name="qrcode" onmouseover="idExtintorDefault();" />
+			</div>
+
+		</form>
+	</div>
+	<br />
+
+	<!-- *************************************************************************************************************************************************************************** -->
+
+	<div id="divEach" th:each="extintor: ${lista}">
+		<div>
+			<!-- class="clsEach" -->
+			<div id="divEsquerda">
+				<span class="clsSpan"> Número de Identificação:</span>
+				<span class="clsResposta">
+					<a th:href="@{${id}(id=${extintor.id})}" th:text="${extintor.id}" target="_blank"></a>
+				</span>
 				<br />
+
+				<span class="clsSpan">Classe:</span>
+				<span class="clsResposta" th:text="${extintor.classe}"></span>
 				<br />
-				<form class="clsLabelAdmin" action="extintor" method="post"
-						th:object="${extintor}">
-						<label class="clsLabelAdmin" for="id">Número de
-								Indentificação:</label>
-								<br />
-						<input class="clsLabelAdmin" id="editarId" type="text"
-								placeholder="digite seu Número de
-										Indentificação"
-								name="id">
-						<br />
 
-						<label class="clsLabelAdmin" for="Classe">Classe:</label>
-						<br />
-						<input class="clsLabelAdmin" id="editarClasse" type="text"
-								placeholder="digite a Classe" name="Classe"/>
-						<br />
+				<span class="clsSpan">Agente:</span>
+				<span class="clsResposta" th:text="${extintor.agente}"></span>
+				<br />
 
-						<label class="clsLabelAdmin" for="Agente">Agente:</label><br />
-						<input class="clsLabelAdmin" id="editarAgente" type="text"
-								placeholder="digite seu Agente" name="Agente"
-						/>
-						<br />
+				<span class="clsSpan">Data Compra:</span>
+				<span class="clsResposta" th:text="${extintor.dataCompra}"></span>
+				<br />
 
-						<label class="clsLabelAdmin" for="DataCompra">Data Compra:</label><br />
-						<input class="clsLabelAdmin" id="editarDataCompra" type="text"
-								placeholder="digite a Data Compra" name="DataCompra"
-						/>
-						<br />
-
-						<label class="clsLabelAdmin" for="Volume">Volume:</label><br />
-						<input class="clsLabelAdmin" id="editarVolume" type="text"
-								placeholder="digite o Volume" name="Volume"
-						/>
-						<br />
-						<label class="clsLabelAdmin" for="Foto">Foto:</label><br />
-						<input class="clsLabelAdmin" id="editarFoto" type="text"
-								placeholder="digite o nome da foto" name="Foto">
-						<br />
-						<div id="imputBot">
-						<input id="botCriarExtintor" type="submit" name="criar"
-								value="criar" onmouseover="idExtintorDefault();"
-						/>
-						<input id="botAtualizarExtintor" type="submit" value="atualizar"
-								name="atualizar" onmouseover="idExtintorDefault();"
-						/>
-						<input id="botDeletarExtintor" type="submit" value="deletar"
-								name="deletar" onmouseover="idExtintorDefault();"
-						/>
-						<input id="botGerarQrExtintor"
-								th:href="@{https://br.qr-code-generator.com/}" type="submit"
-								value="Gerar Qr code" name="qrcode"
-								onmouseover="idExtintorDefault();"
-						/>
-						</div>
-
-				</form>
+				<span class="clsSpan">Volume:</span>
+				<span class="clsResposta" th:text="${extintor.volume}"></span>
+				<br />
+			</div>
+			<div id="divDireita">
+			
+				<span class="clsSpan">Foto:</span>
+				<img th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}" class="clsSpan" />
+				<br />
+				
+				<span class="clsSpan">QRCode:</span>
+				<img th:src="@{/images/qr/extintorId/{qr} (qr='imageQR' + ${extintor.id} +'.jpg')}" class="clsSpan" />
+			</div>
 		</div>
-		<br />
-		<div id="divEach" th:each="extintor: ${lista}">
-				<div><!-- class="clsEach" --> 
-						<div id="divEsquerda">
-								<span class="clsSpan"> Número de Identificação:</span>
-								<span class="clsResposta">
-										<a th:href="@{${id}(id=${extintor.id})}" th:text="${extintor.id}" target="_blank"></a>
-								</span>
-								<br />
-
-								<span class="clsSpan">Classe:</span>
-								<span class="clsResposta" th:text="${extintor.classe}"></span>
-								<br />
-
-								<span class="clsSpan">Agente:</span>
-								<span class="clsResposta" th:text="${extintor.agente}"></span>
-								<br />
-
-								<span class="clsSpan">Data Compra:</span>
-								<span class="clsResposta" th:text="${extintor.dataCompra}"></span>
-								<br />
-
-								<span class="clsSpan">Volume:</span>
-								<span class="clsResposta" th:text="${extintor.volume}"></span>
-								<br />
-						</div>
-						<div id="divDireita">
-								<span class="clsSpan">Foto:</span>
-
-								<img th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}"	class="clsSpan"	/>
-								<br />
-						</div>
-				</div>
-		</div>
+	</div>
+	
+	<!-- *************************************************************************************************************************************************************************** -->
 </body>
 </html>

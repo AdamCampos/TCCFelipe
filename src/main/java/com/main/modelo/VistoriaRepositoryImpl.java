@@ -61,8 +61,7 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 
 	@Override
 	public void delete(Vistoria entity) {
-		// TODO Auto-generated method stub
-
+		jdbc.update("delete from vistoria where id = ?", entity.getId());
 	}
 
 	@Override
@@ -99,8 +98,27 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Vistoria save(Vistoria vistoria) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+
+			log.debug(":: fkExtintor: " + vistoria.getFkExtintor());
+			log.debug(":: fkUsuario: " + vistoria.getFkUsuario());
+			log.debug(":: dataUltima: " + vistoria.getDataUltima());
+			log.debug(":: periodo: " + vistoria.getPeriodo());
+			log.debug(":: dataTeste: " + vistoria.getDataTeste());
+			log.debug(":: foto: " + vistoria.getFoto());
+			log.debug(":: localizacao: " + vistoria.getLocalizacao());
+			log.debug(":: obs: " + vistoria.getObs());
+
+			jdbc.update(
+					"insert into Vistoria (fkExtintor, fkUsuario, dataUltima, periodo,  dataTeste, foto, localizacao, obs) values (?, ?, ?, ?, ?, ?, ?, ?)",
+					vistoria.getFkExtintor(), vistoria.getFkUsuario(), vistoria.getDataUltima(), vistoria.getPeriodo(),
+					vistoria.getDataTeste(), vistoria.getFoto(), vistoria.getLocalizacao(), vistoria.getObs());
+
+		} catch (Exception e) {
+			log.debug("::Erro inserindo vistoria " + e);
+		}
+
+		return vistoria;
 	}
 
 	private Vistoria mapeiaLinhaVistoria(ResultSet rs, int rowNum) {
@@ -108,15 +126,61 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 		Vistoria u = new Vistoria();
 
 		try {
-			u = new Vistoria(rs.getInt("id"), rs.getInt("fkExtintor"), rs.getInt("fkUsuario"),
-					rs.getString("dataUltima"), rs.getString("dataProxima"), rs.getInt("periodo"),
-					rs.getString("dataTeste"), rs.getString("foto"), rs.getString("localizacao"), rs.getString("obs"));
-			log.debug("::" + u);
+
+			u = new Vistoria(rs.getInt("id"), rs.getInt("fkExtintor"), rs.getInt("fkUsuario"), rs.getDate("dataUltima"),
+					rs.getDate("dataProxima"), rs.getInt("periodo"), rs.getDate("dataTeste"), rs.getBytes("foto"),
+					rs.getString("localizacao"), rs.getString("obs"));
+
+			u.setFotoBanco(u.getFotoBanco(u.getFoto()));
+
+			try {
+				log.debug("::Id Original: " + rs.getInt("id"));
+				log.debug("::Foto Original: " + rs.getBytes("foto"));
+				log.debug("::Foto Convertida: " + u.getFotoBanco(rs.getBytes("foto")));
+			} catch (Exception e) {
+				log.error("::Erro no buffer: " + e);
+			}
+
 			return u;
 		} catch (SQLException e) {
 			log.debug("::Erro " + e);
 			return u;
 		}
+	}
+
+	public List<Vistoria> buscaPorUsuario(int matricula) {
+
+		List<Vistoria> v = (List<Vistoria>) jdbc.query("select * from Vistoria where (fkUsuario = ?) ",
+				this::mapeiaLinhaVistoria, matricula);
+
+		log.debug("::Buscando vistorias pelo usuário de matricula = " + matricula);
+
+		return v;
+	}
+
+	public List<Vistoria> buscaPorExtintor(int id) {
+
+		List<Vistoria> v = (List<Vistoria>) jdbc.query("select * from Vistoria where (fkExtintor = ?) ",
+				this::mapeiaLinhaVistoria, id);
+
+		log.debug("::Buscando vistorias pelo usuário de matricula = " + id);
+
+		return v;
+	}
+
+	public List<Vistoria> buscaPorVistoria(int id) {
+
+		log.debug("::Buscando vistorias pelo usuário de matricula = " + id);
+
+		if (id > 0) {
+			List<Vistoria> v = (List<Vistoria>) jdbc.query("select * from Vistoria where (id = ?) ",
+					this::mapeiaLinhaVistoria, id);
+			return v;
+		} else {
+			List<Vistoria> v = (List<Vistoria>) jdbc.query("select * from Vistoria ", this::mapeiaLinhaVistoria);
+			return v;
+		}
+
 	}
 
 }

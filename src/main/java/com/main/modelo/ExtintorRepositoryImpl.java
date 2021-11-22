@@ -83,8 +83,7 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 
 	@Override
 	public Iterable<Extintor> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbc.query("select * from Extintor", this::mapeiaLinhaExtintor);
 	}
 
 	@Override
@@ -131,6 +130,7 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 			lista = (ArrayList<Extintor>) jdbc.query(
 					"select id, classe, agente, dataCompra, volume, foto from Extintor where id=?",
 					this::mapeiaLinhaExtintor, id);
+
 		} catch (Exception e) {
 			log.debug("ERRO 1::" + e);
 		}
