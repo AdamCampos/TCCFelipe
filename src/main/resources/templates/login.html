@@ -8,79 +8,56 @@
 </head>
 <body onload="onLoadLogin();">
 
-		<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">
-				Exemplo de cabeçalho</div>
+	<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo de cabeçalho</div>
 
 
-		<!-- ****************************************************************************************** -->
+	<!-- ****************************************************************************************** -->
 
-		<div id="containerLogin">
-				<div class="clsCaixas" id="caixaLogin">
-						<span id="textoLogin">Já tenho login </span>
-						<br />
+	<div id="containerLogin">
+		<div class="clsCaixas" id="caixaLogin">
+		<br />
+			<span id="textoLogin">Já tenho login </span>
+			<br /><br />
 
-						<form class="clsLabel" action="main" method="post"
-								th:object="${usuario}"
-						>
-								<label class="clsLabel" for="matricula">Matrícula ou
-										Nome</label>
-								<input class="clsLabel" id="matricula" type="text"
-										placeholder="digite sua matrícula ou nome"
-										name="matriculaOuNome"
-								/>
-								<br />
+			<form action="main" method="post" th:object="${usuario}">
+				<label for="matricula">Matrícula ou Nome</label>
+				<input id="matricula" type="text" placeholder="digite sua matrícula ou nome" name="matriculaOuNome" />
+				<br />
 
-								<label class="clsLabel" for="senha">Senha</label>
-								<input class="clsLabel" id="senha" type="password"
-										placeholder="digite a sua senha" name="senha"
-								/>
-								<br />
-								<div id="divBotao">
-										<input id="botLogin" type="submit" name="logar" value="OK" />
-								</div>
-						</form>
-
+				<label for="senha">Senha</label>
+				<input id="senha" type="password" placeholder="digite a sua senha" name="senha" />
+				<br />
+				<div>
+					<input class="classeBotoes" type="submit" name="logar" value="OK" onclick="idUsuarioDefault();" />
 				</div>
+			</form>
 
-				<div class="clsCaixas" id="caixaNovo">
-						<span id="textoEditarLogin">Editar login</span>
-						<br />
-
-						<form class="clsLabel" action="main" method="post"
-								th:object="${usuario}"
-						>
-								<label class="clsLabel" for="matricula">Matrícula</label>
-								<input class="clsLabel" id="editarMatricula" type="text"
-										placeholder="digite sua matrícula" name="matricula"
-								>
-								<br />
-
-								<label class="clsLabel" for="nome">Nome</label>
-								<input class="clsLabel" id="editarNome" type="text"
-										placeholder="digite seu nome" name="nome"
-								/>
-								<br />
-
-								<label class="clsLabel" for="senha">Senha</label>
-								<input class="clsLabel" id="editarSenha" type="password"
-										placeholder="digite a sua senha" name="senha"
-								/>
-								<br />
-								<div id="divEditarBotao">
-										<input id="botCriar" type="submit" name="criar" value="Criar" />
-								</div>
-								<div id="divAtualizarBotao">
-										<input id="botAtualizar" type="submit" name="atualizar"
-												value="Atualizar"
-										/>
-								</div>
-								<div id="divDeletarBotao">
-										<input id="botDeletar" type="submit" name="deletar"
-												value="Deletar"
-										/>
-								</div>
-						</form>
-				</div>
 		</div>
+
+		<div id="caixaNovo">
+			<div class="clsCaixas">
+				<span id="textoEditarLogin">Editar login</span>
+				<br />
+
+				<form action="main" method="post" th:object="${usuario}">
+					<label for="matricula">Matrícula</label>
+					<input id="editarMatricula" type="text" placeholder="digite sua matrícula" name="matricula">
+					<br />
+
+					<label for="nome">Nome</label>
+					<input id="editarNome" type="text" placeholder="digite seu nome" name="nome" />
+					<br />
+
+					<label for="senha">Senha</label>
+					<input id="editarSenha" type="password" placeholder="digite a sua senha" name="senha" />
+					<div>
+						<input class="classeBotoes" type="submit" name="criar" value="Criar" />
+						<input class="classeBotoes" type="submit" name="atualizar" value="Atualizar" />
+						<input class="classeBotoes" type="submit" name="deletar" value="Deletar" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

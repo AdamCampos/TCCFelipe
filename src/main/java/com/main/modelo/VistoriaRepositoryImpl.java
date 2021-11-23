@@ -91,8 +91,8 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 
 	@Override
 	public Vistoria findOne(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Vistoria v = jdbc.queryForObject("select * from Vistoria where (id = ?) ", this::mapeiaLinhaVistoria, id);
+		return v;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,19 +100,27 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 	public Vistoria save(Vistoria vistoria) {
 		try {
 
-			log.debug(":: fkExtintor: " + vistoria.getFkExtintor());
-			log.debug(":: fkUsuario: " + vistoria.getFkUsuario());
-			log.debug(":: dataUltima: " + vistoria.getDataUltima());
-			log.debug(":: periodo: " + vistoria.getPeriodo());
-			log.debug(":: dataTeste: " + vistoria.getDataTeste());
-			log.debug(":: foto: " + vistoria.getFoto());
-			log.debug(":: localizacao: " + vistoria.getLocalizacao());
-			log.debug(":: obs: " + vistoria.getObs());
-
 			jdbc.update(
 					"insert into Vistoria (fkExtintor, fkUsuario, dataUltima, periodo,  dataTeste, foto, localizacao, obs) values (?, ?, ?, ?, ?, ?, ?, ?)",
 					vistoria.getFkExtintor(), vistoria.getFkUsuario(), vistoria.getDataUltima(), vistoria.getPeriodo(),
 					vistoria.getDataTeste(), vistoria.getFoto(), vistoria.getLocalizacao(), vistoria.getObs());
+
+			log.debug("::Inserindo vistoria: " + vistoria.getId());
+
+		} catch (Exception e) {
+			log.debug("::Erro inserindo vistoria " + e);
+		}
+
+		return vistoria;
+	}
+
+	public Vistoria atualizar(Vistoria vistoria) {
+		try {
+			jdbc.update(
+					"update  Vistoria set fkExtintor=?, fkUsuario=?, dataUltima=?, periodo=?,  dataTeste=?, foto=?, localizacao=?, obs=? where id=?",
+					vistoria.getFkExtintor(), vistoria.getFkUsuario(), vistoria.getDataUltima(), vistoria.getPeriodo(),
+					vistoria.getDataTeste(), vistoria.getFoto(), vistoria.getLocalizacao(), vistoria.getObs(),
+					vistoria.getId());
 
 		} catch (Exception e) {
 			log.debug("::Erro inserindo vistoria " + e);
@@ -132,14 +140,6 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 					rs.getString("localizacao"), rs.getString("obs"));
 
 			u.setFotoBanco(u.getFotoBanco(u.getFoto()));
-
-			try {
-				log.debug("::Id Original: " + rs.getInt("id"));
-				log.debug("::Foto Original: " + rs.getBytes("foto"));
-				log.debug("::Foto Convertida: " + u.getFotoBanco(rs.getBytes("foto")));
-			} catch (Exception e) {
-				log.error("::Erro no buffer: " + e);
-			}
 
 			return u;
 		} catch (SQLException e) {

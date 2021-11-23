@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+<title>INESHERS - Extintor</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+
+
+	<div id="caixaAdmin">
+		<!-- class="clsCaixasAdmin" -->
+		<br />
+
+		<span id="textoEditarExtintor">Editar Extintor</span>
+		<br />
+		<br />
+		<form action="extintor" method="post" th:object="${extintor}">
+			<label  for="id">Número de Indentificação:</label>
+			<br />
+			<input  id="extintorId" type="text" placeholder="digite seu Número de Indentificação" name="id">
+			<br />
+
+			<label  for="Classe">Classe:</label>
+			<br />
+			<input  id="editarClasse" type="text" placeholder="digite a Classe" name="Classe" />
+			<br />
+
+			<label  for="Agente">Agente:</label>
+			<br />
+			<input  id="editarAgente" type="text" placeholder="digite seu Agente" name="Agente" />
+			<br />
+
+			<label  for="DataCompra">Data Compra:</label>
+			<br />
+			<input  id="editarDataCompra" type="text" placeholder="digite a Data Compra" name="DataCompra" />
+			<br />
+
+			<label  for="Volume">Volume:</label>
+			<br />
+			<input  id="editarVolume" type="text" placeholder="digite o Volume" name="Volume" />
+			<br />
+			<label  for="Foto">Foto:</label>
+			<br />
+			<input  id="editarFoto" type="text" placeholder="digite o nome da foto" name="Foto">
+			<br />
+			<div>
+				<input class="clsBotoes" type="submit" name="criar" value="criar" onclick="idExtintorDefault();"/>
+				<input class="clsBotoes" type="submit" value="atualizar" name="atualizar" onclick="idExtintorDefault();"/>
+				<input class="clsBotoes" type="submit" value="deletar" name="deletar" onclick="idExtintorDefault();"/>
+			</div>
+
+		</form>
+	</div>
+	<br />
+

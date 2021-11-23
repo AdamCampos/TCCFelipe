@@ -106,9 +106,9 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 	public Extintor save(Extintor extintor) {
 
 		try {
-			jdbc.update("insert into Extintor (id, classe, agente, dataCompra, volume, foto) values (?, ?, ?, ?, ?, ?)",
-					extintor.getId(), extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(),
-					extintor.getVolume(), extintor.getFoto());
+			jdbc.update("insert into Extintor (classe, agente, dataCompra, volume, foto) values (?, ?, ?, ?, ?)",
+					extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(), extintor.getVolume(),
+					extintor.getFoto());
 		} catch (Exception e) {
 			log.debug("::Erro ao inserir extintor " + e);
 			try {

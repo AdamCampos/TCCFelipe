@@ -6,7 +6,6 @@ import java.util.Comparator;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,290 +46,275 @@ public class ControladorVistoria {
 	@Autowired
 	VistoriaRepositoryImpl vistoriaImp;
 
+	private final static ModelAndView MAV = new ModelAndView("vistoria");
+
 	/******************************************************************************************************************/
+	// Controla a requisição GET com caminho "vistoria".
+	// Esta requisição normalemnte vem de fora da página. Para a página ser exibida,
+	// o usuário deve estar logado.
+	// Existem dois objetos principais passados da view para o controler: Vistoria e
+	// HTTPSession
 	@RequestMapping(value = { "/vistoria" }, method = { RequestMethod.GET })
-	public ModelAndView resolveIndex(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao) {
+	public ModelAndView controlePrincipalVistoria(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao) {
 
-		log.debug("::Teste vistoria ");
-
-		ModelAndView mav = new ModelAndView("vistoria");
-
+		// Recebe o usuário atual. O escopo é de sessão.
 		Usuario u = (Usuario) sessao.getAttribute("usuario");
 
+		// Se o usuário não estiver logado, retornará à página de login.
 		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
-			mav = new ModelAndView("login");
+			return new ModelAndView("login");
 		} else {
+			MAV.addObject("lista", this.carregaListaVistorias());
+			this.carregaTodasListas();
 
-			// Tenta buscar a lista de usuários no banco de dados. Isto irá popular o combo
-			// box da busca por usuário. Este método deve ser @PostConstruct
-			try {
-
-				ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) usuarioImp.findAll();
-				listaUsuarios.sort(new Comparator<Usuario>() {
-
-					@Override
-					public int compare(Usuario u1, Usuario u2) {
-
-						int compare = u1.getNome().compareTo(u2.getNome());
-						return compare;
-					}
-				});
-
-				mav.addObject("listaUsuarios", listaUsuarios);
-			} catch (Exception e) {
-				log.error("::Erro ao tentar buscar lista de agentes.");
-			}
-
-			// Tenta buscar a lista de extintores no banco de dados. Isto irá popular o
-			// combobox da busca por extintor. Este método deve ser @PostConstruct
-
-			try {
-
-				ArrayList<Extintor> listaExtintores = (ArrayList<Extintor>) extintorImp.findAll();
-				mav.addObject("listaExtintores", listaExtintores);
-
-			} catch (Exception e) {
-				log.error("::Erro ao tentar buscar lista de extintores.");
-			}
-
-			// Tenta buscar a lista de vistorias no banco de dados. Isto irá popular o
-			// combobox da busca por vistoria. Este método deve ser @PostConstruct
-
-			try {
-				ArrayList<Vistoria> listaVistorias = (ArrayList<Vistoria>) vistoriaImp.findAll();
-				mav.addObject("listaVistorias", listaVistorias);
-
-				Vistoria v = new Vistoria();
-				String fotoString = Base64.encodeBase64String(listaVistorias.get(listaVistorias.size() - 1).getFoto());
-				v.setFoto(listaVistorias.get(listaVistorias.size() - 1).getFoto());
-				log.debug("::Foto em v. " + v.getFoto());
-				v.setId(500);
-				v.setFkUsuario(5);
-
-				sessao.setAttribute("v", v);
-				sessao.setAttribute("fotoString", fotoString);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			return MAV;
 		}
-
-		return mav;
 	}
 
 	/******************************************************************************************************************/
+	// Trata da pesquisa de vistorias por meio do id do usuário.
 	@RequestMapping(value = { "/buscaVistoria" }, method = { RequestMethod.GET }, params = "usuario")
 	public ModelAndView buscaUsuario(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao,
 			WebRequest requisicao) {
 
-		ModelAndView mav = new ModelAndView("vistoria");
+		// Recebe o usuário atual. O escopo é de sessão.
+		Usuario u = (Usuario) sessao.getAttribute("usuario");
 
-		String matricula = requisicao.getParameter("usuario");
-		log.debug("::buscando pelo usuário " + matricula);
+		// Se o usuário não estiver logado, retornará à página de login.
+		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
+			return new ModelAndView("login");
+		}
 
-		// Busca vistorias do usuário escolhido
-
-		sessao.removeAttribute("lista");
+		// Busca vistorias do usuário escolhido. O usuário é obtido do objeto
+		// WebRequest.
+		// O DAO resolve a pesquisa usando a matrícula do objeto usuário.
 		ArrayList<Vistoria> listaVistoriasPorUsuario = (ArrayList<Vistoria>) uri
-				.buscaPorUsuario(Integer.valueOf(matricula));
-		sessao.setAttribute("vistoria", vistoria);
+				.buscaPorUsuario(Integer.valueOf(requisicao.getParameter("usuario")));
 
-		log.debug("::lista de vistorias: " + listaVistoriasPorUsuario.size());
-		mav.addObject("lista", listaVistoriasPorUsuario);
+		// O parâmetro "lista" é a lista principal mostrada na View.
+		MAV.addObject("lista", listaVistoriasPorUsuario);
+		this.carregaTodasListas();
 
-		try {
-
-			ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) usuarioImp.findAll();
-
-			listaUsuarios.sort(new Comparator<Usuario>() {
-
-				@Override
-				public int compare(Usuario u1, Usuario u2) {
-
-					int compare = u1.getNome().compareTo(u2.getNome());
-					return compare;
-				}
-			});
-
-			mav.addObject("listaUsuarios", listaUsuarios);
-
-		} catch (Exception e) {
-			log.error("::Erro ao tentar buscar lista de agentes.");
-		}
-
-		// Tenta buscar a lista de extintores no banco de dados. Isto irá popular o
-		// combobox da busca por extintor. Este método deve ser @PostConstruct
-
-		try {
-
-			ArrayList<Extintor> listaExtintores = (ArrayList<Extintor>) extintorImp.findAll();
-			mav.addObject("listaExtintores", listaExtintores);
-
-		} catch (Exception e) {
-			log.error("::Erro ao tentar buscar lista de extintores.");
-		}
-
-		// Tenta buscar a lista de vistorias no banco de dados. Isto irá popular o
-		// combobox da busca por vistoria. Este método deve ser @PostConstruct
-
-		try {
-			ArrayList<Vistoria> listaVistorias = (ArrayList<Vistoria>) vistoriaImp.findAll();
-			mav.addObject("listaVistorias", listaVistorias);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return mav;
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
+	// Trata da pesquisa de vistorias por meio do id do extintor.
 	@RequestMapping(value = { "/buscaVistoria" }, method = { RequestMethod.GET }, params = "extintor")
 	public ModelAndView buscaExtintor(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao,
 			WebRequest requisicao) {
 
-		ModelAndView mav = new ModelAndView("vistoria");
+		// Recebe o usuário atual. O escopo é de sessão.
+		Usuario u = (Usuario) sessao.getAttribute("usuario");
 
-		String id = requisicao.getParameter("extintor");
-		log.debug("::buscando pelo extintor " + id);
+		// Se o usuário não estiver logado, retornará à página de login.
+		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
+			return new ModelAndView("login");
+		}
 
 		// Busca vistorias do usuário escolhido
+		ArrayList<Vistoria> listaVistoriasPorExtintor = (ArrayList<Vistoria>) uri
+				.buscaPorExtintor(Integer.valueOf(requisicao.getParameter("extintor")));
 
-		sessao.removeAttribute("lista");
-		ArrayList<Vistoria> listaVistorias = (ArrayList<Vistoria>) uri.buscaPorExtintor(Integer.valueOf(id));
-		sessao.setAttribute("vistoria", vistoria);
+		// O parâmetro "lista" é a lista principal mostrada na View.
+		MAV.addObject("lista", listaVistoriasPorExtintor);
 
-		log.debug("::lista de vistorias: " + listaVistorias.size());
-		mav.addObject("lista", listaVistorias);
+		this.carregaTodasListas();
 
-		try {
-
-			ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) usuarioImp.findAll();
-
-			listaUsuarios.sort(new Comparator<Usuario>() {
-
-				@Override
-				public int compare(Usuario u1, Usuario u2) {
-
-					int compare = u1.getNome().compareTo(u2.getNome());
-					return compare;
-				}
-			});
-
-			mav.addObject("listaUsuarios", listaUsuarios);
-
-		} catch (Exception e) {
-			log.error("::Erro ao tentar buscar lista de agentes.");
-		}
-
-		// Tenta buscar a lista de extintores no banco de dados. Isto irá popular o
-		// combo
-		// box da busca por extintor. Este método deve ser @PostConstruct
-
-		try {
-
-			ArrayList<Extintor> listaExtintores = (ArrayList<Extintor>) extintorImp.findAll();
-			mav.addObject("listaExtintores", listaExtintores);
-
-		} catch (Exception e) {
-			log.error("::Erro ao tentar buscar lista de extintores.");
-		}
-
-		return mav;
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
+	// Trata da pesquisa de vistorias por meio do id das vistorias.
 	@RequestMapping(value = { "/buscaVistoria" }, method = { RequestMethod.GET }, params = "vistoria")
 	public ModelAndView buscaVistoria(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao,
 			WebRequest requisicao, ModelMap model) {
 
-		ModelAndView mav = new ModelAndView("vistoria");
+		// Recebe o usuário atual. O escopo é de sessão.
+		Usuario u = (Usuario) sessao.getAttribute("usuario");
 
-		String id = requisicao.getParameter("vistoria");
-		log.debug("::buscando pela vistoria " + id);
+		// Se o usuário não estiver logado, retornará à página de login.
+		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
+			return new ModelAndView("login");
+		}
 
 		// Busca vistorias pelo Id
+		ArrayList<Vistoria> listaVistoriasPorVistoria = (ArrayList<Vistoria>) uri
+				.buscaPorVistoria(Integer.valueOf(requisicao.getParameter("vistoria")));
 
-		sessao.removeAttribute("lista");
-		ArrayList<Vistoria> listaVistorias = (ArrayList<Vistoria>) uri.buscaPorVistoria(Integer.valueOf(id));
-		sessao.setAttribute("vistoria", vistoria);
+		// O parâmetro "lista" é a lista principal mostrada na View.
+		MAV.addObject("lista", listaVistoriasPorVistoria);
 
-		log.debug("::lista de vistorias: " + listaVistorias.size());
-		mav.addObject("listaVistorias", listaVistorias);
+		this.carregaTodasListas();
 
-		try {
-
-			ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) usuarioImp.findAll();
-
-			listaUsuarios.sort(new Comparator<Usuario>() {
-
-				@Override
-				public int compare(Usuario u1, Usuario u2) {
-
-					int compare = u1.getNome().compareTo(u2.getNome());
-					return compare;
-				}
-			});
-
-			mav.addObject("listaUsuarios", listaUsuarios);
-
-		} catch (Exception e) {
-			log.error("::Erro ao tentar buscar lista de agentes.");
-		}
-
-		// Tenta buscar a lista de extintores no banco de dados. Isto irá popular o
-		// combobox da busca por extintor. Este método deve ser @PostConstruct
-
-		try {
-
-			ArrayList<Extintor> listaExtintores = (ArrayList<Extintor>) extintorImp.findAll();
-			mav.addObject("listaExtintores", listaExtintores);
-
-		} catch (Exception e) {
-			log.error("::Erro ao tentar buscar lista de extintores.");
-		}
-
-		// model.addAttribute("pic",
-		// Base64.getEncoder().encodeToString(vistoria.getFoto()));
-
-		return mav;
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
-
+	// Deleta uma vistoria dado seu Id.
 	@RequestMapping(value = { "/vistoria" }, method = { RequestMethod.POST }, params = "deletar")
 	public ModelAndView deletar(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao) {
 
-		ModelAndView mav = new ModelAndView("vistoria");
-		log.debug("::deletando vistoria: " + vistoria.getId());
-		uri.delete(vistoria);
+		// Recebe o usuário atual. O escopo é de sessão.
+		Usuario u = (Usuario) sessao.getAttribute("usuario");
 
-		return mav;
+		// Se o usuário não estiver logado, retornará à página de login.
+		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
+			return new ModelAndView("login");
+		}
+
+		uri.delete(vistoria);
+		// this.carregaTodasListas();
+
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
+	// Atualiza uma vistoria dado seu Id.
+	@RequestMapping(value = { "/vistoria" }, method = { RequestMethod.POST }, params = "atualizar", consumes = {
+			"multipart/form-data" })
+	public ModelAndView atualizar(@ModelAttribute("vistoria") Vistoria vistoria, HttpSession sessao,
+			@RequestParam("fotoUpload") MultipartFile multiparte, MultipartHttpServletRequest request) {
+
+		// Recebe o usuário atual. O escopo é de sessão.
+		Usuario u = (Usuario) sessao.getAttribute("usuario");
+
+		// Se o usuário não estiver logado, retornará à página de login.
+		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
+			return new ModelAndView("login");
+		}
+
+		Vistoria v = uri.findOne(String.valueOf(vistoria.getId()));
+		v.setFkExtintor(vistoria.getFkExtintor());
+
+		// No caso de não haver data nova, se manterá a data que estiver no banco de
+		// dados.
+		if (vistoria.getDataUltima() != null) {
+			v.setDataUltima(vistoria.getDataUltima());
+		}
+
+		// No caso de não haver foto nova, se manterá a foto que estiver no banco de
+		// dados.
+		if (multiparte != null) {
+			log.debug("::Subindo nova foto.");
+			try {
+				v.setFoto(multiparte.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			log.debug("::Usando foto antiga.");
+		}
+
+		// Testa se o usuário é o responsável pela vistoria a ser editada.
+		// Matrícula do usuário que criou a vistoria:
+		int matriculaAntiga = v.getFkUsuario();
+		// Matrícula do usuário atual:
+		int matriculaAtual = u.getMatricula();
+
+		if (matriculaAntiga == matriculaAtual || matriculaAtual == 1) {
+			log.debug("::Atualizando[4].");
+			uri.atualizar(v);
+			this.carregaTodasListas();
+		}
+
+		return MAV;
+	}
+
+	/******************************************************************************************************************/
+	// Gerencia a criação de uma nova Vistoria.
+	// Os parâmetros Usuário e Extintor são obrigatórios.
 	@RequestMapping(value = { "/vistoria" }, method = { RequestMethod.POST }, params = "criar", consumes = {
 			"multipart/form-data" })
 	public ModelAndView criar(@ModelAttribute("vistoria") Vistoria vistoria,
 			@RequestParam("fotoUpload") MultipartFile multiparte, HttpSession sessao,
 			MultipartHttpServletRequest request) {
 
-		// Toda vistoria deve ter um Usuario e pelo menos um extintor.
-
-		// Recupera o usuário logado
+		// Recebe o usuário atual. O escopo é de sessão.
 		Usuario u = (Usuario) sessao.getAttribute("usuario");
-		// Passa para a vistoria o Id do usuário (matrícula)
-		vistoria.setFkUsuario(u.getMatricula());
+
+		// Se o usuário não estiver logado, retornará à página de login.
+		if (u.getNome().contains("Anônimo") || u.getNome().contains("Anonimous")) {
+			return new ModelAndView("login");
+		}
+
 		try {
+			// Passa para a vistoria o Id do usuário (matrícula).
+			// O objeto Usuario é obtido do objeto HttpSession
+			vistoria.setFkUsuario(((Usuario) sessao.getAttribute("usuario")).getMatricula());
 			vistoria.setFoto(multiparte.getBytes());
 			log.error("::Passando o upload.");
 		} catch (IOException e) {
-			log.error("::Erro qao converter o multipart em bytes.");
+			log.error("::Erro ao converter o multipart em bytes.");
 			e.printStackTrace();
 		}
 
-		ModelAndView mav = new ModelAndView("vistoria");
 		uri.save(vistoria);
+		this.carregaTodasListas();
 
-		return mav;
+		return MAV;
+	}
+
+	/******************************************************************************************************************/
+	private ArrayList<Usuario> carregaListaUsuarios() {
+		// Tenta buscar a lista de usuários no banco de dados. Isto irá popular o combo
+		// box da busca por usuário. Este método deve ser @PostConstruct
+		try {
+
+			ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) usuarioImp.findAll();
+			listaUsuarios.sort(new Comparator<Usuario>() {
+
+				@Override
+				public int compare(Usuario u1, Usuario u2) {
+
+					int compare = u1.getNome().compareTo(u2.getNome());
+					return compare;
+				}
+			});
+			return listaUsuarios;
+		} catch (Exception e) {
+			log.error("::Erro ao tentar buscar lista de agentes.");
+			return null;
+		}
+
+	}
+
+	/******************************************************************************************************************/
+	private ArrayList<Extintor> carregaListaExtintores() {
+		try {
+
+			ArrayList<Extintor> listaExtintores = (ArrayList<Extintor>) extintorImp.findAll();
+			return listaExtintores;
+		} catch (Exception e) {
+			log.error("::Erro ao tentar buscar lista de extintores.");
+			return null;
+		}
+	}
+
+	/******************************************************************************************************************/
+	private ArrayList<Vistoria> carregaListaVistorias() {
+		try {
+			ArrayList<Vistoria> listaVistorias = (ArrayList<Vistoria>) vistoriaImp.findAll();
+			return listaVistorias;
+		} catch (Exception e) {
+			log.error("::Erro ao tentar buscar lista de vistorias.");
+			return null;
+		}
+	}
+
+	/******************************************************************************************************************/
+	private void carregaTodasListas() {
+
+		// Tenta buscar a lista de usuários no banco de dados. Isto irá popular o
+		// combobox da busca por usuário. Este método deve ser @PostConstruct
+		MAV.addObject("listaUsuarios", this.carregaListaUsuarios());
+
+		// Tenta buscar a lista de extintores no banco de dados. Isto irá popular o
+		// combobox da busca por extintor. Este método deve ser @PostConstruct
+		MAV.addObject("listaExtintores", this.carregaListaExtintores());
+
+		// Tenta buscar a lista de vistorias no banco de dados. Isto irá popular o
+		// combobox da busca por vistoria. Este método deve ser @PostConstruct
+		MAV.addObject("listaVistorias", this.carregaListaVistorias());
 	}
 }

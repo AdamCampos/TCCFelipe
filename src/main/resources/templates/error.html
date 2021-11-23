@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Erro</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+	<div id="erroH4">
+		<h4>Algo de errado aconteceu!</h4>
+	</div>
+	<div class="clsErroDiv">
+		<span th:text="${errorMsg}"></span>
+	</div>
+	<hr>
+	<div class="clsErroDiv">
+		<span th:text="${errorMsgFull}"></span>
+	</div>
+</body>
+</html>

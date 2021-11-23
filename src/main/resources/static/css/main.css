@@ -4,10 +4,9 @@
  */
 
 /* variáveis*/
-:root { 
-	--cor-cinza: #e0e0e0; 
-	--larg: 50vw; 
-	--alt: 182vh;
+:root { --cor-cinza: #e0e0e0; 
+		--larg: 50vw; 
+		--alt: 182vh;
 }
 
 /* body é todo o conteúdo da página*/
@@ -97,6 +96,8 @@ body {
 }
 
 .clsCaixas {
+	
+	justify-content: center;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -108,6 +109,8 @@ body {
 	box-shadow: 2px -2px #CCC;
 	font-size: 1.2em;
 	color: #e5e5e5;
+	
+	width: 500px;
 }
 
 #caixaLogin {
@@ -120,15 +123,6 @@ body {
 #textoLogin {
 	padding-top: 40px;
 	padding-bottom: 40px;
-}
-
-#botLogin {
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-#divBotao {
-	padding-top: 20px;
 }
 
 #caixaNovo {
@@ -173,10 +167,6 @@ body {
 	align-content: center;
 	align-items: center;
 }
-/* texto usuario*/
-#usuario {
-	padding: 5px;
-}
 
 .submit, input[type=submit] {
 	padding: 5px 15px;
@@ -220,35 +210,43 @@ label {
 	width: 300px;
 }
 
-.clsLabel {
-	display: block;
-	width: 300px;
-	font-size: 16px;
-	padding-top: 5px;
-	align-self: flex-end;
-}
-
 input[type=text], input[type=password] {
 	display: inline-block;
-	width: 293px;
-	font-size: 16px;
+	width: 200px;
+	font-size: 14px;
 }
 
 #usuario {
 	font-size: 1.02em;
+	padding: 5px;
 }
-
-#imputBot {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
 /* ****************************************************************************************** */
 /* CSS extintor */
 
 /* Botão */
+.clsBotoes{
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 110px;
+	justify-content: center;
+}
+
+.clsBotoesVistoria{
+	justify-content: center;
+	width: 100px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.clsSelect{
+	justify-content: center;
+	width: 100px;
+}
+
 #divForm {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -282,27 +280,6 @@ input[type=text], input[type=password] {
 	padding-right: 10px;
 }
 
-#extintorId {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 100px;
-	padding-right: 100px;
-}
-
-#extintorAgente {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 100px;
-	padding-right: 100px;
-}
-
-#botPesquisarExtintor {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
 /* Caixa Extintor */
 #caixaAdmin {
 	padding-left: 10px;
@@ -322,59 +299,59 @@ input[type=text], input[type=password] {
 	font-size: 1.2em;
 	color: #e5e5e5;
 }
-/* .clsLabelAdmin {
-	display: block;
-	width: 300px;
-	font-size: 16px;
-	padding-top: 5px;
-	align-self: flex-end;
-} */
-#botCriarExtintor {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-#botAtualizarExtintor {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-#botDeletarExtintor {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-#botGerarQrExtintor {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
 
 /* Extintor */
 #divEach {
-	background-color: #004080;
-	padding: 10px;
-	border-style: solid;
-	border-color: black;
+	position: relative;
+	padding: 5px;
 	border-width: 3px;
 	align-content: center;
 	align-items: center;
 	text-align: left;
-	width: 93, 2vw;
 	vertical-align: middle;
 	display: flex;
 	justify-content: center;
 	vertical-align: middle;
-	top: 30px;
 	left: 10px;
 	opacity: 0.950;
+	margin-left: 100px;
+	margin-right: 100px;
+}
+#divEachVistoria {
+	position: relative;
+	padding: 5px;
+	border-width: 3px;
+	align-content: center;
+	align-items: center;
+	text-align: left;
+	vertical-align: middle;
+	display: flex;
+	justify-content: center;
+	vertical-align: middle;
+	left: 10px;
+	opacity: 0.950;
+	/* margin-left: 100px;
+	margin-right: 100px; */
+}
+
+.clsResposta {
+	justify-content: center;
+	display: block;
+ 	/* width: 400px;  */
+	font-size: 16px;
+	padding-top: 5px;
+	/* align-self: flex-end; */
+	background-color: white;
+	color: #808080;
+	margin: 2px;
+}
+
+.clsLabel {
+	justify-content: center;
+	display: block;
+	font-size: 16px;
+	padding-top: 5px;
+	align-self: flex-end;
 }
 
 #divEsquerda {
@@ -382,30 +359,25 @@ input[type=text], input[type=password] {
 	border-color: black;
 	border-width: 1px;
 	padding: 20px;
+	margin-right: 10px;
 	display: table-cell;
+	height: 400px;
 }
 
-.clsSpan {
-	background-color: #80ffff;
-	font-size: 16px;
-	width: 300px;
-	border-style: solid;
+ #divVistoriaEsquerda {
+ 	justify-content: center;
+ 	display: table-cell;
+ 	width: 700px;
+ 	margin-left: 300px;
+	margin-right: 10px;
+	height: 500px;
+/* 	border-style: solid;
 	border-color: black;
 	border-width: 1px;
-	display: block;
-	padding-top: 5px;
-	align-self: flex-end;
-}
-
-.clsResposta {
-	display: block;
-	width: 100px;
-	font-size: 16px;
-	padding-top: 5px;
-	align-self: flex-end;
-	border-style: solid;
-	border-color: #ff0000;
-	border-width: 1px;
+	padding: 20px;
+	margin-right: 10px;
+	display: table-cell;
+	height: 400px; */
 }
 
 #divDireita {
@@ -413,89 +385,62 @@ input[type=text], input[type=password] {
 	border-color: black;
 	border-width: 1px;
 	padding: 20px;
+	margin-left: 10px;
 	display: table-cell;
+	height: 400px;
 }
 
-/* ****************************************************************************************** */
-/* CSS vistoria */
-#divEachVistoria {
-	background-color: #004080;
-	padding: 10px;
+#divVistoriaDireita {
+	justify-content: center;
+	display: table-cell;
 	border-style: solid;
 	border-color: black;
+	border-width: 1px;
+	margin-left: 10px;
+	margin-right: 300px;
+	display: table-cell;
+	height: 500px;
+	width: 700px;
+/* 	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding: 20px;
+	margin-left: 10px;
+	display: table-cell;
+	height: 400px; */
+}
+
+#divPesquisa{
+	position: relative;
+	padding: 5px;
 	border-width: 3px;
 	align-content: center;
 	align-items: center;
 	text-align: left;
-	width: 93, 2vw;
 	vertical-align: middle;
 	display: flex;
 	justify-content: center;
 	vertical-align: middle;
-	top: 30px;
 	left: 10px;
 	opacity: 0.950;
+	
 }
-
-#divVistoriaEsquerda {
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	padding: 20px;
-	display: table-cell;
-}
-
-#divVistoriaDireita {
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	padding: 20px;
-	display: table-cell;
-}
-
-/* Caixa Vistoria */
-#caixaAdminVistoria {
-	padding-left: 10px;
-	padding-right: 10px;
-	border-style: solid;
-	border-color: black;
-	border-width: 1px;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #4f4f4f;
-	padding: 2px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	box-shadow: 2px -2px #CCC;
+/* ********************************************** */
+/* Tratamento de erros */
+#erroH4 {
+	padding: 10px;
+	background-color: #d6d6d6;
+	color: #fe2525;
+	font-family: 'verdana';
 	font-size: 1.2em;
-	color: #e5e5e5;
-}
-/* .clsLabelAdmin {
-	display: block;
-	width: 300px;
-	font-size: 16px;
-	padding-top: 5px;
-	align-self: flex-end;
-} */
-#botCriarVistoria {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
+	text-align: left;
 }
 
-#botAtualizarVistoria {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-#botDeletarVistoria {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	padding-left: 10px;
-	padding-right: 10px;
+.clsErroDiv {
+	padding: 12px;
+	background-color: #e9e9e9;
+	color: #fe2525;
+	font-family: 'verdana';
+	font-size: 0.8em;
+	text-align: left;
 }

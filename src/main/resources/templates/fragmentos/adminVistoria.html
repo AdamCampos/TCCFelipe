@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>INESHERS - Extintor</title>
+<meta charset="UTF-8">
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+<body>
+
+	<div id="caixaAdmin" th:fragment="editor">
+		<!-- class="clsCaixasAdmin" -->
+		<br />
+
+		<span id="textoEditarExtintor">Editar Extintor</span>
+		<br />
+		<br />
+		<form class="clsLabelAdmin" action="extintor" method="post" th:object="${extintor}">
+			<label class="clsLabelAdmin" for="id">Número de Indentificação:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarId" type="text" placeholder="digite seu Número de Indentificação" name="id">
+			<br />
+
+			<label class="clsLabelAdmin" for="Classe">Classe:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarClasse" type="text" placeholder="digite a Classe" name="Classe" />
+			<br />
+
+			<label class="clsLabelAdmin" for="Agente">Agente:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarAgente" type="text" placeholder="digite seu Agente" name="Agente" />
+			<br />
+
+			<label class="clsLabelAdmin" for="DataCompra">Data Compra:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarDataCompra" type="text" placeholder="digite a Data Compra" name="DataCompra" />
+			<br />
+
+			<label class="clsLabelAdmin" for="Volume">Volume:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarVolume" type="text" placeholder="digite o Volume" name="Volume" />
+			<br />
+			<label class="clsLabelAdmin" for="Foto">Foto:</label>
+			<br />
+			<input class="clsLabelAdmin" id="editarFoto" type="text" placeholder="digite o nome da foto" name="Foto">
+			<br />
+			<div>
+				<input class="clsBotoesExtintor" type="submit" name="criar" value="criar" />
+				<input class="clsBotoesExtintor" type="submit" value="atualizar" name="atualizar" />
+				<input class="clsBotoesExtintor" type="submit" value="deletar" name="deletar" />
+				<input class="clsBotoesExtintor" th:href="@{https://br.qr-code-generator.com/}" type="submit" value="QR code" name="qrcode"/>
+			</div>
+
+		</form>
+	</div>
+	<br />
+
+<!-- ****************************************************************************************************************************************************** -->
+	<div th:fragment="pesquisas">
+		<form  action="buscaVistoria" method="get">
+			<!-- Usuários -->
+			<input class="clsBotoesVistoria" id="buscaPorUsuario" type="submit" value="Usuário" name="1" />
+			<!-- Carrega todos os usuários. Os exibe de acordo com o javascript -->
+			<select class="clsSelect" name="usuario">
+				<option th:each="usuario : ${listaUsuarios}" th:with="varUsuario=${usuario.nome}" th:value="${usuario.matricula}"
+					th:text="${usuario.matricula} + ' - ' + ${#strings.trim(varUsuario)}"
+				></option>
+			</select>
+		</form>
+
+		<form action="buscaVistoria" method="get">
+			<!-- Extintores -->
+			<input class="clsBotoesVistoria" id="buscaPorExtintor" type="submit" value="Extintor" name="2" />
+			<!-- Carrega todos os extintores. Os exibe de acordo com o javascript -->
+			<select class="clsSelect" name="extintor">
+				<option th:each="extintor : ${listaExtintores}" th:with="varExtintor=${extintor.id}" th:value="${extintor.id}" th:text="${extintor.id}"></option>
+			</select>
+		</form>
+
+		<form action="buscaVistoria" method="get">
+			<!-- Extintores -->
+			<input class="clsBotoesVistoria" id="buscaPorVistoria" type="submit" value="Vistoria" name="3" />
+			<!-- Carrega todas as extintores. As exibe de acordo com o javascript -->
+			<select class="clsSelect" name="vistoria">
+				<option th:each="vistoria : ${listaVistorias}" th:with="varVistoria=${vistoria.id}" th:value="${vistoria.id}" th:text="${vistoria.id}"></option>
+			</select>
+		</form>
+	</div>
+
+</body>
+</html>

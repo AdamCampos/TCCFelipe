@@ -7,153 +7,112 @@
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <body>
-	<div id=containerHeader th:insert="fragmentos/cabecalho :: cabecalho">Exemplo de cabeçalho</div>
-
-	<div class="clsCaixasAdmin" id="caixaAdminVistoria">
+	<div id="containerHeader" th:insert="fragmentos/cabecalho :: cabecalho">Exemplo de cabeçalho</div>
+<br />
+	<div class="clsCaixas">
 		<br />
-
-		<span id="textoEditarVistoria">Dados de Vistorias</span>
+		<span>Dados de Vistorias</span>
 		<br />
 		<br />
-		<form class="clsLabelAdmin" action="vistoria" method="post" th:object="${vistoria}" enctype="multipart/form-data">
+		<form action="vistoria" method="post" th:object="${vistoria}" enctype="multipart/form-data">
 
 			<!-- O usuário é automaticamente identificado, através de login. Usuário não logado não acessa esta página. -->
-			<label class="clsLabelAdmin" for="id">Usuário:</label>
-			<br />
-			<input class="clsLabelAdmin" id="editarId" type="text" th:value="${session.usuario.nome}" name="userId">
-			<br />
+			<label for="usuarioId">Usuário:</label>
+			<input class="clsResposta" id="usuarioId" type="text" th:value="${session.usuario.nome}" name="usuarioId">
 			<!-- *************************************************************************************************************** -->
 
+			<label for="vistoriaId">Número da Vistoria:</label>
+			<input id="vistoriaId" type="text" placeholder="digite o número da Vistoria" name="id">
 
-			<label class="clsLabelAdmin" for="id">Número da Vistoria:</label>
-			<br />
-			<input class="clsLabelAdmin" id="editarIdVistoria" type="text" placeholder="digite o número da Vistoria" name="id">
-			<br />
+			<label for="fkExtintor">Número do extintor:</label>
+			<input id="fkExtintor" type="hidden" placeholder="digite seu Número do extintor" name="fkExtintor" readonly><br/>
+			<select name="extintor" onchange="completaFKExtintor(this);">
+				<option th:each="extintor : ${listaExtintores}" th:with="varExtintor=${extintor.id}" th:value="${extintor.id}" th:text="${extintor.id}"  ></option>
+			</select>
+			<br/>
+			<label for="dataUltima">Última Vistoria:</label>
+			<input id="dataUltima" type="text" placeholder="digite a data da última vistoria" name="dataUltima" />
 
-			<label class="clsLabelAdmin" for="fkExtintor">Número do extintor:</label>
-			<br />
-			<input class="clsLabelAdmin" id="editarId" type="text" placeholder="digite seu Número do extintor" name="fkExtintor">
-			<br />
+			<label for="dataProxima">Próxima Vistoria:</label>
+			<input id="dataProxima" type="text" placeholder="digite a data da próxima vistoria" name="dataProxima" />
 
-			<label class="clsLabelAdmin" for="dataUltima">Última Vistoria:</label>
-			<br />
-			<input class="clsLabelAdmin" id="editarClasse" type="text" placeholder="digite a data da última vistoria" name="dataUltima" />
-			<br />
+			<label for="periodo">Período entre vistorias:</label>
+			<input id="periodo" type="text" placeholder="digite o período entre vistorias" name="periodo" />
 
-			<label class="clsLabelAdmin" for="dataProxima">Próxima Vistoria:</label>
-			<br />
-			<input class="clsLabelAdmin" id="dataProxima" type="text" placeholder="digite a data da próxima vistoria" name="dataProxima" />
-			<br />
+			<label for="localizacao">Localização:</label>
+			<input id="localizacao" type="text" placeholder="digite a localização" name="localizacao" />
 
-			<label class="clsLabelAdmin" for="localizacao">Localização:</label>
-			<br />
-			<input class="clsLabelAdmin" id="localizacao" type="text" placeholder="digite a localização" name="localizacao" />
-			<br />
-
-			<label class="clsLabelAdmin" for="obs">Observação:</label>
-			<br />
-			<input class="clsLabelAdmin" id="obs" type="text" placeholder="digite alguma observaçãoe" name="obs" />
-			<br />
-			<label class="clsLabelAdmin" for="foto">Foto:</label>
-			<br />
-			<input class="clsLabelAdmin" id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg" />
-			<!-- <input class="clsLabelAdmin" id="foto" type="text" placeholder="digite o nome da foto" name="foto"> -->
-			<br />
-			<div id="inputBot">
-				<input id="botCriarVistoriar" type="submit" name="criar" value="criar" />
-				<input id="botAtualizarVistoriar" type="submit" value="atualizar" name="atualizar" />
-				<input id="botDeletarVistoriar" type="submit" value="deletar" name="deletar" />
+			<label for="obs">Observação:</label>
+			<input id="obs" type="text" placeholder="digite alguma observaçãoe" name="obs" />
+			<label for="fotoUpload">Foto:</label>
+			<input id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg" />
+			<div>
+				<input class="clsBotoes" id="botCriarVistoriar" type="submit" name="criar" value="criar" onclick="idVistoriaDefault();" />
+				<input class="clsBotoes" id="botAtualizarVistoriar" type="submit" value="atualizar" name="atualizar" onclick="idVistoriaDefault();" />
+				<input class="clsBotoes" id="botDeletarVistoriar" type="submit" value="deletar" name="deletar" onclick="idVistoriaDefault();" />
+				<button type="button" class="clsBotoes" id="botPesquisar" value="pesquisar" name="pesquisar" onclick="pesquisasVistoria();"> Pesquisar</button>
 			</div>
 
 		</form>
 	</div>
+
 	<br />
 
 	<!-- *************************************************************************************************************** -->
 	<!-- Formulário com opções de pesquisa -->
-	<div>
-		<form action="buscaVistoria" method="get">
-			<!-- Usuários -->
-			<input id="buscaPorUsuario" type="submit" value="Usuário" name="1" />
-			<!-- Carrega todos os usuários. Os exibe de acordo com o javascript -->
-			<select name="usuario">
-				<option th:each="usuario : ${listaUsuarios}" th:with="varUsuario=${usuario.nome}" th:value="${usuario.matricula}"
-					th:text="${usuario.matricula} + ' - ' + ${#strings.trim(varUsuario)}"
-				></option>
-			</select>
-		</form>
-
-		<form action="buscaVistoria" method="get">
-			<!-- Extintores -->
-			<input id="buscaPorExtintor" type="submit" value="Extintor" name="2" />
-			<!-- Carrega todos os extintores. Os exibe de acordo com o javascript -->
-			<select name="extintor">
-				<option th:each="extintor : ${listaExtintores}" th:with="varExtintor=${extintor.id}" th:value="${extintor.id}" th:text="${extintor.id}"></option>
-			</select>
-		</form>
-
-		<form action="buscaVistoria" method="get">
-			<!-- Extintores -->
-			<input id="buscaPorVistoria" type="submit" value="Vistoria" name="3" />
-			<!-- Carrega todas as extintores. As exibe de acordo com o javascript -->
-			<select name="vistoria">
-				<option th:each="vistoria : ${listaVistorias}" th:with="varVistoria=${vistoria.id}" th:value="${vistoria.id}" th:text="${vistoria.id}"></option>
-			</select>
-		</form>
-	</div>
+	<div class="clsCaixas" id="divPesquisa" th:insert="fragmentos/adminVistoria :: pesquisas">Botões de pesquisa</div>
+	<br />
 	<!-- *************************************************************************************************************** -->
-
-
+	<!-- Todos os itens retornados das pesquisas. -->
 	<div id="divEachVistoria" th:each="vistoria: ${lista}">
-		<span th:text="${vistoria.id}"></span>
-		<div class="clsEach">
-			<div id="divVistoriaEsquerda">
-				<span class="clsSpan"> Número de Identificação da Vistoria:</span>
-				<span class="clsResposta">
-					<a th:href="@{${id}(id=${vistoria.id})}" th:text="${vistoria.id}" target="_blank"></a>
-				</span>
-				<br />
+		<div id="divVistoriaEsquerda" class="clsCaixas">
+			<span> Número de Identificação da Vistoria:</span>
+			<span class="clsResposta">
+				<a th:href="@{/buscaVistoria?3=Vistoria&vistoria={id} (id=${vistoria.id})}" th:text="${vistoria.id}"></a>
+			</span>
+			<br />
 
-				<span class="clsSpan">Número de Identificação do Extintor:</span>
-				<span class="clsResposta" th:text="${vistoria.fkExtintor}"></span>
-				<br />
+			<span>Número de Identificação do Extintor:</span>
+			<span class="clsResposta">
+				<a th:href="@{/extintor?id={id} (id=${vistoria.fkExtintor})}" th:text="${vistoria.fkExtintor}"></a>
+			</span>
+			<br />
 
-				<span class="clsSpan">Número de Identificação do Usuário:</span>
-				<span class="clsResposta" th:text="${vistoria.fkUsuario}"></span>
-				<br />
+			<span>Número de Identificação do Usuário:</span>
+			<span class="clsResposta">
+				<a th:href="@{/buscaVistoria?2=Usuario&usuario={id} (id=${vistoria.fkUsuario})}" th:text="${vistoria.fkUsuario}"></a>
+			</span>
+			<br />
 
-				<span class="clsSpan">Última Vistoria</span>
-				<span class="clsResposta" th:with="varDataUltima=${vistoria.dataUltimaDate}" th:value="${vistoria.dataUltima}" th:text="${#dates.format(varDataUltima, 'dd-MM-yyyy')}"> </span>
-				<br />
+			<span>Última Vistoria</span>
+			<span class="clsResposta" th:with="varDataUltima=${vistoria.dataUltima}" th:value="${vistoria.dataUltima}" th:text="${#dates.format(varDataUltima, 'dd-MM-yyyy')}"> </span>
+			<br />
 
-				<span class="clsSpan">Período entre vistorias (meses)</span>
-				<span class="clsResposta" th:text="${vistoria.periodo}"></span>
-				<br />
+			<span>Período entre vistorias (meses)</span>
+			<span class="clsResposta" th:text="${vistoria.periodo}"></span>
+			<br />
 
-				<span class="clsSpan">Próxima vistoria</span>
-				<span class="clsResposta" th:with="varDataProxima=${vistoria.dataProximaDate}" th:value="${vistoria.dataProxima}" th:text="${#dates.format(varDataProxima, 'dd-MM-yyyy')}">
-				</span>
-				<br />
+			<span>Próxima vistoria</span>
+			<span class="clsResposta" th:with="varDataProxima=${vistoria.dataProxima}" th:value="${vistoria.dataProxima}" th:text="${#dates.format(varDataProxima, 'dd-MM-yyyy')}">
+			</span>
+			<br />
 
 
-			</div>
-			<div id="divVistoriaDireita">
-				<span class="clsSpan">Foto:</span>
-				
-				<!-- <img th:src="@{'data:image/png;base64,'+${session.fotoString}}"/> -->
-				<img th:src="@{'data:image/png;base64,'+${vistoria.fotoBanco}}" width="200"/>
-				<br />
-				
-				<span class="clsSpan">Localização</span>
-				<span class="clsResposta" th:text="${vistoria.localizacao}"></span>
-				<br />
+		</div>
+		<div id="divVistoriaDireita" class="clsCaixas">
+			<span class="clsLabel">Foto:</span>
 
-				<span class="clsSpan">Observação</span>
-				<span class="clsResposta" th:text="${vistoria.obs}"></span>
-				<br />
-			</div>
+			<img th:src="@{'data:image/png;base64,'+${vistoria.fotoBanco}}" width="200" />
+			<br />
+
+			<span class="clsLabel">Localização</span>
+			<span class="clsResposta" th:text="${vistoria.localizacao}"></span>
+			<br />
+
+			<span class="clsLabel">Observação</span>
+			<span class="clsResposta" th:text="${vistoria.obs}"></span>
+			<br />
 		</div>
 	</div>
-
 </body>
 </html>

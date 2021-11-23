@@ -3,6 +3,7 @@ package com.main.controlador;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -37,8 +38,8 @@ public class ControladorUsuario {
 	// O método logar devolve uma página modificada e recebe alguns parâmetros
 	// objeto Usuario, dados de sessão e dados de requisição.
 	@CacheEvict
-	public ModelAndView postLogar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao,
-			WebRequest requisicao) {
+	public ModelAndView postLogar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao, WebRequest requisicao,
+			@Valid Usuario usuarioValidado) {
 
 		// Cria um objeto para ser retornado em forma de página web
 		ModelAndView mav = new ModelAndView("login");

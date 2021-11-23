@@ -4,14 +4,29 @@ import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
 import lombok.Data;
+import lombok.extern.log4j.Log4j2;
 
 @Data
 @Entity
 @Named
 @Table(name = "Usuario")
-public class Usuario {
+@Log4j2
+public class Usuario implements Validator {
+
+	@Id
+	@NotNull
+	private int matricula = 999;
+	private String nome = "Anonimous";
+	@NotNull
+	private int senha = 0;
+	private String foto = "fotoAnonima";
 
 	public Usuario(int matricula, String nome, int senha, String foto) {
 
@@ -25,10 +40,24 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	@Id
-	private int matricula = 999;
-	private String nome = "Anonimous";
-	private int senha = 0;
-	private String foto = "fotoAnonima";
+	// Confere se este objeto é validável.
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return Vistoria.class.equals(clazz);
+	}
+
+	@Override
+	public void validate(Object obj, Errors e) {
+
+		log.debug("::Validando " + obj);
+
+		ValidationUtils.rejectIfEmpty(e, "matricula", "name.empty");
+		Usuario u = (Usuario) obj;
+		if (u.getMatricula() < 0) {
+			e.rejectValue("matricula", "negativevalue");
+		} else if (u.getSenha() < 0) {
+			e.rejectValue("senha", "negativevalue");
+		}
+	}
 
 }

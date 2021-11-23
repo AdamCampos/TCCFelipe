@@ -26,7 +26,25 @@ function onLoadIndex() {
 
 };
 
+/** ============================================================================ */
+function idUsuarioDefault() {
 
+	var idUser = document.getElementById('matricula').value;
+	var senha = document.getElementById('senha').value;
+
+	if (idUser == null || idUser == "" || idUser < 0) {
+		document.getElementById('matricula').value = '999';
+	}
+
+	if (senha == null || senha == "" || senha < 0) {
+		document.getElementById('senha').value = '0';
+	}
+
+	else {
+
+	}
+
+};
 /** ============================================================================ */
 function idExtintorDefault() {
 
@@ -40,12 +58,31 @@ function idExtintorDefault() {
 	}
 
 };
+/** ============================================================================ */
+function idVistoriaDefault() {
 
+	var idVist = document.getElementById('vistoriaId').value;
+	var periodo = document.getElementById('periodo').value;
+	var fkExtintor = document.getElementById('fkExtintor').value;
+
+	if (idVist == null || idVist == "" || idVist < 0) {
+		document.getElementById('vistoriaId').value = '0';
+	}
+
+	if (periodo == null || periodo == "" || periodo < 0) {
+		document.getElementById('periodo').value = '12';
+	}
+
+	if (fkExtintor == null || fkExtintor == "" || fkExtintor < 0) {
+		document.getElementById('fkExtintor').value = '0';
+	}
+
+};
 /** ============================================================================ */
 function onLoadLogin() {
 
 
-var target = document.getElementById("usuario");
+	var target = document.getElementById("usuario");
 
 	/*// cria uma nova instância de observador
 	var observer = new MutationObserver(function(mutations) {
@@ -61,30 +98,51 @@ var target = document.getElementById("usuario");
 	
 	// passar o nó alvo, bem como as opções de observação
 	observer.observe(target, config);*/
-	
-	
-	if(target.innerText==='Felipe Campos'){
-		document.getElementById("caixaNovo").style.visibility='visible';
+
+
+	if (target.innerText === 'Felipe Campos') {
+		document.getElementById("caixaNovo").style.visibility = 'visible';
 		console.log('admin');
-	}else{
-		document.getElementById("caixaNovo").style.visibility='hidden';
+	} else {
+		document.getElementById("caixaNovo").style.visibility = 'hidden';
 		console.log('comum');
 	}
-	
+
 };
 
 /** ============================================================================ */
 function onLoadExtintor() {
 
 
-var target = document.getElementById("usuario");
-	
-	if(target.innerText==='Felipe Campos'){
-		document.getElementById("caixaAdmin").style.visibility='visible';
+	var target = document.getElementById("usuario");
+
+	if (target.innerText === 'Felipe Campos') {
+		document.getElementById("caixaAdmin").style.visibility = 'visible';
 		console.log('admin');
-	}else{
-		document.getElementById("caixaAdmin").style.visibility='hidden';
+	} else {
+		document.getElementById("caixaAdmin").style.visibility = 'hidden';
 		console.log('comum');
 	}
-	
+
 };
+
+/** ============================================================================ */
+function completaFKExtintor(objeto) {
+
+	document.getElementById('fkExtintor').value = objeto.value;
+
+}
+/** ============================================================================ */
+function pesquisasVistoria() {
+
+	var divPesquisa = document.getElementById("divPesquisa");
+
+	var estaOculto = window.getComputedStyle(document.getElementById("divPesquisa")).visibility === "hidden";
+
+
+	if (!estaOculto) {
+		divPesquisa.style.visibility = 'hidden';
+	}
+	else { divPesquisa.style.visibility = 'visible'; }
+
+}
