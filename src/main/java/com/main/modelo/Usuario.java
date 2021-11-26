@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -27,13 +28,16 @@ public class Usuario implements Validator {
 	@NotNull
 	private int senha = 0;
 	private String foto = "fotoAnonima";
+	private byte[] img;
+	private String fotoBanco;
 
-	public Usuario(int matricula, String nome, int senha, String foto) {
+	public Usuario(int matricula, String nome, int senha, String foto, byte[] img) {
 
 		this.matricula = matricula;
 		this.nome = nome;
 		this.senha = senha;
 		this.foto = foto;
+		this.img = img;
 
 	}
 
@@ -60,4 +64,9 @@ public class Usuario implements Validator {
 		}
 	}
 
+	public String getFotoBanco(byte[] imagem) {
+
+		String fotoString = Base64.encodeBase64String(imagem);
+		return fotoString;
+	}
 }

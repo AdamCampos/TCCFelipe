@@ -29,13 +29,6 @@ public class ControladorErros implements ErrorController {
 
 		log.error("::Erro - código " + request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));
 
-		try {
-			int httpErrorCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-		} catch (Exception e) {
-			log.error("::Erro - erro " + e);
-		}
-		// log.error("::Erro - request code: " + httpErrorCode);
-
 		if (ex.toString().contains("EmptyResultDataAccessException")) {
 			log.error("::Erro - nenhum valor encontrado no banco de dados com os parâmetros solicitados."
 					+ ex.getCause());

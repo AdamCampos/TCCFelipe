@@ -84,22 +84,6 @@ function onLoadLogin() {
 
 	var target = document.getElementById("usuario");
 
-	/*// cria uma nova instância de observador
-	var observer = new MutationObserver(function(mutations) {
-		mutations.forEach(function(mutation) {
-			console.log(mutation.type);
-			
-			target.innerText = target.innerText + "_mudado";
-		});
-	});
-	
-	// configuração do observador:
-	var config = { attributes: true, childList: true, characterData: true };
-	
-	// passar o nó alvo, bem como as opções de observação
-	observer.observe(target, config);*/
-
-
 	if (target.innerText === 'Felipe Campos') {
 		document.getElementById("caixaNovo").style.visibility = 'visible';
 		console.log('admin');
@@ -144,5 +128,25 @@ function pesquisasVistoria() {
 		divPesquisa.style.visibility = 'hidden';
 	}
 	else { divPesquisa.style.visibility = 'visible'; }
+
+}
+/** ============================================================================ */
+function editarUsuario() {
+
+	var idUsuario = document.getElementById('matriculaUsuario').value;
+	var senhaUsuario = document.getElementById('senhaUsuario').value;
+	var nomeUsuario = document.getElementById('nomeUsuario').value;
+
+	if (nomeUsuario === null || nomeUsuario === "" ) {
+		document.getElementById('nomeUsuario').value = 'nomeGenerico';
+	}
+	
+	if (senhaUsuario === null || senhaUsuario === "" || senhaUsuario < 0) {
+		document.getElementById('senhaUsuario').value = '0';
+	}
+	
+	if (idUsuario === null || idUsuario === "" || idUsuario < 0) {
+		document.getElementById('matriculaUsuario').value = '0';
+	}
 
 }

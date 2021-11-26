@@ -1,5 +1,6 @@
 package com.main.controlador;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.main.modelo.Usuario;
@@ -23,6 +26,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 public class ControladorUsuario {
+
+	private final static ModelAndView MAV = new ModelAndView("login");
 
 	@Autowired
 	Usuario usuario;
@@ -41,9 +46,6 @@ public class ControladorUsuario {
 	public ModelAndView postLogar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao, WebRequest requisicao,
 			@Valid Usuario usuarioValidado) {
 
-		// Cria um objeto para ser retornado em forma de página web
-		ModelAndView mav = new ModelAndView("login");
-
 		// Cria um objeto para receber dados da pesquisa
 		Usuario usuarioRetornado = null;
 
@@ -60,10 +62,10 @@ public class ControladorUsuario {
 		// Testa se alguma pesquisa retornou algum objeto válido
 		if (usuarioRetornado != null) {
 			sessao.setAttribute("usuario", usuarioRetornado);
-			mav.getModel().put("usuario", usuarioRetornado);
+			MAV.getModel().put("usuario", usuarioRetornado);
 		}
 
-		return mav;
+		return MAV;
 
 	}
 
@@ -75,33 +77,47 @@ public class ControladorUsuario {
 	}
 
 	/******************************************************************************************************************/
-	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "criar")
-	public ModelAndView criar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao) {
+	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "criar", consumes = {
+			"multipart/form-data" })
+	public ModelAndView criar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao,
+			@RequestParam("fotoUpload") MultipartFile multiparte) {
 
-		ModelAndView mav = new ModelAndView("login");
+		try {
+			usuario.setImg(multiparte.getBytes());
+		} catch (IOException e) { //
+		}
+
 		uri.save(usuario);
 
-		return mav;
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
-	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "atualizar")
-	public ModelAndView atualizar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao) {
+	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "atualizar", consumes = {
+			"multipart/form-data" })
+	public ModelAndView atualizar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao,
+			@RequestParam("fotoUpload") MultipartFile multiparte) {
 
-		ModelAndView mav = new ModelAndView("login");
+		Usuario u = uri.findOne(String.valueOf(usuario.getMatricula()));
 
-		int matricula = usuario.getMatricula();
-		String nome = usuario.getNome();
-		int senha = usuario.getSenha();
+		if (!usuario.getNome().isEmpty() && !usuario.getNome().isBlank() && !usuario.getNome().contains("Generico")) {
+			u.setNome(usuario.getNome());
+		}
 
-		Usuario u = uri.findOne(String.valueOf(matricula));
-		u.setNome(nome);
-		u.setSenha(senha);
+		if (usuario.getSenha() > 0) {
+			u.setSenha(usuario.getSenha());
+		}
 
-		uri.save(u);
-		log.info("Alterando nome de " + u.getNome() + " para " + nome);
+		if (multiparte.getSize() > 10) {
+			try {
+				u.setImg(multiparte.getBytes());
+			} catch (IOException e) {
+			}
+		}
 
-		return mav;
+		uri.atualizar(u);
+
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
@@ -109,13 +125,11 @@ public class ControladorUsuario {
 	@RequestMapping(value = { "/logoff" }, method = { RequestMethod.GET })
 	public ModelAndView logOff(HttpSession sessao) {
 
-		ModelAndView mav = new ModelAndView("login");
-		usuario = new Usuario(0, "Anônimo", 0, null);
-		sessao.removeAttribute("usuario");
-		sessao.setAttribute("usuario", usuario);
-		log.debug("::Iniciando logoff");
+		Usuario usuarioRetornado = uri.findOne(String.valueOf(999), 0);
+		sessao.setAttribute("usuario", usuarioRetornado);
+		MAV.getModel().put("usuario", usuarioRetornado);
 
-		return mav;
+		return MAV;
 
 	}
 
@@ -141,7 +155,6 @@ public class ControladorUsuario {
 	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "deletar")
 	public ModelAndView deletar(WebRequest requisicao, HttpSession sessao) {
 
-		ModelAndView mav = new ModelAndView("login");
 		String nome = requisicao.getParameter("nome");
 		int matricula = Integer.valueOf(requisicao.getParameter("matricula"));
 
@@ -158,7 +171,7 @@ public class ControladorUsuario {
 
 		uri.delete(uri.findOne(identificacaoUsuario));
 
-		return mav;
+		return MAV;
 	}
 
 	/******************************************************************************************************************/
@@ -166,15 +179,21 @@ public class ControladorUsuario {
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.GET })
 	public String resolveLogin(Model model, HttpSession sessao) {
 
+		Usuario u = (Usuario) sessao.getAttribute("usuario");
+
 		try {
-			Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-			if (usuario == null) {
-				usuario = new Usuario(0, "Anônimo", 0, null);
-				sessao.setAttribute("usuario", usuario);
+			if (u.getMatricula() == 999) {
+
+				Usuario usuarioRetornado = uri.findOne(String.valueOf(999), 0);
+				sessao.setAttribute("usuario", usuarioRetornado);
+				MAV.getModel().put("usuario", usuarioRetornado);
 			}
-			log.info("Usuario inicio do login " + usuario);
 		} catch (Exception e) {
-			log.error("Erro usuario " + e);
+
+			Usuario usuarioRetornado = uri.findOne(String.valueOf(999), 0);
+			sessao.setAttribute("usuario", usuarioRetornado);
+			MAV.getModel().put("usuario", usuarioRetornado);
+
 		}
 
 		return "login";

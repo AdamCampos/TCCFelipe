@@ -25,7 +25,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 	@Override
 	public Iterable<Usuario> findAll() {
-		return jdbc.query("select matricula, nome, senha, foto from Usuario", this::mapeiaLinhaUsuario);
+		return jdbc.query("select * from Usuario", this::mapeiaLinhaUsuario);
 	}
 
 	@Override
@@ -34,12 +34,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		Usuario u = null;
 		try {
 			log.info("::Pesquisando por matrícula " + id);
-			u = jdbc.queryForObject("select matricula, nome, senha, foto from Usuario where (matricula = ?) ",
-					this::mapeiaLinhaUsuario, id);
+			u = jdbc.queryForObject("select * from Usuario where (matricula = ?) ", this::mapeiaLinhaUsuario, id);
 		} catch (Exception e) {
 			log.info("::Pesquisando por nome " + id);
-			u = jdbc.queryForObject("select matricula, nome, senha, foto from Usuario where (nome like ?) ",
-					this::mapeiaLinhaUsuario, id);
+			u = jdbc.queryForObject("select * from Usuario where (nome like ?) ", this::mapeiaLinhaUsuario, id);
 		}
 
 		return u;
@@ -50,13 +48,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		Usuario u = null;
 		try {
 			log.info("::Pesquisando por matrícula " + nomeOuSenha);
-			u = jdbc.queryForObject(
-					"select matricula, nome, senha, foto from Usuario where (matricula = ? and senha = ?) ",
+			u = jdbc.queryForObject("select * from Usuario where (matricula = ? and senha = ?) ",
 					this::mapeiaLinhaUsuario, nomeOuSenha, senha);
 		} catch (Exception e) {
 			log.info("::Pesquisando por nome " + nomeOuSenha);
-			u = jdbc.queryForObject(
-					"select matricula, nome, senha, foto from Usuario where (nome like ? and senha = ?) ",
+			u = jdbc.queryForObject("select * from Usuario where (nome like ? and senha = ?) ",
 					this::mapeiaLinhaUsuario, nomeOuSenha, senha);
 		}
 
@@ -67,8 +63,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 
 		log.info("::Pesquisando nome " + nome + " matrícula " + matricula);
 
-		ArrayList<Usuario> lista = (ArrayList<Usuario>) jdbc.query("select matricula, nome, senha, foto from Usuario",
-				this::mapeiaLinhaUsuario);
+		ArrayList<Usuario> lista = (ArrayList<Usuario>) jdbc.query("select * from Usuario", this::mapeiaLinhaUsuario);
 
 		ArrayList<Usuario> listaFinal = new ArrayList<Usuario>();
 		listaFinal.clear();
@@ -84,13 +79,17 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 	@Override
 	public Usuario save(Usuario usuario) {
 
-		try {
-			jdbc.update("insert into Usuario (matricula, nome, senha, foto) values (?, ?, ?, ?)",
-					usuario.getMatricula(), usuario.getNome(), usuario.getSenha(), usuario.getFoto());
-		} catch (Exception e) {
-			jdbc.update("update Usuario set nome=?, senha=?, foto=?  where matricula=?", usuario.getNome(),
-					usuario.getSenha(), usuario.getFoto(), usuario.getMatricula());
-		}
+		jdbc.update("insert into Usuario (nome, senha, foto, img) values (?, ?, ?, ?)", usuario.getNome(),
+				usuario.getSenha(), usuario.getFoto(), usuario.getImg());
+
+		return usuario;
+	}
+
+	public Usuario atualizar(Usuario usuario) {
+
+		jdbc.update("update Usuario set nome=?, senha=?, foto=?, img=?  where matricula=?", usuario.getNome(),
+				usuario.getSenha(), usuario.getFoto(), usuario.getImg(), usuario.getMatricula());
+
 		return usuario;
 	}
 
@@ -99,7 +98,11 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		Usuario u = new Usuario();
 
 		try {
-			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"), rs.getString("foto"));
+			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"), rs.getString("foto"),
+					rs.getBytes("img"));
+
+			u.setFotoBanco(u.getFotoBanco(u.getImg()));
+
 			return u;
 		} catch (SQLException e) {
 			log.error("Erro: " + e);

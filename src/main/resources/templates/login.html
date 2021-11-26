@@ -39,21 +39,24 @@
 				<span id="textoEditarLogin">Editar login</span>
 				<br />
 
-				<form action="main" method="post" th:object="${usuario}">
-					<label for="matricula">Matrícula</label>
-					<input id="editarMatricula" type="text" placeholder="digite sua matrícula" name="matricula">
+				<form action="main" method="post" th:object="${usuario}" enctype="multipart/form-data" name="form">
+					<label for="matriculaUsuario">Matrícula</label>
+					<input id="matriculaUsuario" type="text" placeholder="digite sua matrícula" name="matricula">
 					<br />
 
-					<label for="nome">Nome</label>
-					<input id="editarNome" type="text" placeholder="digite seu nome" name="nome" />
+					<label for="nomeUsuario">Nome</label>
+					<input id="nomeUsuario" type="text" placeholder="digite seu nome" name="nome" />
 					<br />
 
-					<label for="senha">Senha</label>
-					<input id="editarSenha" type="password" placeholder="digite a sua senha" name="senha" />
+					<label for="senhaUsuario">Senha</label>
+					<input id="senhaUsuario" type="password" placeholder="digite a sua senha" name="senha" />
+					
+					<label for="fotoUpload">Foto:</label>
+					<input id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg" />
 					<div>
-						<input class="classeBotoes" type="submit" name="criar" value="Criar" />
-						<input class="classeBotoes" type="submit" name="atualizar" value="Atualizar" />
-						<input class="classeBotoes" type="submit" name="deletar" value="Deletar" />
+						<input class="classeBotoes" type="submit" name="criar" value="criar" onclick="editarUsuario();"/>
+						<input class="classeBotoes" type="submit" name="atualizar" value="atualizar" onclick="editarUsuario();"/>
+						<input class="classeBotoes" type="submit" name="deletar" value="deletar" onclick="editarUsuario();"/>
 					</div>
 				</form>
 			</div>

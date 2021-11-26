@@ -187,23 +187,27 @@ public class ControladorVistoria {
 		Vistoria v = uri.findOne(String.valueOf(vistoria.getId()));
 		v.setFkExtintor(vistoria.getFkExtintor());
 
-		// No caso de não haver data nova, se manterá a data que estiver no banco de
-		// dados.
+		// Atualiza apenas os campos digitados.
+		if (!vistoria.getLocalizacao().isEmpty() && !vistoria.getLocalizacao().isBlank()) {
+			v.setLocalizacao(vistoria.getLocalizacao());
+		}
+		if (!vistoria.getObs().isEmpty() && !vistoria.getObs().isBlank()) {
+			v.setObs(vistoria.getObs());
+		}
 		if (vistoria.getDataUltima() != null) {
 			v.setDataUltima(vistoria.getDataUltima());
 		}
-
-		// No caso de não haver foto nova, se manterá a foto que estiver no banco de
-		// dados.
 		if (multiparte != null) {
-			log.debug("::Subindo nova foto.");
 			try {
-				v.setFoto(multiparte.getBytes());
+
+				// Se a nova imagem for nula, continuará a do banco.
+				if (multiparte.getSize() > 10) {
+					v.setFoto(multiparte.getBytes());
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			log.debug("::Usando foto antiga.");
 		}
 
 		// Testa se o usuário é o responsável pela vistoria a ser editada.
@@ -213,7 +217,6 @@ public class ControladorVistoria {
 		int matriculaAtual = u.getMatricula();
 
 		if (matriculaAntiga == matriculaAtual || matriculaAtual == 1) {
-			log.debug("::Atualizando[4].");
 			uri.atualizar(v);
 			this.carregaTodasListas();
 		}

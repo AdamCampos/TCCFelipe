@@ -29,8 +29,8 @@
 			<a th:href="@{/extintor}"><img id="iconExtintor" th:src="@{/images/extintor.png}" /></a>
 			</div>	
 
-			<div class ="clsIcon" id="divLogin">
-			<a th:href="@{/login}"><img id="iconLogin" th:src="@{/images/login.png}"/></a>
+			<div class ="clsIcon" id="divLogin" th:with="usuario=${session.usuario.nome}">
+			<a th:href="@{/login}"><img id="iconLogin" th:src="@{'data:image/png;base64,'+${session.usuario.fotoBanco}}"/></a>
 			<br/>
 			<span id="usuario" th:text="${session.usuario.nome}"></span>
 			</div>
