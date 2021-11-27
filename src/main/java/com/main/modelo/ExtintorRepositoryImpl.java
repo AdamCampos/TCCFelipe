@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Repository
 @Log4j2
-public class ExtintorRepositoryImpl implements ExtintorRepository {
+public class ExtintorRepositoryImpl implements CrudRepository<Extintor, String> {
 
 	private JdbcTemplate jdbc;
 
@@ -86,7 +87,6 @@ public class ExtintorRepositoryImpl implements ExtintorRepository {
 		return jdbc.query("select * from Extintor", this::mapeiaLinhaExtintor);
 	}
 
-	@Override
 	public Extintor findOne(String id) {
 
 		Extintor u = null;

@@ -15,15 +15,13 @@
 
 	<div id="containerLogin">
 		<div class="clsCaixas" id="caixaLogin">
-		<br />
+			<br />
 			<span id="textoLogin">Já tenho login </span>
-			<br /><br />
-
+			<br />
 			<form action="main" method="post" th:object="${usuario}">
 				<label for="matricula">Matrícula ou Nome</label>
 				<input id="matricula" type="text" placeholder="digite sua matrícula ou nome" name="matriculaOuNome" />
 				<br />
-
 				<label for="senha">Senha</label>
 				<input id="senha" type="password" placeholder="digite a sua senha" name="senha" />
 				<br />
@@ -31,32 +29,29 @@
 					<input class="classeBotoes" type="submit" name="logar" value="OK" onclick="idUsuarioDefault();" />
 				</div>
 			</form>
-
 		</div>
-
 		<div id="caixaNovo">
 			<div class="clsCaixas">
+				<br />
 				<span id="textoEditarLogin">Editar login</span>
 				<br />
-
 				<form action="main" method="post" th:object="${usuario}" enctype="multipart/form-data" name="form">
 					<label for="matriculaUsuario">Matrícula</label>
 					<input id="matriculaUsuario" type="text" placeholder="digite sua matrícula" name="matricula">
 					<br />
-
 					<label for="nomeUsuario">Nome</label>
 					<input id="nomeUsuario" type="text" placeholder="digite seu nome" name="nome" />
 					<br />
-
 					<label for="senhaUsuario">Senha</label>
 					<input id="senhaUsuario" type="password" placeholder="digite a sua senha" name="senha" />
-					
+					<br />
 					<label for="fotoUpload">Foto:</label>
 					<input id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg" />
+					<br />
 					<div>
-						<input class="classeBotoes" type="submit" name="criar" value="criar" onclick="editarUsuario();"/>
-						<input class="classeBotoes" type="submit" name="atualizar" value="atualizar" onclick="editarUsuario();"/>
-						<input class="classeBotoes" type="submit" name="deletar" value="deletar" onclick="editarUsuario();"/>
+						<input class="classeBotoes" type="submit" name="criar" value="criar" onclick="editarUsuario();" />
+						<input class="classeBotoes" type="submit" name="atualizar" value="atualizar" onclick="editarUsuario();" />
+						<input class="classeBotoes" type="submit" name="deletar" value="deletar" onclick="editarUsuario();" />
 					</div>
 				</form>
 			</div>

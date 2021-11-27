@@ -48,10 +48,10 @@ function idUsuarioDefault() {
 /** ============================================================================ */
 function idExtintorDefault() {
 
-	var idExt = document.getElementById('extintorId').value;
+	var idExt = document.getElementById('extintorPesquisaId').value;
 
 	if (idExt == null || idExt == "" || idExt < 0) {
-		document.getElementById('extintorId').value = '0';
+		document.getElementById('extintorPesquisaId').value = '0';
 	}
 	else {
 

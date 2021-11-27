@@ -54,6 +54,9 @@ public class ControladorExtintor {
 
 				// No caso de id <= 0, a pesquisa será pelo tipo
 				if (extintor.getId() <= 0) {
+
+					log.debug("::Pesquisando extintor pelo agente.");
+
 					ArrayList<Extintor> lista = (ArrayList<Extintor>) uri
 							.buscarAgente("%" + extintor.getAgente() + "%");
 
@@ -68,6 +71,7 @@ public class ControladorExtintor {
 					}
 
 					mav.addObject("lista", lista);
+
 					return mav;
 				} else {
 

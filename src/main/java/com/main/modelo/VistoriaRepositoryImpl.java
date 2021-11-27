@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Repository
 @Log4j2
-public class VistoriaRepositoryImpl implements VistoriaRepository {
+public class VistoriaRepositoryImpl implements CrudRepository<Vistoria, String> {
 
 	private JdbcTemplate jdbc;
 
@@ -89,7 +90,6 @@ public class VistoriaRepositoryImpl implements VistoriaRepository {
 		return lista;
 	}
 
-	@Override
 	public Vistoria findOne(String id) {
 		Vistoria v = jdbc.queryForObject("select * from Vistoria where (id = ?) ", this::mapeiaLinhaVistoria, id);
 		return v;

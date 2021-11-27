@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Repository
 @Log4j2
-public class UsuarioRepositoryImpl implements UsuarioRepository {
+public class UsuarioRepositoryImpl implements CrudRepository<Usuario, String> {
 
 	private JdbcTemplate jdbc;
 
@@ -28,7 +29,6 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
 		return jdbc.query("select * from Usuario", this::mapeiaLinhaUsuario);
 	}
 
-	@Override
 	public Usuario findOne(String id) {
 
 		Usuario u = null;

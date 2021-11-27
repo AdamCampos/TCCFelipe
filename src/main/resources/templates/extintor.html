@@ -39,35 +39,27 @@
 			<span class="clsResposta">
 				<a th:href="@{${id}(id=${extintor.id})}" th:text="${extintor.id}" target="_blank"></a>
 			</span>
-			<br />
-
 			<span>Classe:</span>
 			<span class="clsResposta" th:text="${extintor.classe}"></span>
 			<br />
-
 			<span>Agente:</span>
 			<span class="clsResposta" th:text="${extintor.agente}"></span>
 			<br />
-
 			<span>Data Compra:</span>
 			<span class="clsResposta" th:text="${extintor.dataCompra}"></span>
 			<br />
-
 			<span>Volume:</span>
 			<span class="clsResposta" th:text="${extintor.volume}"></span>
 			<br />
-		</div>
-		<div id="divDireita" class="clsCaixas">
-
-			<span class="clsLabel">Foto:</span>
-			<img th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}" width="150" />
-			<br />
-
-			<span class="clsLabel">QRCode:</span>
-			<img th:src="@{/images/qr/extintorId/{qr} (qr='imageQR' + ${extintor.id} +'.jpg')}" width="150" />
+			<div id="divDireita" class="clsCaixas">
+				<span class="clsLabel">Foto:</span>
+				<img th:src="@{/images/fotos/{foto}(foto=${#strings.trim(extintor.foto)+ '.jfif'})}" width="150" />
+				<br />
+				<span class="clsLabel">QRCode:</span>
+				<img th:src="@{/images/qr/extintorId/{qr} (qr='imageQR' + ${extintor.id} +'.jpg')}" width="150" />
+			</div>
 		</div>
 	</div>
-
 	<!-- *************************************************************************************************************************************************************************** -->
 </body>
 </html>
