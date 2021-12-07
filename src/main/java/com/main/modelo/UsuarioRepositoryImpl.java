@@ -79,16 +79,16 @@ public class UsuarioRepositoryImpl implements CrudRepository<Usuario, String> {
 	@Override
 	public Usuario save(Usuario usuario) {
 
-		jdbc.update("insert into Usuario (nome, senha, foto, img) values (?, ?, ?, ?)", usuario.getNome(),
-				usuario.getSenha(), usuario.getFoto(), usuario.getImg());
+		jdbc.update("insert into Usuario (nome, senha, foto, img, admin) values (?, ?, ?, ?, ?)", usuario.getNome(),
+				usuario.getSenha(), usuario.getFoto(), usuario.getImg(), usuario.isAdmin());
 
 		return usuario;
 	}
 
 	public Usuario atualizar(Usuario usuario) {
 
-		jdbc.update("update Usuario set nome=?, senha=?, foto=?, img=?  where matricula=?", usuario.getNome(),
-				usuario.getSenha(), usuario.getFoto(), usuario.getImg(), usuario.getMatricula());
+		jdbc.update("update Usuario set nome=?, senha=?, foto=?, img=?, admin=?  where matricula=?", usuario.getNome(),
+				usuario.getSenha(), usuario.getFoto(), usuario.getImg(), usuario.isAdmin(), usuario.getMatricula());
 
 		return usuario;
 	}
@@ -99,7 +99,7 @@ public class UsuarioRepositoryImpl implements CrudRepository<Usuario, String> {
 
 		try {
 			u = new Usuario(rs.getInt("matricula"), rs.getString("nome"), rs.getInt("senha"), rs.getString("foto"),
-					rs.getBytes("img"));
+					rs.getBytes("img"), rs.getBoolean("admin"));
 
 			u.setFotoBanco(u.getFotoBanco(u.getImg()));
 

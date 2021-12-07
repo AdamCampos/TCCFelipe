@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.main.GeradorQRCode;
+
 import lombok.Data;
 
 @Data

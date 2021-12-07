@@ -81,17 +81,23 @@ function idVistoriaDefault() {
 /** ============================================================================ */
 function onLoadLogin() {
 
+	try {
+       var admin = document.getElementById("setAdmin").checked;
+      
+			if (admin === true) {
+				document.getElementById("caixaNovo").style.visibility = 'visible';
+				console.log('admin');
+			} else {
+				document.getElementById("caixaNovo").style.visibility = 'hidden';
+				console.log('comum');
+			}
 
-	var target = document.getElementById("usuario");
-
-	if (target.innerText === 'Felipe Campos') {
-		document.getElementById("caixaNovo").style.visibility = 'visible';
-		console.log('admin');
-	} else {
-		document.getElementById("caixaNovo").style.visibility = 'hidden';
-		console.log('comum');
 	}
-
+	catch (e) {
+	console.log(e);
+    document.getElementById("caixaNovo").style.visibility = 'hidden';
+	}
+	
 };
 
 /** ============================================================================ */
@@ -138,7 +144,7 @@ function editarUsuario() {
 	var nomeUsuario = document.getElementById('nomeUsuario').value;
 
 	if (nomeUsuario === null || nomeUsuario === "" ) {
-		document.getElementById('nomeUsuario').value = 'nomeGenerico';
+		//document.getElementById('nomeUsuario').value = 'nomeGenerico';
 	}
 	
 	if (senhaUsuario === null || senhaUsuario === "" || senhaUsuario < 0) {

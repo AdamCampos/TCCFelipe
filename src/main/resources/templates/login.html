@@ -41,12 +41,16 @@
 					<br />
 					<label for="nomeUsuario">Nome</label>
 					<input id="nomeUsuario" type="text" placeholder="digite seu nome" name="nome" />
+					<p th:if="${#fields.hasErrors('nome')}">Nome inválido</p>
 					<br />
 					<label for="senhaUsuario">Senha</label>
 					<input id="senhaUsuario" type="password" placeholder="digite a sua senha" name="senha" />
 					<br />
 					<label for="fotoUpload">Foto:</label>
-					<input id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg" />
+					<input id="fotoUpload" type="file" name="fotoUpload" accept="image/png, image/jpeg, image/jpg" />
+					<br />
+					<label for="setAdmin">Administrador:</label>
+					<input id="setAdmin" type="checkbox" name="admin" th:checked="${usuario.admin}" />
 					<br />
 					<div>
 						<input class="classeBotoes" type="submit" name="criar" value="criar" onclick="editarUsuario();" />

@@ -153,10 +153,11 @@
 
 	<build>
 		<plugins>
-			<plugin>
+		<!-- Comentado o plugin spring-boot-maven-plugin para fazer deploy para web server -->
+			<!-- <plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>

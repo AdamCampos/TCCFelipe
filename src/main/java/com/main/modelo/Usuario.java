@@ -4,6 +4,7 @@ import javax.inject.Named;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.codec.binary.Base64;
@@ -24,30 +25,33 @@ public class Usuario implements Validator {
 	@Id
 	@NotNull
 	private int matricula = 999;
+	@NotEmpty(message = "Na edição, o campo nome deve ser preenchido.")
 	private String nome = "Anonimous";
 	@NotNull
 	private int senha = 0;
 	private String foto = "fotoAnonima";
 	private byte[] img;
 	private String fotoBanco;
+	private boolean admin = false;
 
-	public Usuario(int matricula, String nome, int senha, String foto, byte[] img) {
+	public Usuario() {
+	}
+
+	public Usuario(int matricula, String nome, int senha, String foto, byte[] img, boolean admin) {
 
 		this.matricula = matricula;
 		this.nome = nome;
 		this.senha = senha;
 		this.foto = foto;
 		this.img = img;
+		this.admin = admin;
 
-	}
-
-	public Usuario() {
 	}
 
 	// Confere se este objeto é validável.
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return Vistoria.class.equals(clazz);
+		return Usuario.class.equals(clazz);
 	}
 
 	@Override

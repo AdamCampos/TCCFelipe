@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,8 +96,12 @@ public class ControladorUsuario {
 	/******************************************************************************************************************/
 	@RequestMapping(value = { "/main" }, method = { RequestMethod.POST }, params = "atualizar", consumes = {
 			"multipart/form-data" })
-	public ModelAndView atualizar(@ModelAttribute("usuario") Usuario usuario, HttpSession sessao,
-			@RequestParam("fotoUpload") MultipartFile multiparte) {
+	public ModelAndView atualizar(@Valid @ModelAttribute("usuario") Usuario usuario, HttpSession sessao,
+			@RequestParam("fotoUpload") MultipartFile multiparte, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			return MAV;
+		}
 
 		Usuario u = uri.findOne(String.valueOf(usuario.getMatricula()));
 
@@ -114,6 +119,8 @@ public class ControladorUsuario {
 			} catch (IOException e) {
 			}
 		}
+
+		log.debug("::Admin " + usuario.isAdmin());
 
 		uri.atualizar(u);
 

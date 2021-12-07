@@ -1,4 +1,4 @@
-package com.main.modelo;
+package com.main;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
