@@ -34,9 +34,6 @@ public class Usuario implements Validator {
 	private String fotoBanco;
 	private boolean admin = false;
 
-	public Usuario() {
-	}
-
 	public Usuario(int matricula, String nome, int senha, String foto, byte[] img, boolean admin) {
 
 		this.matricula = matricula;
@@ -46,6 +43,9 @@ public class Usuario implements Validator {
 		this.img = img;
 		this.admin = admin;
 
+	}
+
+	public Usuario() {
 	}
 
 	// Confere se este objeto é validável.

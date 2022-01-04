@@ -92,7 +92,8 @@ public class ExtintorRepositoryImpl implements CrudRepository<Extintor, String> 
 		Extintor u = null;
 		try {
 			log.info("::Pesquisando por id " + id);
-			u = jdbc.queryForObject("select id, classe, agente, dataCompra, volume, foto from Extintor where (id = ?) ",
+			u = jdbc.queryForObject(
+					"select id, classe, agente, dataCompra, dataTeste, volume, foto from Extintor where (id = ?) ",
 					this::mapeiaLinhaExtintor, id);
 		} catch (Exception e) {
 			log.info("::Erro ao pesquisar extintor " + e);
@@ -106,15 +107,17 @@ public class ExtintorRepositoryImpl implements CrudRepository<Extintor, String> 
 	public Extintor save(Extintor extintor) {
 
 		try {
-			jdbc.update("insert into Extintor (classe, agente, dataCompra, volume, foto) values (?, ?, ?, ?, ?)",
-					extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(), extintor.getVolume(),
-					extintor.getFoto());
+			jdbc.update(
+					"insert into Extintor (classe, agente, dataCompra, dataTeste, volume, foto) values (?, ?, ?, ?, ? ,?)",
+					extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(), extintor.getDataTeste(),
+					extintor.getVolume(), extintor.getFoto());
 		} catch (Exception e) {
 			log.debug("::Erro ao inserir extintor " + e);
 			try {
-				jdbc.update("update Extintor set classe=?, agente=?, dataCompra=?, volume=?, foto=?  where id=?",
-						extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(), extintor.getVolume(),
-						extintor.getFoto(), extintor.getId());
+				jdbc.update(
+						"update Extintor set classe=?, agente=?, dataCompra=?, dataTeste=?, volume=?, foto=?  where id=?",
+						extintor.getClasse(), extintor.getAgente(), extintor.getDataCompra(), extintor.getDataTeste(),
+						extintor.getVolume(), extintor.getFoto(), extintor.getId());
 			} catch (Exception sqlE) {
 				log.debug("::Erro ao atualizar extintor " + sqlE);
 			}
@@ -128,7 +131,7 @@ public class ExtintorRepositoryImpl implements CrudRepository<Extintor, String> 
 		ArrayList<Extintor> lista = new ArrayList<Extintor>();
 		try {
 			lista = (ArrayList<Extintor>) jdbc.query(
-					"select id, classe, agente, dataCompra, volume, foto from Extintor where id=?",
+					"select id, classe, agente, dataCompra, c volume, foto from Extintor where id=?",
 					this::mapeiaLinhaExtintor, id);
 
 		} catch (Exception e) {
@@ -144,7 +147,7 @@ public class ExtintorRepositoryImpl implements CrudRepository<Extintor, String> 
 		ArrayList<Extintor> lista = new ArrayList<Extintor>();
 		try {
 			lista = (ArrayList<Extintor>) jdbc.query(
-					"select id, classe, agente, dataCompra, volume, foto from Extintor where agente like ?",
+					"select id, classe, agente, dataCompra, dataTeste, volume, foto from Extintor where agente like ?",
 					this::mapeiaLinhaExtintor, agente);
 		} catch (Exception e) {
 			log.debug("ERRO 2::" + e);
@@ -165,7 +168,8 @@ public class ExtintorRepositoryImpl implements CrudRepository<Extintor, String> 
 
 		try {
 			u = new Extintor(rs.getInt("id"), rs.getString("classe"), rs.getString("agente"),
-					rs.getString("dataCompra"), rs.getString("volume"), rs.getString("foto"));
+					rs.getString("dataCompra"), rs.getString("dataTeste"), rs.getString("volume"),
+					rs.getString("foto"));
 			log.debug("::" + u);
 			return u;
 		} catch (SQLException e) {

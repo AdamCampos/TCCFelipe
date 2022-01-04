@@ -113,6 +113,7 @@ public class ControladorExtintor {
 		String classe = extintor.getClasse();
 		String agente = extintor.getAgente();
 		String dataCompra = extintor.getDataCompra();
+		String dataTeste = extintor.getDataTeste();
 		String volume = extintor.getVolume();
 		String foto = extintor.getFoto();
 
@@ -120,6 +121,7 @@ public class ControladorExtintor {
 		u.setClasse(classe);
 		u.setAgente(agente);
 		u.setDataCompra(dataCompra);
+		u.setDataCompra(dataTeste);
 		u.setVolume(volume);
 		u.setFoto(foto);
 

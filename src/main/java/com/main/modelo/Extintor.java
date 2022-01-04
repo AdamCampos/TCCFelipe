@@ -26,6 +26,7 @@ public class Extintor {
 	private String classe = null;
 	private String agente = null;
 	private String dataCompra = "1999-01-01";
+	private String dataTeste = "1999-01-01";
 	private String volume = "1999-01-01";
 	private String foto = null;
 	@Transient
@@ -33,12 +34,14 @@ public class Extintor {
 	@Transient
 	private Image imagemQRCode;
 
-	public Extintor(int id, String classe, String agente, String dataCompra, String volume, String foto) {
+	public Extintor(int id, String classe, String agente, String dataCompra, String dataTeste, String volume,
+			String foto) {
 
 		this.id = id;
 		this.classe = classe;
 		this.agente = agente;
 		this.dataCompra = dataCompra;
+		this.dataTeste = dataTeste;
 		this.volume = volume;
 		this.foto = foto;
 		this.byteImageQRCode = this.getImagemQRCode(String.valueOf(id));
